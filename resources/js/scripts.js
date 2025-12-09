@@ -1,4 +1,8 @@
-// scripts.js (LNB 스크롤/배경 토글 제거 버전)
+// scripts.js (LNB 스크롤/활성화 처리 — 수정본)
+// 주요 변경:
+// - currentFile과 href 비교 시 하이픈(-)을 언더스코어(_)로 정규화해서 비교
+// - gnbGroups를 디렉터리(그룹) 기준으로 구성하고, href가 해당 디렉터리를 포함하는지 확인
+
 document.addEventListener('DOMContentLoaded', function() {
     const header = document.querySelector('header');
     const megaMenu = document.querySelector('.mega-menu-wrapper');
@@ -6,10 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const languageSwitcherLink = document.getElementById('language-switcher-link');
     const languageFlagImg = document.getElementById('language-flag-img');
 
-    // (참고) horizontalLNB는 더 이상 스크롤에 따라 .scrolled를 토글하지 않습니다.
-    // const horizontalLNB = document.querySelector('.horizontal-lnb-wrapper');
-
-    // 스크롤 임계값 (헤더만 사용)
     const GNB_SCROLL_THRESHOLD = 80;
 
     const flagPaths = {
@@ -22,7 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const path = window.location.pathname;
         let file = path.substring(path.lastIndexOf('/') + 1);
         if (!file) file = 'index.html';
-        return file;
+        return file.toLowerCase();
+    };
+
+    // currentFile을 언더스코어 형태로 정규화해서 비교에 사용
+    const normalizeName = (name) => {
+        if (!name) return name;
+        return name.toLowerCase().replace(/-/g, '_').replace(/^\//, '');
     };
 
     const initializeFlag = () => {
@@ -41,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (languageFlagImg) initializeFlag();
 
-    // GNB 드롭다운: hover/focus 작동
     if (header && megaMenu) {
         header.addEventListener('mouseenter', function() {
             megaMenu.classList.add('is-active');
@@ -59,13 +64,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // GNB 클릭: 드롭다운 열려있으면 닫기
+    // mainMenuLinks 클릭 시 드롭다운 닫기 동작
     mainMenuLinks.forEach(link => {
         link.addEventListener('click', function(event) {
             const isDropdownActive = megaMenu && megaMenu.classList.contains('is-active');
             if (isDropdownActive) {
                 event.preventDefault();
                 megaMenu.classList.remove('is-active');
+                // 링크로 이동하려면 잠깐 후에 이동
+                const href = link.getAttribute('href');
+                if (href) {
+                    setTimeout(() => { window.location.href = href; }, 150);
+                }
             }
         });
     });
@@ -84,10 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 스크롤 이벤트: 헤더만 처리 (LNB는 더 이상 여기에서 토글하지 않음)
+    // 스크롤 처리 (헤더 scrolled 클래스)
     const onScroll = () => {
         const scrollPosition = window.scrollY;
-
         if (header) {
             if (scrollPosition > GNB_SCROLL_THRESHOLD) header.classList.add('scrolled');
             else header.classList.remove('scrolled');
@@ -96,61 +105,79 @@ document.addEventListener('DOMContentLoaded', function() {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // --- Active 관리: GNB와 수평 LNB ---
-    const currentFile = getCurrentFileName().toLowerCase();
+    // --- Active 관리: GNB와 LNB ---
+    // 현재 파일명 (정규화)
+    const currentFile = normalizeName(getCurrentFileName());
 
+    // 그룹을 디렉터리(폴더) 기반으로 정의 — 실제 파일명(언더스코어)으로 맞춤
     const gnbGroups = {
-        'philosophy_vision.html': [
+        'philosophy': [
             'brand_vision.html',
             'craftsmanship.html',
             'ethics_management.html',
             'directions.html'
         ],
-        'tea_profiling.html': [
-            'the-six-tea.html',
+        'tea_profiling': [
+            'the_six_tea.html',
             'tea_of_the_month.html',
             'brewing_guide.html',
             'teas_by_region.html'
         ],
-        'pairing_blending.html': [
+        'pairing': [
             'tea_food_pairing.html',
             'blending_lab.html',
             'seasonal_pairings.html'
         ],
-        'culture_news.html': [
+        'culture': [
             'tea_culture_magazine.html',
             'notices.html',
             'faq_contact.html',
             'media_press.html'
         ],
-        'index.html': [
+        'index': [
             'index.html',
             'index_en.html'
         ]
     };
 
-    // GNB active 설정
+    // GNB active 설정: 각 GNB 링크(href)에 포함된 디렉터리명으로 판정하거나,
+    // href의 파일명이 현재 파일과 같은 그룹에 속하면 활성화
     document.querySelectorAll('.gnb a').forEach(a => {
-        const href = (a.getAttribute('href') || '').toLowerCase();
+        const hrefRaw = (a.getAttribute('href') || '').toLowerCase();
+        const hrefFile = normalizeName(hrefRaw.substring(hrefRaw.lastIndexOf('/') + 1));
         let setActive = false;
-        for (const [groupRoot, files] of Object.entries(gnbGroups)) {
-            if (files.includes(currentFile) && href === groupRoot) {
-                a.classList.add('active');
-                setActive = true;
-                break;
+
+        for (const [groupDir, files] of Object.entries(gnbGroups)) {
+            // 현재 파일이 이 그룹에 속하는지 확인
+            const filesNormalized = files.map(f => normalizeName(f));
+            if (filesNormalized.includes(currentFile)) {
+                // 1) 링크 href가 그룹 디렉터리를 포함하면 활성화
+                if (hrefRaw.includes(`/${groupDir}/`) || hrefRaw.includes(`/${groupDir}`)) {
+                    a.classList.add('active');
+                    setActive = true;
+                    break;
+                }
+                // 2) 또는 링크의 파일명이 그룹 내 파일명과 일치하면 활성화
+                if (hrefFile && filesNormalized.includes(hrefFile)) {
+                    a.classList.add('active');
+                    setActive = true;
+                    break;
+                }
             }
         }
+
         if (!setActive) a.classList.remove('active');
     });
 
-    // LNB(active) 설정은 href와 현재 파일명 비교만 수행 (스크롤 관련 클래스 변경 없음)
+    // LNB / sidebar / lnb-list 활성화: href의 파일명과 현재 파일 비교 (정규화)
     document.querySelectorAll('.horizontal-lnb a, .sidebar-nav a, .lnb-list a').forEach(a => {
-        const href = (a.getAttribute('href') || '').toLowerCase();
-        if (!href) {
+        const hrefRaw = (a.getAttribute('href') || '').toLowerCase();
+        const hrefFile = normalizeName(hrefRaw.substring(hrefRaw.lastIndexOf('/') + 1));
+        if (!hrefFile) {
             a.classList.remove('active');
             return;
         }
-        if (href === currentFile || (currentFile === 'index.html' && href === 'tea_of_the_month.html')) {
+        if (hrefFile === currentFile || (currentFile === 'index.html' && hrefFile === 'tea_of_the_month.html')) {
             a.classList.add('active');
         } else {
             a.classList.remove('active');
