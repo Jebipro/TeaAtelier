@@ -184,4 +184,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // 검색 아이콘 클릭
+    const searchIcon = document.querySelector('.search-icon');
+    if (searchIcon) {
+        searchIcon.addEventListener('click', function() {
+            window.location.href = '/search.html';
+        });
+        searchIcon.style.cursor = 'pointer';
+    }
+
 });

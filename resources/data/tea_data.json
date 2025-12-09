@@ -1,0 +1,120 @@
+{
+  "teas": [
+    {
+      "id": "green-longjing",
+      "type": "green",
+      "name": "용정차 (龍井茶)",
+      "nameEn": "Longjing / Dragon Well",
+      "category": "녹차",
+      "tags": ["녹차", "Green", "중국", "볶음", "고급"],
+      "origin": "중국 항저우",
+      "flavor": "담백하고 은은한 밤 향",
+      "temperature": "80°C",
+      "time": "2-3분",
+      "description": "중국 10대 명차 중 하나로, 손으로 볶아 만든 편평한 형태가 특징입니다.",
+      "image": "/resources/style/tea_green_longjing.jpg",
+      "detailPage": "/tea_profiling/the_six_tea.html#green",
+      "searchKeywords": ["용정", "longjing", "dragon well", "녹차", "중국차", "볶음차"]
+    },
+    {
+      "id": "white-silver-needle",
+      "type": "white",
+      "name": "백호은침 (白毫銀針)",
+      "nameEn": "Silver Needle",
+      "category": "백차",
+      "tags": ["백차", "White", "중국", "은침", "프리미엄"],
+      "origin": "중국 푸젠성",
+      "flavor": "달콤하고 부드러운 꽃향",
+      "temperature": "75°C",
+      "time":  "4-5분",
+      "description": "백차의 최고급으로, 어린 새싹만을 사용한 은빛 찻잎입니다.",
+      "image": "/resources/style/tea_white_silver. jpg",
+      "detailPage": "/tea_profiling/the_six_tea.html#white",
+      "searchKeywords":  ["백호은침", "silver needle", "백차", "프리미엄", "꽃향"]
+    },
+    {
+      "id": "oolong-tieguanyin",
+      "type": "oolong",
+      "name": "철관음 (鐵觀音)",
+      "nameEn": "Tieguanyin",
+      "category": "청차",
+      "tags": ["청차", "Oolong", "중국", "반발효", "화향"],
+      "origin": "중국 푸젠성 안시",
+      "flavor": "화려한 난 향과 부드러운 감칠맛",
+      "temperature": "95°C",
+      "time":  "3-4분",
+      "description": "청차의 대표 품종으로, 여러 번 우려 마실 수 있습니다.",
+      "image":  "/resources/style/tea_oolong_tieguanyin. jpg",
+      "detailPage": "/tea_profiling/the_six_tea.html#oolong",
+      "searchKeywords": ["철관음", "tieguanyin", "청차", "우롱", "반발효", "화향"]
+    },
+    {
+      "id": "black-darjeeling",
+      "type":  "black",
+      "name":  "다즐링 홍차",
+      "nameEn": "Darjeeling Black Tea",
+      "category": "홍차",
+      "tags":  ["홍차", "Black", "인도", "다즐링", "고산"],
+      "origin": "인도 다즐링",
+      "flavor": "은은한 과일 향과 머스캣 풍미",
+      "temperature":  "95°C",
+      "time":  "3-4분",
+      "description": "홍차의 샴페인이라 불리는 고급 홍차입니다.",
+      "image": "/resources/style/tea_black_darjeeling.jpg",
+      "detailPage": "/tea_profiling/the_six_tea.html#black",
+      "searchKeywords": ["다즐링", "darjeeling", "홍차", "인도", "고산차", "샴페인"]
+    },
+    {
+      "id": "dark-puerh",
+      "type": "dark",
+      "name": "보이차 (普洱茶)",
+      "nameEn": "Pu-erh Tea",
+      "category": "흑차",
+      "tags":  ["흑차", "Dark", "중국", "후발효", "숙성"],
+      "origin":  "중국 윈난성",
+      "flavor": "깊고 묵직한 흙 내음과 단맛",
+      "temperature":  "100°C",
+      "time":  "1-2분 (여러 번 우림)",
+      "description": "후발효차의 대표로, 오래 숙성할수록 가치가 높아집니다.",
+      "image": "/resources/style/tea_dark_puerh.jpg",
+      "detailPage": "/tea_profiling/the_six_tea.html#dark",
+      "searchKeywords": ["보이차", "puerh", "pu'er", "흑차", "후발효", "숙성차", "중국"]
+    }
+  ],
+  "pairings": [
+    {
+      "id": "darjeeling-scone",
+      "name": "다즐링 x 스콘",
+      "nameEn": "Darjeeling & Scone",
+      "tags": ["다즐링", "스콘", "홍차", "베이커리", "클래식"],
+      "teaType": "black",
+      "foodType": "베이커리",
+      "description": "다즐링의 은은한 과일 향이 버터 향 가득한 스콘과 완벽한 조화를 이룹니다.",
+      "image": "/resources/style/pairing_darjeeling_scone.jpg",
+      "detailPage": "/pairing/tea_food_pairing.html#darjeeling-scone",
+      "searchKeywords": ["다즐링", "스콘", "페어링", "홍차", "베이커리", "애프터눈티"]
+    },
+    {
+      "id": "functional-tea",
+      "name": "기능성 고형차",
+      "nameEn": "Functional Tea Blocks",
+      "tags": ["기능성", "고형차", "블렌딩", "건강", "현대적"],
+      "category": "블렌딩",
+      "description": "다양한 허브와 차를 압축한 휴대 가능한 고형차입니다.",
+      "image": "/resources/style/blending_functional. jpg",
+      "detailPage": "/pairing/blending_lab.html#functional",
+      "searchKeywords": ["고형차", "기능성", "블렌딩", "허브", "휴대용", "건강차"]
+    },
+    {
+      "id":  "seasonal-spring",
+      "name": "봄 시즌 페어링",
+      "nameEn": "Spring Season Pairing",
+      "tags": ["시즌별", "봄", "페어링", "레시피"],
+      "season": "spring",
+      "description": "봄에 어울리는 가벼운 녹차와 화이트 티 페어링 레시피입니다.",
+      "image": "/resources/style/seasonal_spring.jpg",
+      "detailPage": "/pairing/seasonal_pairings.html#spring",
+      "searchKeywords": ["봄", "시즌", "녹차", "백차", "페어링", "레시피"]
+    }
+  ]
+}

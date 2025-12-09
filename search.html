@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tea Atelier | 검색 결과</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/resources/css/styles.css">
+    <link rel="stylesheet" href="/resources/css/subpage.css">
+    
+    <style>
+        .search-header {
+            padding: 120px 80px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #f7f7f7 0%, #ffffff 100%);
+        }
+        
+        .search-header h1 {
+            font-size: 42px;
+            font-family: 'GFS Didot', serif;
+            color: #4F7B60;
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding:  15px 50px 15px 20px;
+            font-size: 16px;
+            border: 2px solid #4F7B60;
+            border-radius: 30px;
+            outline: none;
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform:  translateY(-50%);
+            background: #4F7B60;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .active-filters {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .filter-tag {
+            background: #AA3624;
+            color: white;
+            padding: 8px 15px;
+            border-radius:  20px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-tag.remove {
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .results-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 80px;
+        }
+        
+        .results-count {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .result-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s;
+            background: white;
+        }
+        
+        .result-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-image {
+            width: 100%;
+            height: 200px;
+            background: #f7f7f7;
+            overflow: hidden;
+        }
+        
+        .result-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .result-content {
+            padding: 20px;
+        }
+        
+        .result-content h3 {
+            font-size: 20px;
+            color: #AA3624;
+            margin-bottom: 8px;
+        }
+        
+        .result-content.category {
+            font-size: 13px;
+            color: #4F7B60;
+            font-weight: 600;
+            margin-bottom:  10px;
+        }
+        
+        .result-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .result-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .result-tags span {
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius:  12px;
+            font-size:  12px;
+            color:  #555;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .no-results h2 {
+            font-size: 32px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER (기존과 동일) -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/index.html">The Tea Atelier</a>
+            </div>
+
+            <nav class="gnb">
+                <ul>
+                    <li><a href="/philosophy/brand_vision.html">우리의 철학</a></li>
+                    <li><a href="/tea_profiling/the_six_tea.html">티 프로파일링</a></li>
+                    <li><a href="/pairing/tea_food_pairing.html">페어링 & 블렌딩</a></li>
+                    <li><a href="/culture/tea_culture_magazine.html">문화 & 소식</a></li>
+                </ul>
+            </nav>
+
+            <div class="utility">
+                <img src="/resources/style/black_search.png" alt="검색" class="search-icon">
+                <div class="lang-switcher">
+                    <a href="#" id="language-switcher-link">
+                        <img src="/resources/style/korea.png" alt="한국어" class="flag-icon" id="language-flag-img">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 검색 헤더 -->
+    <div class="search-header">
+        <h1>검색 & 탐색</h1>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="차 이름, 산지, 태그로 검색하세요...">
+            <button id="search-btn">검색</button>
+        </div>
+        <div class="active-filters" id="active-filters">
+            <!-- 활성 필터가 여기 표시됨 -->
+        </div>
+    </div>
+
+    <!-- 검색 결과 -->
+    <div class="results-container">
+        <div class="results-count" id="results-count">
+            <!-- 결과 개수 표시 -->
+        </div>
+        <div class="result-grid" id="results-grid">
+            <!-- 검색 결과 카드들이 여기 동적으로 삽입됨 -->
+        </div>
+        <div class="no-results" id="no-results" style="display: none;">
+            <h2>검색 결과가 없습니다</h2>
+            <p>다른 키워드로 검색해 보세요.</p>
+        </div>
+    </div>
+
+    <!-- FOOTER (기존과 동일) -->
+    <footer>
+        <!-- ...  기존 푸터 내용 ... -->
+    </footer>
+
+    <script src="/resources/js/scripts.js"></script>
+    <script src="/resources/js/search.js"></script>
+</body>
+</html>
