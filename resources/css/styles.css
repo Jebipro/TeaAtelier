@@ -1,0 +1,513 @@
+/* ---------------------------------------------------- */
+/* 1. 기본 설정 및 초기화 */
+/* ---------------------------------------------------- */
+body { 
+    margin: 0; 
+    font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+    min-width: 1200px;
+    overflow-x: auto;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ---------------------------------------------------- */
+/* 2. HEADER & GNB (흰색 배경, 80px 높이, 중앙 배치) */
+/* ---------------------------------------------------- */
+header { 
+    position: fixed;
+    top: 0;
+    width: 100%; 
+    height: 80px;
+    background-color: #fff;
+    color: #000;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+/* 스크롤 시 검은색 헤더 상태 */
+header.scrolled {
+    /* ❗ [요청 반영] rgba(0, 0, 0, 0.8)로 변경 */
+    background-color: rgba(0, 0, 0, 0.8); 
+    color: #fff; /* 폰트 흰색 */
+    box-shadow: none; 
+}
+header.scrolled .search-icon {
+    filter: invert(1); /* 검은색 검색 아이콘을 흰색으로 반전 */
+}
+header.scrolled .flag-icon {
+    border-color: #fff; /* 국기 테두리 흰색으로 */
+}
+
+/* GNB 항목 호버 시 폰트 색상도 흰색으로 유지 */
+header.scrolled .gnb ul li:hover > a {
+    color: #F1ECC4; /* 흰색 배경에서 골드/크림 색으로 하이라이트 */
+}
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 80px;
+    min-width: 1200px;
+}
+.logo a { 
+    font-family: 'GFS Didot', serif; 
+    font-weight: 400;
+    font-size: 28px;
+    white-space: nowrap;
+}
+
+/* GNB 메뉴 (전체 중앙 배치) */
+.gnb {
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center; 
+}
+.gnb ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0; 
+}
+.gnb ul li {
+    position: relative;
+    padding: 0; 
+    margin: 0 30px;
+    width: 170px;
+    text-align: center; 
+}
+.gnb ul li > a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 18px; 
+    font-weight: 600; 
+    padding: 10px 0;
+    display: block;
+}
+
+.gnb ul li:hover > a {
+    color: #4F7B60; 
+}
+
+/* ---------------------------------------------------- */
+/* 3. 유틸리티 (검색, 국기 이미지 배치) */
+/* ---------------------------------------------------- */
+.utility {
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+.search-icon {
+    width: 18px; 
+    cursor: pointer;
+    margin-right: 15px;
+}
+.flag-icon {
+    width: 28px; 
+    height: 28px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+/* ---------------------------------------------------- */
+/* 4. MEGA DROPDOWN WRAPPER (투명 GNB 스타일) */
+/* ---------------------------------------------------- */
+.mega-menu-wrapper {
+    position: absolute;
+    top: 80px; 
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    
+    height: 0; 
+    overflow: hidden; 
+    opacity: 0;
+    transition: height 0.3s ease, opacity 0.3s ease; 
+}
+
+.mega-menu-wrapper.is-active {
+    height: 250px; 
+    opacity: 1;
+}
+
+/* 서브 메뉴 컨테이너: nav-container와 동일한 구조 */
+.mega-menu-inner-content {
+    padding: 20px 80px; 
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    min-width: 1200px;
+}
+
+/* 로고 영역과 동일한 너비의 빈 공간 */
+.mega-menu-spacer-left {
+    flex-shrink: 0;
+}
+
+/* 서브 메뉴를 GNB와 동일하게 flex-grow로 중앙 정렬 */
+.sub-menu-columns-row {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* 유틸리티 영역과 동일한 너비의 빈 공간 */
+.mega-menu-spacer-right {
+    flex-shrink: 0;
+}
+
+/* 각 서브 메뉴 컬럼: 상단 메뉴와 동일한 위치/너비 */
+.sub-menu-column {
+    width: 170px;
+    margin: 0 30px;
+    
+    padding: 0;
+    min-width: 120px;
+    text-align: center;
+    height: 100%;
+    
+    position: relative;
+}
+/* 첫 번째 컬럼 제외하고 왼쪽에 구분선 추가 */
+.sub-menu-column:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: #eee;
+}
+
+/* 서브 메뉴 항목 (폰트 스타일) */
+.sub-menu-column a {
+    display: block;
+    padding: 5px 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #666; 
+    line-height: 1.6;
+    white-space: nowrap;
+}
+.sub-menu-column a:hover {
+    color: #4F7B60; 
+}
+
+/* ---------------------------------------------------- */
+/* 5. HERO SECTION (이미지, 텍스트 왼쪽 상단 배치) */
+/* ---------------------------------------------------- */
+.hero-section {
+    height: calc(100vh - 80px);
+    padding-top: 80px; 
+    background-image: url('/resources/style/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+    overflow: hidden; 
+}
+
+.hero-text {
+    position: absolute; 
+    top: 15%;
+    left: 80px;
+    transform: translateY(0);
+    text-align: center; 
+    color: #fff;
+    max-width: 600px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); 
+}
+
+/* ---------------------------------------------------- */
+/* 6. 텍스트 및 버튼 스타일 */
+/* ---------------------------------------------------- */
+.title-pre { 
+    font-size: 24px; 
+    font-weight: 400;
+    color: #F1ECC4;
+}
+.title-main { 
+    font-size: 56px;  
+    font-weight: 400;
+    color: #AA3624;
+    margin-top: 5px;
+    letter-spacing: 0.05em;
+}
+.title-sub { 
+    font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+    font-size: 30px; 
+    color: #AA3624;
+    margin-top: 16px;
+}
+.slogan { 
+    font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+    font-size: 20px; 
+    margin-top: 30px; 
+    color: #F1ECC4;
+    font-weight: 400;
+}
+
+.cta-button {
+    position: absolute; 
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%); 
+    
+    padding: 15px 40px;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+.cta-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-color: #fff;
+}
+/* NEW SECTION: 브랜드 핵심 가치 섹션 CSS */
+/* ---------------------------------------------------- */
+.value-proposition-section {
+    padding: 100px 80px;
+    text-align: center;
+    background-color: #fcfcfc; 
+}
+.value-proposition-section h2 {
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 60px;
+    color: #4F7B60; 
+}
+.content-wrapper { max-width: 1200px; margin: 0 auto; }
+.value-columns { display: flex; justify-content: space-between; gap: 40px; }
+.value-item { flex-basis: 30%; text-align: center; }
+.value-icon { 
+    width: 80px;
+    height: 80px;
+    background-color: #e8e8e8;
+    margin: 0 auto 20px;
+    display: block;
+    border-radius: 50%; 
+}
+.value-icon.pure-origin {
+    background-image: url('/resources/style/icon_pure_origin.svg');
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.value-icon.atelier-expertise {
+    background-image: url('/resources/style/icon_atelier_expertise.svg');
+    background-size: 120px 120px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.value-icon.refined-experience {
+    background-image: url('/resources/style/icon_refined_experience.svg');
+    background-size: 120px 120px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.value-item h3 {
+    font-size: 20px;
+    font-family: 'GFS Didot', serif;
+    color: #000;
+    margin-bottom: 10px;
+}
+.value-item p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 40px; }
+.value-cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 1px solid #AA3624;
+    color: #AA3624;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+.value-cta-button:hover { background-color: #AA3624; color: #fff; }
+
+
+/* ---------------------------------------------------- */
+/* NEW SECTION: 티 전문 지식 미리보기 CSS */
+/* ---------------------------------------------------- */
+.knowledge-preview-section {
+    padding: 80px 80px;
+    background-color: #fff;
+}
+.knowledge-preview-section h2 {
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #000;
+}
+.preview-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.preview-item {
+    flex-basis: 50%;
+    padding: 30px;
+    border: 1px solid #eee;
+    border-left: 5px solid #4F7B60;
+    text-align: left;
+    height: 100%;
+}
+.preview-item h3 { font-size: 22px; color: #4F7B60; margin-bottom: 15px; }
+.preview-item p { font-size: 16px; color: #555; line-height: 1.5; margin-bottom: 25px; }
+.type-links, .pairing-examples {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.pairing-examples {
+    margin-bottom: 70px;
+}
+.type-links a, .pairing-examples a {
+    display: block;
+    padding: 10px;
+    background-color: #f0f5f0;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #4F7B60;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.type-links a:hover, .pairing-examples a:hover {
+    background-color: #4F7B60;
+    color: #fff;
+    transform: translateY(-2px);
+}
+.preview-cta-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #AA3624;
+    color: #AA3624;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+.preview-cta-button:hover { background-color: #AA3624; color: #fff; }
+
+/* ---------------------------------------------------- */
+/* 7. 푸터 (Footer) CSS */
+/* ---------------------------------------------------- */
+footer {
+    background-color: #222; 
+    color: #bbb; 
+    padding: 60px 80px;
+    font-size: 14px;
+}
+
+.footer-wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column {
+    flex-basis: 30%; 
+    padding: 0 15px;
+}
+
+.footer-info {
+    flex-basis: 45%; 
+    text-align: left;
+    line-height: 1.8;
+}
+
+.footer-logo {
+    font-family: 'GFS Didot', serif;
+    font-size: 28px;
+    color: #F1ECC4; 
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.footer-info p {
+    margin: 5px 0;
+}
+
+.footer-info .copyright {
+    margin-top: 20px;
+    color: #777;
+    font-size: 13px;
+}
+
+.footer-links, .footer-legal {
+    text-align: left;
+}
+
+.footer-links h4, .footer-legal h4 {
+    font-size: 16px;
+    color: #F1ECC4; 
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-links ul, .footer-legal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 2.0;
+}
+
+.footer-links a, .footer-legal a {
+    color: #bbb;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover, .footer-legal a:hover {
+    color: #fff;
+}
+
+.social-links {
+    margin-top: 20px;
+}
+
+.social-icon {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-color: #444; 
+    color: #fff;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.social-icon:hover {
+    background-color: #F1ECC4;
+    transform: translateY(-3px);
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+    vertical-align: middle;
+}

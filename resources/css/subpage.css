@@ -1,0 +1,472 @@
+/* subpage.css (LNB 고정 제거 버전) */
+
+/* ---------------------------------------------------- */
+/* 8. SUB PAGE Layout (페이지 제목 및 1단 레이아웃) */
+/* ---------------------------------------------------- */
+
+/* 상단 페이지 제목 영역 (page-header) */
+.page-header {
+    /* ❗ [요청 반영] padding-top을 0으로 복구 */
+    padding-top: 0;
+    background-color: transparent;
+    padding: 80px 80px 30px 80px; /* 나머지 패딩 유지 */
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.page-header h1 {
+    font-size: 48px;
+    font-family: 'GFS Didot', serif;
+    color: #AA3624;
+    margin-bottom: 10px;
+}
+.page-header p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 0;
+}
+
+/* ---------------------------------------------------- */
+/* 9. HORIZONTAL LNB (수평 메뉴) - sticky 제거 */
+/* ---------------------------------------------------- */
+.horizontal-lnb-wrapper {
+    background-color: #ffffff; /* 기본 흰색 배경 */
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    /* position: sticky 제거하여 스크롤에 따라 흘러가도록 변경 */
+    position: static;
+    z-index: 999;
+    /* transition 유지하되 scrolled 관련 스타일은 더 이상 사용되지 않음 */
+    transition: background-color 0.3s, border-bottom 0.3s, box-shadow 0.3s;
+}
+
+/* .horizontal-lnb-wrapper.scrolled 관련 스타일은 LNB에 적용되지 않도록 의도적으로 유지하지 않습니다. */
+
+.horizontal-lnb {
+    display: flex;
+    justify-content: center; /* 메뉴 중앙 정렬 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.horizontal-lnb ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.horizontal-lnb ul li {
+    position: relative;
+    display: flex;
+}
+
+.horizontal-lnb ul li a {
+    display: block;
+    padding: 15px 30px;
+    font-size: 16px;
+    color: #555; /* 기본 텍스트 색상 */
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 밑줄을 위한 가상 요소 정의 (기본값) */
+.horizontal-lnb ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    height: 3px;
+    width: 80%;
+    background-color: transparent;
+    transform: translateX(-50%);
+    transition: all 0.3s ease;
+}
+
+.horizontal-lnb ul li a:hover {
+    color: #4F7B60; /* 기본 호버 색상 */
+}
+
+.horizontal-lnb ul li.active a {
+    color: #AA3624; /* 활성화된 메뉴 텍스트 색상 */
+    font-weight: 700;
+}
+.horizontal-lnb ul li.active a::after {
+    width: 80%;
+    background-color: #AA3624;
+}
+
+/* ---------------------------------------------------- */
+/* 이하 파일 원본 내용 유지 (Breadcrumb, content, responsive 등) */
+/* ---------------------------------------------------- */
+
+/* 9.5 BREADCRUMB (경로 표시) */
+.breadcrumb-wrapper {
+    background-color: #ffffff;
+    padding: 15px 80px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.breadcrumb {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 14px;
+    color: #888;
+}
+.breadcrumb a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.breadcrumb a:hover {
+    color: #4F7B60;
+}
+.breadcrumb span {
+    margin: 0 8px;
+}
+.breadcrumb .current-page {
+    color: #AA3624;
+    font-weight: 600;
+}
+
+/* 10. MAIN CONTENT CONTAINER */
+.sub-page-container {
+    display: block;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 50px;
+}
+
+/* 모든 섹션의 기본 스타일 */
+.content-section {
+    padding-bottom: 80px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #eee;
+}
+.content-section:last-child { border-bottom: none; }
+
+/* 콘텐츠 섹션 제목 */
+.content-section h2 {
+    font-size: 38px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-bottom: 50px;
+    /* ❗ [요청 반영] padding-top: 20px; 삭제 */
+    padding-top: 0; 
+    text-align: center;
+    font-weight: 400;
+}
+
+
+/* ---------------------------------------------------- */
+/* 11. VALUE GRID (핵심 가치 카드 및 기술적 가치 카드) - 아이콘 스타일 포함 */
+/* ---------------------------------------------------- */
+.value-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+    gap: 40px; /* 카드 간 간격 */
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 0; 
+}
+
+/* 인덱스 페이지에서 사용된 아이콘 스타일 복사 */
+.value-icon { 
+    width: 80px;
+    height: 80px;
+    background-color: #e8e8e8;
+    margin: 0 auto 20px;
+    display: block;
+    border-radius: 50%; 
+    background-size: 100px 100px; /* 기본값 설정 */
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #ddd;
+}
+
+/* 카드 스타일 */
+.value-card {
+    background-color: #fff;
+    border: 1px solid #eee;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.value-card h3 {
+    font-size: 22px; 
+    font-family: 'GFS Didot', serif;
+    color: #AA3624;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 10px;
+    line-height: 1.1;
+    white-space: nowrap; 
+}
+
+.value-card h3::after { 
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background-color: #4F7B60;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.value-card p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.7;
+    margin-top: 20px;
+}
+
+/* ---------------------------------------------------- */
+/* 12. BRAND VISION SPECIFIC STYLES (Hero, Intro Text) */
+/* ---------------------------------------------------- */
+
+#brand-vision .intro-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    text-align: center;
+    max-width: 900px;
+    margin: 30px auto 60px auto;
+    font-weight: 300;
+}
+
+.vision-hero {
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    margin-bottom: 70px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+.vision-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---------------------------------------------------- */
+/* 13. BRAND STORY (이미지 교차 블록) */
+/* ---------------------------------------------------- */
+.brand-story {
+    margin-top: 80px;
+    display: flex;
+    gap: 60px;
+    /* ❗ 사진과 텍스트 비율을 50:50으로 복구 */
+    align-items: center;
+    padding: 0 20px;
+}
+
+.brand-story.reverse {
+    flex-direction: row-reverse;
+}
+
+.story-image {
+    /* flex-basis: 50% 복구 */
+    flex-basis: 50%; 
+    height: 380px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+.story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.story-content {
+    /* flex-basis: 50% 복구 */
+    flex-basis: 50%; 
+}
+
+.story-content h3 {
+    font-size: 24px; /* 폰트 크기 최종 조정 */
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-bottom: 20px;
+    position: relative;
+    text-align: left;
+    line-height: 1.3;
+    white-space: normal; 
+    word-break: keep-all; 
+    overflow-wrap: break-word;
+}
+
+.story-content h3::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background-color: #AA3624;
+    margin-top: 10px;
+    left: 0;
+    transform: none;
+}
+
+.story-content p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+/* ---------------------------------------------------- */
+/* 14. CRAFTSMANSHIP CONTENT BLOCK (장인 정신 페이지) */
+/* ---------------------------------------------------- */
+.content-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    padding: 40px; 
+    background-color: #fcfcfc; 
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+/* 짝수 번째 블록에 다른 배경색 */
+.content-section .content-block:nth-child(even) {
+    background-color: #ffffff; 
+}
+
+.content-block-image {
+    flex-basis: 50%;
+    overflow: hidden;
+    height: 380px;
+    padding: 10px;
+    background-color: #fff; 
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.content-block-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 4px;
+}
+
+.content-block-text {
+    flex-basis: 50%;
+    padding: 0 40px;
+}
+
+.content-block-text h3 {
+    font-size: 32px;
+    color: #AA3624;
+    margin-bottom: 5px;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+    padding-left: 0;
+}
+.content-block-text h3 + p.subtitle {
+    font-size: 17px;
+    color: #4F7B60;
+    margin-bottom: 25px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.content-block-text p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.7;
+    margin-top: 20px;
+}
+/* 좌/우 패딩 조정 */
+.content-block.left-image .content-block-text { padding-right: 0; padding-left: 40px; } 
+.content-block.right-image .content-block-text { padding-left: 0; padding-right: 40px; }
+
+/* ---------------------------------------------------- */
+/* 15. Responsive Design (모바일/태블릿 대응) */
+/* ---------------------------------------------------- */
+@media (max-width: 1024px) {
+    .sub-page-container { padding: 50px 40px; }
+    .breadcrumb-wrapper { padding: 15px 40px; }
+    
+    /* Brand Vision Story */
+    .brand-story, .brand-story.reverse {
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 60px;
+    }
+    .story-image { flex-basis: 100%; height: 300px; }
+    .story-content { flex-basis: 100%; }
+
+    /* 스토리 제목 모바일 */
+    .story-content h3 {
+        font-size: 24px; /* 모바일에서 글자 크기 다시 조정 */
+        text-align: center; /* 모바일에서 가운데 정렬 */
+    }
+    .story-content h3::after {
+        margin: 10px auto 0 auto; /* 모바일에서 밑줄 가운데 정렬 */
+    }
+
+    /* Craftsmanship Content Block */
+    .content-block { flex-direction: column; padding: 30px; margin-bottom: 40px; }
+    .content-block-image, .content-block-text { flex-basis: 100%; width: 100%; padding: 0; margin-bottom: 20px; }
+    .content-block-image { height: 250px; border: none; background: none; box-shadow: none; }
+    .content-block-text { padding: 0 10px; }
+    
+    /* 모바일 패딩 정리 */
+    .content-block.left-image .content-block-text, .content-block.right-image .content-block-text { padding: 0 10px; }
+    
+    .value-grid-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 80px;
+    }
+    /* 아이콘 크기 조정 */
+    .value-icon {
+        width: 60px;
+        height: 60px;
+        background-size: 80px 80px;
+    }
+    /* 모바일 카드 제목 */
+    .value-card h3 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .horizontal-lnb {
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0;
+    }
+    .horizontal-lnb ul {
+        flex-wrap: nowrap;
+        padding: 0 10px;
+    }
+    .breadcrumb-wrapper {
+        padding: 10px 20px;
+    }
+    .sub-page-container {
+        padding: 30px 20px;
+    }
+}

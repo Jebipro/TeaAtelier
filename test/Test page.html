@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tea Atelier | 이달의 차: 다즐링 홍차</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------------------------------------------------- */
+        /* 1. 기본 설정 및 초기화 */
+        /* ---------------------------------------------------- */
+        body { 
+            margin: 0; 
+            font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+            min-width: 1200px;
+            overflow-x: auto;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ---------------------------------------------------- */
+        /* 2. HEADER & GNB (흰색 배경, 80px 높이, 중앙 배치) */
+        /* ---------------------------------------------------- */
+        header { 
+            position: fixed;
+            top: 0;
+            width: 100%; 
+            height: 80px;
+            background-color: #fff;
+            color: #000;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding: 0 80px;
+            min-width: 1200px;
+        }
+        .logo a { 
+            font-family: 'GFS Didot', serif; 
+            font-weight: 400;
+            font-size: 28px;
+            white-space: nowrap;
+        }
+
+        /* GNB 메뉴 (전체 중앙 배치) */
+        .gnb {
+            flex-grow: 1; 
+            display: flex;
+            justify-content: center; 
+        }
+        .gnb ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0; 
+        }
+        .gnb ul li {
+            position: relative;
+            padding: 0; 
+            margin: 0 30px;
+            width: 170px;
+            text-align: center; 
+        }
+        .gnb ul li > a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 18px; 
+            font-weight: 600; 
+            padding: 10px 0;
+            display: block;
+        }
+        
+        .gnb ul li:hover > a {
+            color: #4F7B60; 
+        }
+        
+        /* ---------------------------------------------------- */
+        /* 3. 유틸리티 (검색, 국기 이미지 배치) */
+        /* ---------------------------------------------------- */
+        .utility {
+            display: flex;
+            align-items: center;
+            color: #333;
+        }
+        .search-icon {
+            width: 18px; 
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        .flag-icon {
+            width: 20px; 
+            height: 14px;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+        }
+
+        /* ---------------------------------------------------- */
+        /* 4. MEGA DROPDOWN WRAPPER (투명 GNB 스타일) */
+        /* ---------------------------------------------------- */
+        .mega-menu-wrapper {
+            position: absolute;
+            top: 80px; 
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            
+            height: 0; 
+            overflow: hidden; 
+            opacity: 0;
+            transition: height 0.3s ease, opacity 0.3s ease; 
+        }
+
+        .mega-menu-wrapper.is-active {
+            height: 250px; 
+            opacity: 1;
+        }
+        
+        /* 서브 메뉴 컨테이너: nav-container와 동일한 구조 */
+        .mega-menu-inner-content {
+            padding: 20px 80px; 
+            display: flex;
+            justify-content: space-between;
+            height: 100%;
+            min-width: 1200px;
+        }
+
+        /* 로고 영역과 동일한 너비의 빈 공간 */
+        .mega-menu-spacer-left {
+            flex-shrink: 0;
+        }
+
+        /* 서브 메뉴를 GNB와 동일하게 flex-grow로 중앙 정렬 */
+        .sub-menu-columns-row {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* 유틸리티 영역과 동일한 너비의 빈 공간 */
+        .mega-menu-spacer-right {
+            flex-shrink: 0;
+        }
+        
+        /* 각 서브 메뉴 컬럼: 상단 메뉴와 동일한 위치/너비 */
+        .sub-menu-column {
+            width: 170px;
+            margin: 0 30px;
+            
+            padding: 0;
+            min-width: 120px;
+            text-align: center;
+            height: 100%;
+            
+            position: relative;
+        }
+        /* 첫 번째 컬럼 제외하고 왼쪽에 구분선 추가 */
+        .sub-menu-column:not(:first-child)::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #eee;
+        }
+        
+        /* 서브 메뉴 항목 (폰트 스타일) */
+        .sub-menu-column a {
+            display: block;
+            padding: 5px 0;
+            font-size: 16px;
+            font-weight: 400;
+            color: #666; 
+            line-height: 1.6;
+            white-space: nowrap;
+        }
+        .sub-menu-column a:hover {
+            color: #4F7B60; 
+        }
+
+        /* ---------------------------------------------------- */
+        /* 5. HERO SECTION (이미지, 텍스트 왼쪽 상단 배치) */
+        /* ---------------------------------------------------- */
+        .hero-section {
+            height: calc(100vh - 80px);
+            padding-top: 80px; 
+            background-image: url('style/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            position: relative;
+            overflow: hidden; 
+        }
+
+        .hero-text {
+            position: absolute; 
+            top: 15%;
+            left: 80px;
+            transform: translateY(0);
+            text-align: center; 
+            color: #fff;
+            max-width: 600px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); 
+        }
+
+        /* ---------------------------------------------------- */
+        /* 6. 텍스트 및 버튼 스타일 */
+        /* ---------------------------------------------------- */
+        .title-pre { 
+            font-size: 24px; 
+            font-weight: 400;
+            color: #F1ECC4;
+        }
+        .title-main { 
+            font-size: 56px;  
+            font-weight: 400;
+            color: #AA3624;
+            margin-top: 5px;
+            letter-spacing: 0.05em;
+        }
+        .title-sub { 
+            font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+            font-size: 30px; 
+            color: #AA3624;
+            margin-top: 16px;
+        }
+        .slogan { 
+            font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+            font-size: 20px; 
+            margin-top: 30px; 
+            color: #F1ECC4;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            position: absolute; 
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%); 
+            
+            padding: 15px 40px;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-color: #fff;
+        }
+        /* NEW SECTION: 브랜드 핵심 가치 섹션 CSS */
+        /* ---------------------------------------------------- */
+        .value-proposition-section {
+            padding: 100px 80px;
+            text-align: center;
+            background-color: #fcfcfc; 
+        }
+        .value-proposition-section h2 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 60px;
+            color: #4F7B60; 
+        }
+        .content-wrapper { max-width: 1200px; margin: 0 auto; }
+        .value-columns { display: flex; justify-content: space-between; gap: 40px; }
+        .value-item { flex-basis: 30%; text-align: center; }
+        .value-icon { 
+            width: 80px;
+            height: 80px;
+            background-color: #e8e8e8;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 50%; 
+        }
+        .value-item h3 {
+            font-size: 20px;
+            font-family: 'GFS Didot', serif;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .value-item p { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 40px; }
+        .value-cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 1px solid #AA3624;
+            color: #AA3624;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+        .value-cta-button:hover { background-color: #AA3624; color: #fff; }
+
+
+        /* ---------------------------------------------------- */
+        /* NEW SECTION: 티 전문 지식 미리보기 CSS */
+        /* ---------------------------------------------------- */
+        .knowledge-preview-section {
+            padding: 80px 80px;
+            background-color: #fff;
+        }
+        .knowledge-preview-section h2 {
+            font-size: 30px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #000;
+        }
+        .preview-columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .preview-item {
+            flex-basis: 50%;
+            padding: 30px;
+            border: 1px solid #eee;
+            border-left: 5px solid #4F7B60;
+            text-align: left;
+            height: 100%;
+        }
+        .preview-item h3 { font-size: 22px; color: #4F7B60; margin-bottom: 15px; }
+        .preview-item p { font-size: 16px; color: #555; line-height: 1.5; margin-bottom: 25px; }
+        .type-links a, .pairing-examples span {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px 5px 5px 0;
+            background-color: #f0f5f0;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #4F7B60;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .preview-cta-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid #AA3624;
+            color: #AA3624;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .preview-cta-button:hover { background-color: #AA3624; color: #fff; }
+
+
+        /* ---------------------------------------------------- */
+        /* 7. 푸터 (Footer) CSS */
+        /* ---------------------------------------------------- */
+        footer {
+            background-color: #222; 
+            color: #bbb; 
+            padding: 60px 80px;
+            font-size: 14px;
+        }
+
+        .footer-wrapper {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column {
+            flex-basis: 30%; 
+            padding: 0 15px;
+        }
+
+        .footer-info {
+            flex-basis: 45%; 
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .footer-logo {
+            font-family: 'GFS Didot', serif;
+            font-size: 28px;
+            color: #F1ECC4; 
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .footer-info p {
+            margin: 5px 0;
+        }
+
+        .footer-info .copyright {
+            margin-top: 20px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .footer-links, .footer-legal {
+            text-align: left;
+        }
+
+        .footer-links h4, .footer-legal h4 {
+            font-size: 16px;
+            color: #F1ECC4; 
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-links ul, .footer-legal ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            line-height: 2.0;
+        }
+
+        .footer-links a, .footer-legal a {
+            color: #bbb;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover, .footer-legal a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #444; 
+            color: #fff;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 0;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#">The Tea Atelier</a>
+            </div>
+
+            <nav class="gnb">
+                <ul>
+                    <li><a href="#">우리의 철학</a></li>
+                    <li><a href="#">티 프로파일링</a></li>
+                    <li><a href="#">페어링 &amp; 블렌딩</a></li>
+                    <li><a href="#">문화 &amp; 소식</a></li>
+                </ul>
+            </nav>
+
+            <div class="utility">
+                <img src="style/black_search.png" alt="검색" class="search-icon">
+                <div class="lang-switcher">
+                    <img src="style/korea.png" alt="한국어" class="flag-icon">
+                </div>
+            </div>
+        </div>
+        
+        <div class="mega-menu-wrapper">
+            <div class="mega-menu-inner-content">
+                <div class="mega-menu-spacer-left">
+                    <div class="logo" style="visibility: hidden;">
+                        <a href="#">The Tea Atelier</a>
+                    </div>
+                </div>
+                <div class="sub-menu-columns-row">
+                    <div class="sub-menu-column">
+                        <a href="#">브랜드 비전</a>
+                        <a href="#">장인 정신</a>
+                        <a href="#">윤리 경영</a>
+                        <a href="#">오시는 길</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="#">6대 다류</a>
+                        <a href="#">이달의 차(茶)</a>
+                        <a href="#">브루잉 가이드</a>
+                        <a href="#">산지별 티</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="#">티 푸드 페어링</a>
+                        <a href="#">블렌딩 연구소</a>
+                        <a href="#">시즌별 페어링</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="#">티 문화 매거진</a>
+                        <a href="#">공지사항</a>
+                        <a href="#">FAQ &amp; 문의</a>
+                        <a href="#">미디어 &amp; 보도</a>
+                    </div>
+                </div>
+                <div class="mega-menu-spacer-right">
+                    <div class="utility" style="visibility: hidden;">
+                        <img src="style/black_search.png" alt="검색" class="search-icon">
+                        <div class="lang-switcher">
+                            <img src="style/korea.png" alt="한국어" class="flag-icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="hero-section">
+        <div class="hero-text">
+            <div class="title-pre">The Atelier's Choice</div>
+            <div class="title-main">다즐링 홍차</div>
+            <div class="title-sub">Darjeeling Autumn Flush</div>
+            <div class="slogan">부드러운 은은한 향이 계절의 여운을 담은 차</div>
+        </div>
+        
+        <a href="#" class="cta-button">자세히 보기</a>
+    </main>
+    
+    <section class="value-proposition-section">
+        <div class="content-wrapper">
+            <h2>우리가 차(茶)를 대하는 세 가지 시선</h2>
+            <div class="value-columns">
+                
+                <div class="value-item">
+                    <div class="value-icon"></div>
+                    <h3>PURE ORIGIN</h3>
+                    <p>세계 최고 산지의 엄선된 찻잎만을 사용하며,<br>재료 본연의 순수한 향미를 추구합니다.</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon"></div>
+                    <h3>ATELIER EXPERTISE</h3>
+                    <p>티 소믈리에의 전문적인 블렌딩 노하우와 제다 기술로,<br>완벽한 균형을 창조합니다.</p>
+                </div>
+                
+                <div class="value-item">
+                    <div class="value-icon"></div>
+                    <h3>REFINED EXPERIENCE</h3>
+                    <p>차를 마시는 행위를 넘어, 미학적인 공간과 <br> 조화로운 페어링으로 일상의 휴식을 완성합니다.</p>
+                </div>
+            </div>
+            <a href="our_philosophy.html" class="value-cta-button">우리의 철학 더 알아보기</a>
+        </div>
+    </section>
+
+    <section class="knowledge-preview-section">
+        <div class="content-wrapper">
+            <h2>티를 넘어, 지식을 큐레이션하다</h2>
+            <div class="preview-columns">
+                
+                <div class="preview-item profile-guide">
+                    <h3>🔍 티 프로파일링: 6대 다류를 탐색하세요</h3>
+                    <p>다즐링 홍차부터 백차까지, 세계 6대 다류의 상세한 향미 노트, 산지, 제다법을 체계적인 데이터로 확인하세요. <span>(고부가가치 침출차의 가치 강조)</span></p>
+                    <div class="type-links">
+                        <a href="#">#홍차 (Black)</a>
+                        <a href="#">#녹차 (Green)</a>
+                        <a href="#">#우롱차 (Oolong)</a>
+                        <a href="#">#허브티 (Herbal)</a>
+                    </div>
+                    <a href="tea_profiling.html" class="preview-cta-button">프로파일 전체 보기</a>
+                </div>
+                
+                <div class="preview-item pairing-lab">
+                    <h3>🥂 페어링 & 블렌딩: 경험을 완성하는 지침서</h3>
+                    <p>전문 소믈리에가 제안하는 음식 페어링 조합과, 집에서 시도할 수 있는 창의적인 블렌딩 레시피를 만나보세요. <span>(고형차 활용법 및 경험 소비 트렌드 반영)</span></p>
+                    <div class="pairing-examples">
+                        <span class="example-tag">#다즐링_스콘</span>
+                        <span class="example-tag">#기능성_고형차</span>
+                        <span class="example-tag">#시즈널_레시피</span>
+                    </div>
+                    <a href="pairing_blending.html" class="preview-cta-button">활용 가이드 보기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-wrapper">
+            
+            <div class="footer-column footer-info">
+                <h3 class="footer-logo">The Tea Atelier</h3>
+                <p>대표: 김홍차 | 사업자등록번호: 123-45-67890</p>
+                <p>주소: 전남 순천시 중앙로 255 | 이메일: contact@theteaatelier.com</p>
+                <p>고객센터: 1544-XXXX (평일 10:00 ~ 17:00)</p>
+                <p class="copyright">© 2025 The Tea Atelier. All rights reserved.</p>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4>사이트맵</h4>
+                <ul>
+                    <li><a href="our_philosophy.html">우리의 철학</a></li>
+                    <li><a href="tea_profiling.html">티 프로파일링</a></li>
+                    <li><a href="pairing_blending.html">페어링 & 블렌딩</a></li>
+                    <li><a href="culture_news.html">문화 & 소식</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column footer-legal">
+                <h4>Legal & Support</h4>
+                <ul>
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">법적고지</a></li>
+                    <li><a href="#">FAQ & 문의</a></li>
+                </ul>
+                <div class="social-links">
+                    <span class="social-icon">I</span>
+                    <span class="social-icon">F</span>
+                    <span class="social-icon">Y</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            const megaMenu = document.querySelector('.mega-menu-wrapper');
+
+            header.addEventListener('mouseenter', function() {
+                megaMenu.classList.add('is-active');
+            });
+
+            header.addEventListener('mouseleave', function() {
+                megaMenu.classList.remove('is-active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tea Atelier | 이달의 차: 다즐링 홍차</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------------------------------------------------- */
+        /* 1. 기본 설정 및 초기화 */
+        /* ---------------------------------------------------- */
+        body { 
+            margin: 0; 
+            font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif; /* 폰트 임시 설정 */
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ---------------------------------------------------- */
+        /* 2. HEADER & GNB (흰색 배경, 80px 높이, 중앙 배치) */
+        /* ---------------------------------------------------- */
+        header { 
+            position: fixed;
+            top: 0;
+            width: 100%; 
+            height: 80px; /* 요청된 높이 */
+            background-color: #fff; /* 요청된 배경색 */
+            color: #000; /* GNB 폰트 색상 */
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%; /* Header 높이에 맞춤 */
+            padding: 0 80px; /* 좌우 여백 */
+        }
+        .logo a { 
+            font-family: 'GFS Didot', serif; 
+            font-weight: 400;
+            font-size: 24px;  
+        }
+
+        .gnb {
+            flex-grow: 1; /* <-- 중앙 영역을 차지하도록 확장 */
+            display: flex;
+            justify-content: center; /* <-- GNB 항목들을 중앙에 모음 */
+        }
+
+        /* GNB 메뉴 리스트 */
+        .gnb ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+        .gnb ul li {
+            position: relative;
+            padding: 0 80px;
+        }
+        .gnb ul li > a {
+            color: inherit;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 10px 0;
+            display: block;
+        }
+
+        .gnb ul li:hover > a {
+            color: #4F7B60;
+        }
+        
+        /* ---------------------------------------------------- */
+        /* 3. 유틸리티 (검색, 국기 이미지 배치) */
+        /* ---------------------------------------------------- */
+        .utility {
+            display: flex;
+            align-items: center;
+            color: #333;
+        }
+        .search-icon {
+            width: 18px; 
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        .flag-icon {
+            width: 20px; 
+            height: 14px;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+        }
+
+
+        /* ---------------------------------------------------- */
+        /* 4. 서브 메뉴 (GNB open.jpg 스타일 반영) */
+        /* ---------------------------------------------------- */
+        .sub-menu {
+            position: absolute;
+            /* GNB 메뉴 바로 아래, 왼쪽 정렬 */
+            top: 100%; 
+            left: 50%;
+            transform: translateX(-50%);
+
+            background: #fff; 
+            padding: 15px 0;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            display: none; /* 초기 숨김 */
+            color: #333; 
+            white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+            min-width: 180px; /* 너비 임시 설정 */
+            text-align: left;
+        }
+
+        /* 마우스 오버 시 서브 메뉴 표시 */
+        .gnb ul li:hover .sub-menu {
+            display: block;
+        }
+
+        .sub-menu a {
+            display: block;
+            padding: 5px 20px;
+            font-size: 16px;
+            color: #666; /* 서브 메뉴 폰트 색상 */
+            line-height: 1.8;
+            transition: color 0.2s;
+            text-align: left;
+        }
+        .sub-menu a:hover {
+            color: #4F7B60;
+        }
+
+        /* ---------------------------------------------------- */
+        /* 5. HERO SECTION (이미지, 텍스트 왼쪽 상단 배치) */
+        /* ---------------------------------------------------- */
+        .hero-section {
+            height: calc(100vh - 80px);
+            padding-top: 80px; 
+            /* GNB 높이(80px)를 고려하여 top 패딩을 조정해야 스크롤 없이 보입니다. */
+            padding-top: 80px; 
+            background-image: url('style/background.png'); /* 이미지 파일명으로 변경 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden; 
+        }
+
+        .hero-text {
+            /* 텍스트를 왼쪽 상단에 배치하도록 수정 */
+            position: absolute; 
+            top: 15%; /* GNB 아래쪽에서 적절히 떨어진 위치 */
+            left: 80px; /* Header의 좌측 패딩과 동일하게 설정 */
+            transform: translateY(0); /* 중앙 정렬 트랜스폼 제거 */
+            text-align: center; 
+            color: #fff;
+            max-width: 600px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            /* GNB open.jpg의 텍스트가 잘 안보이는 문제를 해결하기 위해 그림자 효과를 기본 적용합니다. */
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); 
+        }
+
+        /* ---------------------------------------------------- */
+        /* 6. 텍스트 및 버튼 스타일 (이미지 색상 및 크기 반영) */
+        /* ---------------------------------------------------- */
+        .title-pre { 
+            font-size: 24px; 
+            font-weight: 400;
+            color: #F1ECC4; /* 은은한 골드베이지 */
+        }
+        .title-main { 
+            font-size: 56px;  
+            font-weight: 400;
+            color: #AA3624;
+            margin-top: 5px;
+            letter-spacing: 0.05em;
+        }
+        .title-sub { 
+            font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+            font-size: 30px; 
+            color: #AA3624; /* 다즐링 홍차의 붉은 톤 반영 */
+            margin-top: 16px;
+        }
+        .slogan { 
+            font-family: 'Noto Sans KR', 'Noto+Sans', 'Malgun Gothic', '맑은 고딕', arial, sans-serif;
+            font-size: 20px; 
+            margin-top: 30px; 
+            color: #F1ECC4;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            /* 버튼은 요청에 따라 중앙 하단에 배치 유지 */
+            position: absolute; 
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%); 
+            
+            padding: 15px 40px;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.2); /* 호버 시 배경 투명도 증가 */
+            color: #fff;
+            border-color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#">The Tea Atelier</a>
+            </div>
+
+            <nav class="gnb">
+                <ul>
+                    <li>
+                        <a href="#">우리의 철학</a>
+                        <div class="sub-menu">
+                            <a href="#">브랜드 비전</a>
+                            <a href="#">오시는 길</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">티 프로파일링</a>
+                        <div class="sub-menu">
+                            <a href="#">6대 다류</a>
+                            <a href="#">이달의 차(茶)</a>
+                            <a href="#">브루잉 가이드</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">페어링 &amp; 블렌딩</a>
+                        <div class="sub-menu">
+                            <a href="#">티 푸드 페어링</a>
+                            <a href="#">블렌딩 연구소</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">문화 &amp; 소식</a>
+                        <div class="sub-menu">
+                            <a href="#">티 문화 매거진</a>
+                            <a href="#">공지사항</a>
+                            <a href="#">FAQ &amp; 문의</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="utility">
+                <img src="style/black_search.png" alt="검색" class="search-icon">
+                <div class="lang-switcher">
+                    <img src="style/korea.png" alt="한국어" class="flag-icon">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="hero-section">
+        <div class="hero-text">
+            <div class="title-pre">The Atelier's Choice</div>
+            <div class="title-main">다즐링 홍차</div>
+            <div class="title-sub">Darjeeling Autumn Flush</div>
+            <div class="slogan">부드럽고 은은한 향이 계절의 여운을 담은 차</div>
+        </div>
+        
+        <a href="#" class="cta-button">자세히 보기</a>
+    </main>
+
+</body>
+</html>
