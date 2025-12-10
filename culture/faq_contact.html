@@ -183,6 +183,85 @@
         .channel-card a:hover {
             background-color: #3d6249;
         }
+
+        /* 검색바 개선 */
+        .faq-search-bar {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+    
+        .faq-search-bar input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size:  15px;
+            transition: all 0.3s;
+        }
+    
+        .faq-search-bar input:focus {
+            outline: none;
+            border-color: #4F7B60;
+            box-shadow: 0 0 0 3px rgba(79, 123, 96, 0.1);
+        }
+    
+        #clearSearchBtn {
+            position:  absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            border: none;
+            background-color: #ccc;
+            color: white;
+            border-radius: 50%;
+            font-size:  20px;
+            line-height: 1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        #clearSearchBtn:hover {
+            background-color: #AA3624;
+        }
+    
+        /* 검색 결과 하이라이팅 */
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-weight:  600;
+        }
+    
+        /* 검색 결과 없음 메시지 */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+    
+        .no-results h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+    
+        .no-results p {
+            font-size: 16px;
+        }
+    
+        /* 검색 결과 카운트 */
+        #searchResultCount {
+            font-weight: 600;
+            color:  #4F7B60;
+        }
+    
+        #searchResultCount .count {
+            font-size: 18px;
+            color: #AA3624;
+        }
         
         @media (max-width: 1024px) {
             .contact-channels {
@@ -309,9 +388,11 @@
                 <h2>자주 묻는 질문 (FAQ)</h2>
                 
                 <!-- 검색바 -->
-                <div class="faq-search-bar">
+                <div class="faq-search-bar" style="position: relative; margin-bottom: 20px;">
                     <input type="text" id="faqSearchInput" placeholder="궁금한 내용을 검색해보세요 (예: 배송, 반품, 브루잉)">
+                    <button id="clearSearchBtn" style="display: none;">x</button>
                 </div>
+                <div id="searchResultCount" style="text-align: center; margin-bottom: 20px; font-size: 14px; color: #666;"></div>
 
                 <!-- 카테고리 필터 버튼 -->
                 <div class="faq-category-filter">
@@ -647,86 +728,262 @@
     
     <!-- FAQ 페이지 전용 JavaScript -->
     <script>
-        // FAQ 아코디언 기능
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const isActive = faqItem.classList.contains('active');
-                
-                // 다른 모든 항목 닫기
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                    item.querySelector('.icon').textContent = '+';
-                });
-                
-                // 클릭한 항목 열기/닫기
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                    question.querySelector('.icon').textContent = '−';
-                }
-            });
-        });
-
-        // 카테고리 필터 기능
-        document. querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                // 버튼 active 상태 변경
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const category = btn.dataset.category;
-                
-                // FAQ 항목 필터링
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    if (category === 'all' || item.dataset.category === category) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                        item.classList.remove('active');
-                        item.querySelector('.icon').textContent = '+';
-                    }
-                });
-            });
-        });
-
-        // 검색 기능
-        const searchInput = document.getElementById('faqSearchInput');
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
+    // FAQ 아코디언 기능
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            const isActive = faqItem.classList.contains('active');
             
-            document.querySelectorAll('. faq-item').forEach(item => {
-                const question = item.querySelector('.faq-question').textContent.toLowerCase();
-                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
-                
-                if (question. includes(searchTerm) || answer.includes(searchTerm)) {
-                    item.style.display = 'block';
+            // 다른 모든 항목 닫기
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item. classList.remove('active');
+                item.querySelector('.icon').textContent = '+';
+            });
+            
+            // 클릭한 항목 열기/닫기
+            if (!isActive) {
+                faqItem. classList.add('active');
+                question.querySelector('.icon').textContent = '−';
+            }
+        });
+    });
+
+    // 카테고리 필터 기능
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 검색어 초기화
+            const searchInput = document.getElementById('faqSearchInput');
+            searchInput.value = '';
+            document.getElementById('clearSearchBtn').style.display = 'none';
+            removeHighlights();
+            
+            // 버튼 active 상태 변경
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const category = btn.dataset.category;
+            
+            // 빈 결과 메시지 제거
+            removeNoResultsMessage();
+            
+            // FAQ 항목 필터링
+            let visibleCount = 0;
+            document. querySelectorAll('.faq-item').forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item. style.display = 'block';
+                    visibleCount++;
                 } else {
                     item.style.display = 'none';
+                    item.classList.remove('active');
+                    item.querySelector('.icon').textContent = '+';
                 }
             });
             
-            // 검색 중일 때 카테고리 필터 초기화
-            if (searchTerm) {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            }
+            // 결과 개수 표시
+            updateResultCount(visibleCount, false);
         });
+    });
 
-        // 폼 제출 처리
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
+    // 검색 기능 (업그레이드)
+    const searchInput = document.getElementById('faqSearchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target. value.toLowerCase().trim();
+        
+        // 초기화 버튼 표시/숨김
+        clearBtn.style.display = searchTerm ? 'block' : 'none';
+        
+        // 하이라이팅 제거
+        removeHighlights();
+        
+        // 빈 결과 메시지 제거
+        removeNoResultsMessage();
+        
+        // 검색어가 없으면 전체 표시
+        if (!searchTerm) {
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.style.display = 'block';
+            });
+            // 카테고리 필터 "전체"로 리셋
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+            updateResultCount(document.querySelectorAll('.faq-item').length, false);
+            return;
+        }
+        
+        // 검색 실행
+        let visibleCount = 0;
+        let firstVisibleItem = null;
+        
+        document.querySelectorAll('. faq-item').forEach(item => {
+            const questionEl = item.querySelector('.faq-question');
+            const answerEl = item.querySelector('.faq-answer');
             
-            const formData = new FormData(e.target);
-            const message = formData.get('message');
+            const questionText = questionEl.textContent. toLowerCase();
+            const answerText = answerEl.textContent. toLowerCase();
             
-            if (message. length < 10) {
-                alert('문의 내용을 최소 10자 이상 입력해주세요.');
-                return;
+            if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                item.style.display = 'block';
+                visibleCount++;
+                
+                // 첫 번째 결과 저장
+                if (!firstVisibleItem) {
+                    firstVisibleItem = item;
+                }
+                
+                // 하이라이팅 추가
+                highlightText(questionEl, searchTerm);
+                highlightText(answerEl, searchTerm);
+                
+            } else {
+                item.style.display = 'none';
+                item.classList.remove('active');
+                item.querySelector('.icon').textContent = '+';
             }
-            
-            // 실제로는 서버로 전송해야 하지만, 여기서는 시뮬레이션
-            alert('문의가 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
-            e.target.reset();
         });
-    </script>
+        
+        // 결과 개수 표시
+        updateResultCount(visibleCount, true, searchTerm);
+        
+        // 빈 결과 처리
+        if (visibleCount === 0) {
+            showNoResultsMessage(searchTerm);
+        } else {
+            // 첫 번째 결과 자동으로 펼치기
+            if (firstVisibleItem) {
+                firstVisibleItem.classList.add('active');
+                firstVisibleItem.querySelector('.icon').textContent = '−';
+            }
+        }
+        
+        // 검색 중일 때 카테고리 필터 초기화
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    });
+    
+    // 초기화 버튼 클릭
+    clearBtn.addEventListener('click', () => {
+        searchInput. value = '';
+        clearBtn.style.display = 'none';
+        removeHighlights();
+        removeNoResultsMessage();
+        
+        // 모든 FAQ 표시
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item. style.display = 'block';
+            item.classList.remove('active');
+            item.querySelector('.icon').textContent = '+';
+        });
+        
+        // 카테고리 "전체"로 리셋
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+        
+        updateResultCount(document.querySelectorAll('.faq-item').length, false);
+        searchInput.focus();
+    });
+    
+    // 하이라이팅 함수
+    function highlightText(element, searchTerm) {
+        // 카테고리 태그는 제외
+        const categoryTag = element.querySelector('. category');
+        const icon = element.querySelector('.icon');
+        
+        let html = element.innerHTML;
+        
+        // 카테고리와 아이콘 임시 저장
+        const categoryHTML = categoryTag ? categoryTag.outerHTML : '';
+        const iconHTML = icon ? icon.outerHTML :  '';
+        
+        // 텍스트만 추출
+        let textOnly = element.textContent;
+        
+        // 대소문자 구분 없이 검색
+        const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
+        
+        // 하이라이팅
+        if (element.classList.contains('faq-question')) {
+            // 질문은 카테고리 태그 제외하고 하이라이트
+            let questionText = textOnly.replace(categoryTag ?  categoryTag.textContent : '', '').replace(icon ? icon.textContent : '', '');
+            questionText = questionText.replace(regex, '<span class="highlight">$1</span>');
+            element.innerHTML = categoryHTML + questionText + iconHTML;
+        } else {
+            // 답변은 전체 하이라이트
+            const highlightedHTML = textOnly.replace(regex, '<span class="highlight">$1</span>');
+            element.innerHTML = highlightedHTML;
+        }
+    }
+    
+    // 하이라이팅 제거
+    function removeHighlights() {
+        document.querySelectorAll('.highlight').forEach(highlight => {
+            const parent = highlight.parentNode;
+            parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+            parent.normalize(); // 텍스트 노드 병합
+        });
+    }
+    
+    // 정규식 특수문자 이스케이프
+    function escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    
+    // 결과 개수 업데이트
+    function updateResultCount(count, isSearch, searchTerm = '') {
+        const countEl = document.getElementById('searchResultCount');
+        if (isSearch) {
+            countEl.innerHTML = `"<strong>${searchTerm}</strong>" 검색 결과:  <span class="count">${count}개</span>`;
+        } else {
+            countEl.innerHTML = `총 <span class="count">${count}개</span>의 FAQ`;
+        }
+    }
+    
+    // 빈 결과 메시지 표시
+    function showNoResultsMessage(searchTerm) {
+        removeNoResultsMessage(); // 기존 메시지 제거
+        
+        const noResultsDiv = document.createElement('div');
+        noResultsDiv.className = 'no-results';
+        noResultsDiv.id = 'noResultsMessage';
+        noResultsDiv.innerHTML = `
+            <h3>🔍 검색 결과가 없습니다</h3>
+            <p>"${searchTerm}"에 대한 FAQ를 찾을 수 없습니다.</p>
+            <p style="margin-top: 10px; color: #4F7B60;">다른 키워드로 검색하시거나, 아래 <strong>1: 1 문의</strong>를 이용해주세요.</p>
+        `;
+        
+        document.querySelector('. faq-accordion').appendChild(noResultsDiv);
+    }
+    
+    // 빈 결과 메시지 제거
+    function removeNoResultsMessage() {
+        const existing = document.getElementById('noResultsMessage');
+        if (existing) {
+            existing.remove();
+        }
+    }
+    
+    // 초기 로드 시 결과 개수 표시
+    document. addEventListener('DOMContentLoaded', () => {
+        const totalCount = document.querySelectorAll('.faq-item').length;
+        updateResultCount(totalCount, false);
+    });
+
+    // 폼 제출 처리
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e. target);
+        const message = formData.get('message');
+        
+        if (message.length < 10) {
+            alert('문의 내용을 최소 10자 이상 입력해주세요.');
+            return;
+        }
+        
+        // 실제로는 서버로 전송해야 하지만, 여기서는 시뮬레이션
+        alert('문의가 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
+        e.target.reset();
+    });
+</script>
 </body>
 </html>
