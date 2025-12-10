@@ -904,13 +904,13 @@
 }
 
 /* ---------------------------------------------------- */
-/* CULTURE: 티 문화 매거진 (tea_culture_magazine.html) */
+/* CULTURE:  티 문화 매거진 - 클릭 가능/불가능 스타일 */
 /* ---------------------------------------------------- */
 .magazine-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    margin-top:  50px;
+    margin-top: 50px;
 }
 
 .article-card {
@@ -919,17 +919,40 @@
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration:  none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
 }
 
-.article-card :hover {
-    transform:  translateY(-5px);
+.article-card:hover {
+    transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 클릭 불가능한 카드 스타일 */
+.article-card .disabled {
+    opacity: 0.7;
+    cursor: default;
+    pointer-events: none;
+}
+
+.article-card .disabled:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.article-card .disabled .article-content h3,
+.article-card .disabled .article-content p {
+    color: #999;
 }
 
 .article-thumb {
     height: 200px;
     overflow: hidden;
+    background-color: #f7f7f7;
 }
+
 .article-thumb img {
     width: 100%;
     height: 100%;
@@ -947,7 +970,7 @@
     font-weight: 700;
 }
 
-.article-content p .date {
+.article-content p date {
     font-size: 13px;
     color: #AA3624;
     margin-bottom: 15px;
@@ -959,6 +982,18 @@
     line-height: 1.6;
     height: 65px;
     overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+    .magazine-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width:  768px) {
+    .magazine-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ---------------------------------------------------- */
