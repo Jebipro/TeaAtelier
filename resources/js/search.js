@@ -84,31 +84,60 @@ async function performSearch(query, tag, type) {
             })));
         }
         
-        // 3. tea_regions 테이블 검색 (산지 관련 키워드가 있을 때만)
-        const regionKeywords = ['산지', '지역', '떼루아', 'region', 'origin', '국가', '나라'];
-        const shouldSearchRegions = ! query || regionKeywords.some(kw => query.toLowerCase().includes(kw));
+        // 3. tea_regions 테이블 검색
+        let regionsQuery = window. supabaseClient
+            .from('tea_regions')
+            .select('*');
         
-        if (shouldSearchRegions) {
-            let regionsQuery = window.supabaseClient.from('tea_regions').select('*');
+        if (query) {
+            // ⚠️ Supabase의 배열 검색은 제한적이므로 모든 데이터 가져오기
+            // 클라이언트에서 필터링
+        }
+        
+        const { data: regionsData, error: regionsError } = await regionsQuery;
+        
+        if (!regionsError && regionsData) {
+            let filteredRegions = regionsData;
             
+            // 검색어가 있으면 필터링
             if (query) {
-                regionsQuery = regionsQuery. or(`name_ko.ilike.%${query}%,name_en.ilike.%${query}%,country. ilike.%${query}%,description.ilike.%${query}%`);
+                const queryLower = query.toLowerCase().trim();
+                
+                filteredRegions = regionsData. filter(region => {
+                    // 기본 필드 검색
+                    const basicMatch = 
+                        region.name_ko?.toLowerCase().includes(queryLower) ||
+                        region.name_en?.toLowerCase().includes(queryLower) ||
+                        region.country?.toLowerCase().includes(queryLower) ||
+                        region.tea_type?.toLowerCase().includes(queryLower) ||
+                        region.description?.toLowerCase().includes(queryLower);
+                    
+                    // tags 배열 검색
+                    const tagsMatch = region. tags?. some(tag => 
+                        tag.toLowerCase().includes(queryLower)
+                    );
+                    
+                    // search_keywords 배열 검색
+                    const keywordsMatch = region.search_keywords?.some(kw => 
+                        kw.toLowerCase().includes(queryLower)
+                    );
+                    
+                    return basicMatch || tagsMatch || keywordsMatch;
+                });
+                
+                console.log(`🗺️ tea_regions 필터링:  ${regionsData.length} → ${filteredRegions.length}`);
             }
             
-            const { data: regionsData, error: regionsError } = await regionsQuery;
-            
-            if (!regionsError && regionsData) {
-                results.push(...regionsData.map(region => ({
-                    name: region.name_ko,
-                    nameEn: region.name_en,
-                    category: `${region.tea_type} 🗺️`,
-                    description: region.description. substring(0, 120) + '...',
-                    image: region.image_url,
-                    tags: region.terroir_characteristics. split(', '),
-                    contentType: 'region',
-                    detailPage: `/tea_profiling/region_detail. html?id=${region.id}`
-                })));
-            }
+            results.push(...filteredRegions.map(region => ({
+                name: region.name_ko,
+                nameEn: region. name_en,
+                category:  `${region.tea_type} 🗺️`,
+                description: region.description?.substring(0, 120) + '...',
+                image: region.image_url,
+                tags: region.tags || region.terroir_characteristics?.split(', ') || [],
+                contentType: 'region',
+                detailPage:  `/tea_profiling/region_detail.html?id=${region. id}`
+            })));
         }
         
         // 태그 필터링
