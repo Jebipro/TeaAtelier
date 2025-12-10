@@ -1,4 +1,4 @@
-// search.js - Supabase 버전
+// search.js - Supabase 버전 (중복 제거 포함)
 
 // URL 쿼리 파라미터 읽기
 function getQueryParams() {
@@ -10,7 +10,34 @@ function getQueryParams() {
     };
 }
 
-// Supabase 검색 실행 (3개 테이블 통합 검색)
+// 중복 제거 함수
+function removeDuplicates(results) {
+    const seen = new Map();
+    
+    return results.filter(item => {
+        // 이름 기반 키 생성
+        const key = item. name.toLowerCase().replace(/\s+/g, '').replace(/[()]/g, '');
+        
+        if (seen.has(key)) {
+            // 이미 있으면 우선순위 비교
+            const existing = seen. get(key);
+            
+            // 제품(tea) > 페어링(pairing) > 산지(region) 순으로 우선순위
+            const priority = { 'tea': 1, 'pairing': 2, 'region': 3 };
+            
+            if (priority[item.contentType] < priority[existing.contentType]) {
+                seen.set(key, item);
+                return true;
+            }
+            return false;
+        }
+        
+        seen.set(key, item);
+        return true;
+    });
+}
+
+// Supabase 검색 실행
 async function performSearch(query, tag, type) {
     try {
         console.log('🔍 검색 시작:', { query, tag, type });
@@ -21,19 +48,20 @@ async function performSearch(query, tag, type) {
         let teasQuery = window.supabaseClient.from('teas').select('*');
         
         if (query) {
-            teasQuery = teasQuery.or(`name. ilike.%${query}%,name_en.ilike.%${query}%,description.ilike.%${query}%,origin.ilike.%${query}%`);
+            teasQuery = teasQuery.or(`name.ilike.%${query}%,name_en.ilike.%${query}%,description.ilike.%${query}%,origin.ilike.%${query}%`);
         }
         
         if (type) {
             teasQuery = teasQuery.eq('type', type);
         }
         
-        const { data:  teasData, error: teasError } = await teasQuery;
+        const { data:  teasData, error:  teasError } = await teasQuery;
         
         if (! teasError && teasData) {
-            results. push(...teasData. map(tea => ({
-                ... tea,
+            results. push(...teasData.map(tea => ({
+                ...tea,
                 contentType: 'tea',
+                category: `${tea.category} 🍵`,
                 detailPage: tea.detail_page
             })));
         }
@@ -42,42 +70,48 @@ async function performSearch(query, tag, type) {
         let pairingsQuery = window.supabaseClient.from('pairings').select('*');
         
         if (query) {
-            pairingsQuery = pairingsQuery.or(`name.ilike.%${query}%,name_en.ilike.%${query}%,description.ilike.%${query}%`);
+            pairingsQuery = pairingsQuery.or(`name.ilike.%${query}%,name_en.ilike.%${query}%,description.ilike. %${query}%`);
         }
         
         const { data: pairingsData, error: pairingsError } = await pairingsQuery;
         
         if (!pairingsError && pairingsData) {
-            results.push(...pairingsData.map(pairing => ({
+            results.push(... pairingsData.map(pairing => ({
                 ...pairing,
                 contentType: 'pairing',
+                category: `${pairing.category || '페어링'} 🍰`,
                 detailPage: pairing.detail_page
             })));
         }
         
-        // 3. tea_regions 테이블 검색 (산지)
-        let regionsQuery = window.supabaseClient.from('tea_regions').select('*');
+        // 3. tea_regions 테이블 검색 (산지 관련 키워드가 있을 때만)
+        const regionKeywords = ['산지', '지역', '떼루아', 'region', 'origin', '국가', '나라'];
+        const shouldSearchRegions = ! query || regionKeywords.some(kw => query.toLowerCase().includes(kw));
         
-        if (query) {
-            regionsQuery = regionsQuery.or(`name_ko.ilike.%${query}%,name_en.ilike.%${query}%,country.ilike.%${query}%,description.ilike.%${query}%`);
+        if (shouldSearchRegions) {
+            let regionsQuery = window.supabaseClient.from('tea_regions').select('*');
+            
+            if (query) {
+                regionsQuery = regionsQuery. or(`name_ko.ilike.%${query}%,name_en.ilike.%${query}%,country. ilike.%${query}%,description.ilike.%${query}%`);
+            }
+            
+            const { data: regionsData, error: regionsError } = await regionsQuery;
+            
+            if (!regionsError && regionsData) {
+                results.push(...regionsData.map(region => ({
+                    name: region.name_ko,
+                    nameEn: region.name_en,
+                    category: `${region.tea_type} 🗺️`,
+                    description: region.description. substring(0, 120) + '...',
+                    image: region.image_url,
+                    tags: region.terroir_characteristics. split(', '),
+                    contentType: 'region',
+                    detailPage: `/tea_profiling/region_detail. html?id=${region.id}`
+                })));
+            }
         }
         
-        const { data: regionsData, error: regionsError } = await regionsQuery;
-        
-        if (!regionsError && regionsData) {
-            results.push(...regionsData.map(region => ({
-                name: region.name_ko,
-                nameEn: region.name_en,
-                category: region.tea_type,
-                description: region.description. substring(0, 120) + '...',
-                image: region.image_url,
-                tags: region.terroir_characteristics. split(', '),
-                contentType:  'region',
-                detailPage: `/tea_profiling/region_detail.html?id=${region.id}`
-            })));
-        }
-        
-        // 태그 필터링 (클라이언트 측)
+        // 태그 필터링
         if (tag) {
             results = results.filter(item => 
                 item.tags && item.tags.some(t => 
@@ -86,7 +120,12 @@ async function performSearch(query, tag, type) {
             );
         }
         
-        console.log('✅ 검색 결과:', results. length);
+        console.log('🔍 중복 제거 전:', results.length);
+        
+        // ✅ 중복 제거
+        results = removeDuplicates(results);
+        
+        console.log('✅ 검색 결과:', results.length);
         return results;
         
     } catch (error) {
@@ -108,16 +147,16 @@ function renderResults(results) {
         return;
     }
     
-    grid.style.display = 'grid';
+    grid. style.display = 'grid';
     noResults.style.display = 'none';
     countEl.textContent = `${results.length}개의 결과`;
     
     grid.innerHTML = results.map(item => `
         <a href="${item.detailPage || item.detail_page}" class="result-card">
             <div class="result-image">
-                <img src="${item.image || '/resources/style/placeholder.jpg'}" 
+                <img src="${item. image || '/resources/style/placeholder.jpg'}" 
                     alt="${item.name}" 
-                    onerror="this.src='/resources/style/placeholder.jpg'">
+                    onerror="this. src='/resources/style/placeholder. jpg'">
             </div>
             <div class="result-content">
                 <div class="category">${item.category || item.contentType}</div>
@@ -136,7 +175,7 @@ function renderActiveFilters(params) {
     const container = document.getElementById('active-filters');
     const filters = [];
     
-    if (params.tag) {
+    if (params. tag) {
         filters.push({ type: 'tag', value: params.tag, label: `태그: ${params.tag}` });
     }
     if (params.query) {
@@ -147,7 +186,7 @@ function renderActiveFilters(params) {
     }
     
     if (filters. length === 0) {
-        container. style.display = 'none';
+        container.style.display = 'none';
         return;
     }
     
@@ -186,7 +225,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const params = getQueryParams();
     
     // 검색 실행
-    const results = await performSearch(params.query, params.tag, params.type);
+    const results = await performSearch(params. query, params.tag, params. type);
     
     // 결과 렌더링
     renderResults(results);
