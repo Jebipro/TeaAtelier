@@ -390,7 +390,7 @@
                 <!-- 검색바 -->
                 <div class="faq-search-bar" style="position: relative; margin-bottom: 20px;">
                     <input type="text" id="faqSearchInput" placeholder="궁금한 내용을 검색해보세요 (예: 배송, 반품, 브루잉)">
-                    <button id="clearSearchBtn" style="display: none;">x</button>
+                    <button id="clearSearchBtn" style="display: none;">×</button>
                 </div>
                 <div id="searchResultCount" style="text-align: center; margin-bottom: 20px; font-size: 14px; color: #666;"></div>
 
@@ -441,7 +441,7 @@
                         </div>
                         <div class="faq-answer">
                             <p>
-                                제품 출고 시 이메일 및 문자로 송장번호를 안내드립니다. 마이페이지 > 주문내역에서도 실시간 배송 조회가 가능하며, 택배사 홈페이지에서 직접 확인하실 수도 있습니다. 
+                                제품 출고 시 이메일 및 문자로 송장번호를 안내드립니다. 마이페이지 &gt; 주문내역에서도 실시간 배송 조회가 가능하며, 택배사 홈페이지에서 직접 확인하실 수도 있습니다. 
                             </p>
                         </div>
                     </div>
@@ -725,265 +725,280 @@
 
     <!-- JavaScript 파일 링크 -->
     <script src="/resources/js/scripts.js"></script>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <!-- FAQ 페이지 전용 JavaScript -->
     <script>
-    // FAQ 아코디언 기능
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', () => {
-            const faqItem = question.parentElement;
-            const isActive = faqItem.classList.contains('active');
-            
-            // 다른 모든 항목 닫기
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item. classList.remove('active');
-                item.querySelector('.icon').textContent = '+';
-            });
-            
-            // 클릭한 항목 열기/닫기
-            if (!isActive) {
-                faqItem. classList.add('active');
-                question.querySelector('.icon').textContent = '−';
-            }
-        });
-    });
 
-    // 카테고리 필터 기능
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            // 검색어 초기화
-            const searchInput = document.getElementById('faqSearchInput');
-            searchInput.value = '';
-            document.getElementById('clearSearchBtn').style.display = 'none';
+        // Supabase 초기화
+        const SUPABASE_URL = 'https://sebjmsqyaspkmgxpuggv.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_aP48wgJuxq2YxEK6exl3qw_EtOrrqIv';
+
+        const supabase = window.supabase. createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // FAQ 아코디언 기능
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.icon').textContent = '+';
+                });
+                
+                if (!isActive) {
+                        faqItem.classList.add('active');
+                    question.querySelector('.icon').textContent = '−';
+                }
+            });
+        });
+
+        // 카테고리 필터 기능
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const searchInput = document.getElementById('faqSearchInput');
+                searchInput.value = '';
+                document.getElementById('clearSearchBtn').style.display = 'none';
+                removeHighlights();
+                
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const category = btn.dataset.category;
+                removeNoResultsMessage();
+                
+                let visibleCount = 0;
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (category === 'all' || item. dataset.category === category) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('active');
+                        item.querySelector('.icon').textContent = '+';
+                    }
+                });
+                
+                updateResultCount(visibleCount, false);
+            });
+        });
+
+        // 검색 기능
+        const searchInput = document.getElementById('faqSearchInput');
+        const clearBtn = document.getElementById('clearSearchBtn');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            
+            clearBtn.style.display = searchTerm ? 'block' : 'none';
             removeHighlights();
-            
-            // 버튼 active 상태 변경
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const category = btn.dataset.category;
-            
-            // 빈 결과 메시지 제거
             removeNoResultsMessage();
             
-            // FAQ 항목 필터링
+            if (! searchTerm) {
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.style.display = 'block';
+                });
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+                updateResultCount(document.querySelectorAll('.faq-item').length, false);
+                return;
+            }
+            
             let visibleCount = 0;
-            document. querySelectorAll('.faq-item').forEach(item => {
-                if (category === 'all' || item.dataset.category === category) {
-                    item. style.display = 'block';
+            let firstVisibleItem = null;
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const questionEl = item.querySelector('.faq-question');
+                const answerEl = item.querySelector('.faq-answer');
+                
+                const questionText = questionEl.textContent. toLowerCase();
+                const answerText = answerEl.textContent.toLowerCase();
+                
+                if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                    item.style.display = 'block';
                     visibleCount++;
+                    
+                    if (! firstVisibleItem) {
+                        firstVisibleItem = item;
+                    }
+                    
+                    // 답변에만 하이라이팅 적용
+                    highlightText(answerEl, searchTerm);
+                    
                 } else {
                     item.style.display = 'none';
-                    item.classList.remove('active');
+                    item. classList.remove('active');
                     item.querySelector('.icon').textContent = '+';
                 }
             });
             
-            // 결과 개수 표시
-            updateResultCount(visibleCount, false);
-        });
-    });
-
-    // 검색 기능 (업그레이드)
-    const searchInput = document.getElementById('faqSearchInput');
-    const clearBtn = document.getElementById('clearSearchBtn');
-    
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target. value.toLowerCase().trim();
-        
-        // 초기화 버튼 표시/숨김
-        clearBtn.style.display = searchTerm ? 'block' : 'none';
-        
-        // 하이라이팅 제거
-        removeHighlights();
-        
-        // 빈 결과 메시지 제거
-        removeNoResultsMessage();
-        
-        // 검색어가 없으면 전체 표시
-        if (!searchTerm) {
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.style.display = 'block';
-            });
-            // 카테고리 필터 "전체"로 리셋
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
-            updateResultCount(document.querySelectorAll('.faq-item').length, false);
-            return;
-        }
-        
-        // 검색 실행
-        let visibleCount = 0;
-        let firstVisibleItem = null;
-        
-        document.querySelectorAll('. faq-item').forEach(item => {
-            const questionEl = item.querySelector('.faq-question');
-            const answerEl = item.querySelector('.faq-answer');
+            updateResultCount(visibleCount, true, searchTerm);
             
-            const questionText = questionEl.textContent. toLowerCase();
-            const answerText = answerEl.textContent. toLowerCase();
-            
-            if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
-                item.style.display = 'block';
-                visibleCount++;
-                
-                // 첫 번째 결과 저장
-                if (!firstVisibleItem) {
-                    firstVisibleItem = item;
-                }
-                
-                // 하이라이팅 추가
-                highlightText(questionEl, searchTerm);
-                highlightText(answerEl, searchTerm);
-                
+            if (visibleCount === 0) {
+                showNoResultsMessage(searchTerm);
             } else {
-                item.style.display = 'none';
+                if (firstVisibleItem) {
+                    firstVisibleItem.classList. add('active');
+                    firstVisibleItem. querySelector('.icon').textContent = '−';
+                }
+            }
+            
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        });
+        
+        // 초기화 버튼
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            removeHighlights();
+            removeNoResultsMessage();
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.style. display = 'block';
                 item.classList.remove('active');
                 item.querySelector('.icon').textContent = '+';
-            }
+            });
+            
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+            
+            updateResultCount(document.querySelectorAll('.faq-item').length, false);
+            searchInput.focus();
         });
         
-        // 결과 개수 표시
-        updateResultCount(visibleCount, true, searchTerm);
-        
-        // 빈 결과 처리
-        if (visibleCount === 0) {
-            showNoResultsMessage(searchTerm);
-        } else {
-            // 첫 번째 결과 자동으로 펼치기
-            if (firstVisibleItem) {
-                firstVisibleItem.classList.add('active');
-                firstVisibleItem.querySelector('.icon').textContent = '−';
-            }
-        }
-        
-        // 검색 중일 때 카테고리 필터 초기화
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    });
-    
-    // 초기화 버튼 클릭
-    clearBtn.addEventListener('click', () => {
-        searchInput. value = '';
-        clearBtn.style.display = 'none';
-        removeHighlights();
-        removeNoResultsMessage();
-        
-        // 모든 FAQ 표시
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item. style.display = 'block';
-            item.classList.remove('active');
-            item.querySelector('.icon').textContent = '+';
-        });
-        
-        // 카테고리 "전체"로 리셋
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
-        
-        updateResultCount(document.querySelectorAll('.faq-item').length, false);
-        searchInput.focus();
-    });
-    
-    // 하이라이팅 함수
-    function highlightText(element, searchTerm) {
-        // 카테고리 태그는 제외
-        const categoryTag = element.querySelector('. category');
-        const icon = element.querySelector('.icon');
-        
-        let html = element.innerHTML;
-        
-        // 카테고리와 아이콘 임시 저장
-        const categoryHTML = categoryTag ? categoryTag.outerHTML : '';
-        const iconHTML = icon ? icon.outerHTML :  '';
-        
-        // 텍스트만 추출
-        let textOnly = element.textContent;
-        
-        // 대소문자 구분 없이 검색
-        const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
-        
-        // 하이라이팅
-        if (element.classList.contains('faq-question')) {
-            // 질문은 카테고리 태그 제외하고 하이라이트
-            let questionText = textOnly.replace(categoryTag ?  categoryTag.textContent : '', '').replace(icon ? icon.textContent : '', '');
-            questionText = questionText.replace(regex, '<span class="highlight">$1</span>');
-            element.innerHTML = categoryHTML + questionText + iconHTML;
-        } else {
-            // 답변은 전체 하이라이트
-            const highlightedHTML = textOnly.replace(regex, '<span class="highlight">$1</span>');
+        // 하이라이팅 함수 (답변에만 적용)
+            function highlightText(element, searchTerm) {
+            const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
+            const textContent = element.textContent;
+            const highlightedHTML = textContent.replace(regex, '<span class="highlight">$1</span>');
             element.innerHTML = highlightedHTML;
         }
-    }
-    
-    // 하이라이팅 제거
-    function removeHighlights() {
-        document.querySelectorAll('.highlight').forEach(highlight => {
-            const parent = highlight.parentNode;
-            parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
-            parent.normalize(); // 텍스트 노드 병합
+        
+        // 하이라이팅 제거
+        function removeHighlights() {
+            document.querySelectorAll('.highlight').forEach(highlight => {
+                const parent = highlight.parentNode;
+                parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+                parent.normalize();
+            });
+        }
+        
+        // 정규식 이스케이프
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        
+        // 결과 개수 업데이트
+        function updateResultCount(count, isSearch, searchTerm = '') {
+            const countEl = document.getElementById('searchResultCount');
+            if (isSearch) {
+                countEl.innerHTML = `"<strong>${searchTerm}</strong>" 검색 결과:  <span class="count">${count}개</span>`;
+            } else {
+                countEl.innerHTML = `총 <span class="count">${count}개</span>의 FAQ`;
+            }
+        }
+        
+        // 빈 결과 메시지
+        function showNoResultsMessage(searchTerm) {
+            removeNoResultsMessage();
+            
+            const noResultsDiv = document.createElement('div');
+            noResultsDiv.className = 'no-results';
+            noResultsDiv.id = 'noResultsMessage';
+            noResultsDiv.innerHTML = `
+                <h3>🔍 검색 결과가 없습니다</h3>
+                <p>"${searchTerm}"에 대한 FAQ를 찾을 수 없습니다.</p>
+                <p style="margin-top: 10px; color: #4F7B60;">다른 키워드로 검색하시거나, 아래 <strong>1: 1 문의</strong>를 이용해주세요.</p>
+            `;
+            
+            document.querySelector('.faq-accordion').appendChild(noResultsDiv);
+        }
+        
+        function removeNoResultsMessage() {
+            const existing = document.getElementById('noResultsMessage');
+            if (existing) {
+                existing.remove();
+            }
+        }
+        
+        // 초기 로드
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalCount = document.querySelectorAll('.faq-item').length;
+            updateResultCount(totalCount, false);
         });
-    }
-    
-    // 정규식 특수문자 이스케이프
-    function escapeRegex(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    
-    // 결과 개수 업데이트
-    function updateResultCount(count, isSearch, searchTerm = '') {
-        const countEl = document.getElementById('searchResultCount');
-        if (isSearch) {
-            countEl.innerHTML = `"<strong>${searchTerm}</strong>" 검색 결과:  <span class="count">${count}개</span>`;
-        } else {
-            countEl.innerHTML = `총 <span class="count">${count}개</span>의 FAQ`;
-        }
-    }
-    
-    // 빈 결과 메시지 표시
-    function showNoResultsMessage(searchTerm) {
-        removeNoResultsMessage(); // 기존 메시지 제거
-        
-        const noResultsDiv = document.createElement('div');
-        noResultsDiv.className = 'no-results';
-        noResultsDiv.id = 'noResultsMessage';
-        noResultsDiv.innerHTML = `
-            <h3>🔍 검색 결과가 없습니다</h3>
-            <p>"${searchTerm}"에 대한 FAQ를 찾을 수 없습니다.</p>
-            <p style="margin-top: 10px; color: #4F7B60;">다른 키워드로 검색하시거나, 아래 <strong>1: 1 문의</strong>를 이용해주세요.</p>
-        `;
-        
-        document.querySelector('. faq-accordion').appendChild(noResultsDiv);
-    }
-    
-    // 빈 결과 메시지 제거
-    function removeNoResultsMessage() {
-        const existing = document.getElementById('noResultsMessage');
-        if (existing) {
-            existing.remove();
-        }
-    }
-    
-    // 초기 로드 시 결과 개수 표시
-    document. addEventListener('DOMContentLoaded', () => {
-        const totalCount = document.querySelectorAll('.faq-item').length;
-        updateResultCount(totalCount, false);
-    });
 
-    // 폼 제출 처리
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(e. target);
-        const message = formData.get('message');
-        
-        if (message.length < 10) {
-            alert('문의 내용을 최소 10자 이상 입력해주세요.');
-            return;
-        }
-        
-        // 실제로는 서버로 전송해야 하지만, 여기서는 시뮬레이션
-        alert('문의가 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
-        e.target.reset();
-    });
-</script>
+        // 폼 제출
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e. target);
+            const message = formData.get('message');
+            
+            if (message.length < 10) {
+                alert('문의 내용을 최소 10자 이상 입력해주세요.');
+                return;
+            }
+            
+            alert('문의가 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
+            e.target.reset();
+        });
+
+        // 폼 제출 처리 (Supabase 연동)
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+            const formData = new FormData(e. target);
+            const message = formData.get('message');
+    
+            // 클라이언트 검증
+            if (message.length < 10) {
+                alert('문의 내용을 최소 10자 이상 입력해주세요.');
+                return;
+            }
+    
+            // 제출 버튼 비활성화
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '전송 중...';
+    
+            try {
+                // Supabase에 데이터 삽입
+                const { data, error } = await supabase
+                    .from('contact_inquiries')
+                    .insert([
+                        {
+                            name: formData.get('name'),
+                            email: formData.get('email'),
+                            phone: formData.get('phone') || null,
+                            category:  formData.get('category'),
+                            subject: formData.get('subject'),
+                            message:  formData.get('message')
+                        }
+                    ])
+                    .select();
+                    
+                if (error) {
+                    throw error;
+                }
+            
+                // 성공
+                console.log('저장된 데이터:', data);
+                alert('✅ 문의가 성공적으로 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
+                e.target.reset();
+            
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ 전송 중 오류가 발생했습니다.\n' + error.message);
+            } finally {
+                // 버튼 복구
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
 </body>
 </html>
