@@ -108,7 +108,7 @@ function resetMap() {
 async function loadRegions() {
     try {
         // Supabase에서 데이터 가져오기
-        const { data:  regions, error } = await supabase
+        const { data: regions, error } = await supabase
             .from('tea_regions')
             .select('*')
             .order('id', { ascending: true });
