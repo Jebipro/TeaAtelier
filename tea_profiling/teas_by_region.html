@@ -201,13 +201,18 @@
     <!-- Supabase SDK 로드 -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Supabase 초기화 -->
+    <!-- 3. Supabase 초기화 -->
     <script>
+        console.log('🔧 Supabase 초기화 시작...');
+        
         const SUPABASE_URL = 'https://sebjmsqyaspkmgxpuggv.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlYmptc3F5YXNwa21neHB1Z2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzODAyMDgsImV4cCI6MjA4MDk1NjIwOH0.zzJBoLANypVVQHJDPQAYfA4hiOo9Eja32PcLynyQ4d4';
         
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log('✅ Supabase 초기화 완료');
+        // ✅ 전역 변수로 저장
+        window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        console.log('✅ Supabase 클라이언트 생성 완료');
+        console.log('Type:', typeof window.supabaseClient);
     </script>
 
     <!-- Google Maps API -->

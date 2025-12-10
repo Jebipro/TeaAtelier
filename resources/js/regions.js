@@ -243,19 +243,13 @@ function addMapMarkers(regions) {
     });
 }
 
-// 페이지 로드 시 (Google Maps API 로드 전이면 대기)
-if (typeof google === 'undefined') {
-    console.log('Google Maps API 로딩 중...');
-} else {
-    initMap();
-}
-
 // 페이지 로드 시 실행
 window.addEventListener('load', () => {
     console.log('🚀 페이지 로드 완료');
     
-    if (typeof google !== 'undefined' && typeof window.supabaseClient !== 'undefined') {
+    if (typeof google !== 'undefined' && typeof window. supabaseClient !== 'undefined') {
         console.log('✅ Google Maps & Supabase 준비 완료');
+        console.log('Supabase Client:', window.supabaseClient);
         initMap();
     } else {
         console.error('❌ 필요한 라이브러리가 로드되지 않았습니다.');
