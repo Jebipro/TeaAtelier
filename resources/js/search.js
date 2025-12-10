@@ -45,21 +45,46 @@ async function performSearch(query, tag, type) {
         let results = [];
         
         // 1. teas 테이블 검색
-        let teasQuery = window.supabaseClient.from('teas').select('*');
+        const { data:   teasData, error:   teasError } = await window. supabaseClient
+            .from('teas')
+            .select('*');
         
-        if (query) {
-            teasQuery = teasQuery.or(`name.ilike.%${query}%,name_en.ilike.%${query}%,description.ilike.%${query}%,origin.ilike.%${query}%`);
-        }
-        
-        if (type) {
-            teasQuery = teasQuery.eq('type', type);
-        }
-        
-        const { data:  teasData, error:  teasError } = await teasQuery;
-        
-        if (! teasError && teasData) {
-            results. push(...teasData.map(tea => ({
-                ...tea,
+        if (teasError) {
+            console.error('❌ teas 오류:', teasError);
+        } else if (teasData) {
+            // 클라이언트 측 필터링
+            let filteredTeas = teasData;
+            
+            if (query) {
+                const queryLower = query.toLowerCase().trim();
+                filteredTeas = teasData. filter(tea => {
+                    const basicMatch = 
+                        tea.name?. toLowerCase().includes(queryLower) ||
+                        tea.name_en?.toLowerCase().includes(queryLower) ||
+                        tea. category?.toLowerCase().includes(queryLower) ||
+                        tea.description?.toLowerCase().includes(queryLower) ||
+                        tea.origin?.toLowerCase().includes(queryLower);
+                    
+                    const tagsMatch = tea.tags?. some(t => 
+                        t.toLowerCase().includes(queryLower)
+                    );
+                    
+                    const keywordsMatch = tea.search_keywords?.some(kw => 
+                        kw.toLowerCase().includes(queryLower)
+                    );
+                    
+                    return basicMatch || tagsMatch || keywordsMatch;
+                });
+            }
+            
+            if (type) {
+                filteredTeas = filteredTeas.filter(tea => tea.type === type);
+            }
+            
+            console.log(`🍵 teas:  ${teasData.length} → ${filteredTeas.length}`);
+            
+            results.push(...filteredTeas. map(tea => ({
+                ... tea,
                 contentType: 'tea',
                 category: `${tea.category} 🍵`,
                 detailPage: tea.detail_page
@@ -67,91 +92,107 @@ async function performSearch(query, tag, type) {
         }
         
         // 2. pairings 테이블 검색
-        let pairingsQuery = window.supabaseClient.from('pairings').select('*');
+        const { data:  pairingsData, error: pairingsError } = await window.supabaseClient
+            .from('pairings')
+            .select('*');
         
-        if (query) {
-            pairingsQuery = pairingsQuery.or(`name.ilike.%${query}%,name_en.ilike.%${query}%,description.ilike. %${query}%`);
-        }
-        
-        const { data: pairingsData, error: pairingsError } = await pairingsQuery;
-        
-        if (!pairingsError && pairingsData) {
-            results.push(... pairingsData.map(pairing => ({
+        if (pairingsError) {
+            console.error('❌ pairings 오류:', pairingsError);
+        } else if (pairingsData) {
+            let filteredPairings = pairingsData;
+            
+            if (query) {
+                const queryLower = query.toLowerCase().trim();
+                filteredPairings = pairingsData. filter(pairing => {
+                    const basicMatch = 
+                        pairing.name?.toLowerCase().includes(queryLower) ||
+                        pairing.name_en?.toLowerCase().includes(queryLower) ||
+                        pairing.description?.toLowerCase().includes(queryLower) ||
+                        pairing.category?.toLowerCase().includes(queryLower);
+                    
+                    const tagsMatch = pairing.tags?. some(t => 
+                        t.toLowerCase().includes(queryLower)
+                    );
+                    
+                    const keywordsMatch = pairing.search_keywords?.some(kw => 
+                        kw.toLowerCase().includes(queryLower)
+                    );
+                    
+                    return basicMatch || tagsMatch || keywordsMatch;
+                });
+            }
+            
+            console. log(`🍰 pairings: ${pairingsData.length} → ${filteredPairings.length}`);
+            
+            results.push(... filteredPairings.map(pairing => ({
                 ...pairing,
                 contentType: 'pairing',
-                category: `${pairing.category || '페어링'} 🍰`,
+                category:  `${pairing.category || '페어링'} 🍰`,
                 detailPage: pairing.detail_page
             })));
         }
         
         // 3. tea_regions 테이블 검색
-        let regionsQuery = window. supabaseClient
-            .from('tea_regions')
+        const { data: regionsData, error: regionsError } = await window.supabaseClient
+            . from('tea_regions')
             .select('*');
         
-        if (query) {
-            // ⚠️ Supabase의 배열 검색은 제한적이므로 모든 데이터 가져오기
-            // 클라이언트에서 필터링
-        }
-        
-        const { data: regionsData, error: regionsError } = await regionsQuery;
-        
-        if (!regionsError && regionsData) {
+        if (regionsError) {
+            console.error('❌ tea_regions 오류:', regionsError);
+        } else if (regionsData) {
             let filteredRegions = regionsData;
             
-            // 검색어가 있으면 필터링
             if (query) {
                 const queryLower = query.toLowerCase().trim();
-                
-                filteredRegions = regionsData. filter(region => {
-                    // 기본 필드 검색
+                filteredRegions = regionsData.filter(region => {
                     const basicMatch = 
                         region.name_ko?.toLowerCase().includes(queryLower) ||
-                        region.name_en?.toLowerCase().includes(queryLower) ||
+                        region. name_en?.toLowerCase().includes(queryLower) ||
                         region.country?.toLowerCase().includes(queryLower) ||
                         region.tea_type?.toLowerCase().includes(queryLower) ||
-                        region.description?.toLowerCase().includes(queryLower);
+                        region.description?.toLowerCase().includes(queryLower) ||
+                        region.terroir_characteristics?.toLowerCase().includes(queryLower);
                     
-                    // tags 배열 검색
-                    const tagsMatch = region. tags?. some(tag => 
-                        tag.toLowerCase().includes(queryLower)
+                    const tagsMatch = region.tags?.some(t => 
+                        t.toLowerCase().includes(queryLower)
                     );
                     
-                    // search_keywords 배열 검색
                     const keywordsMatch = region.search_keywords?.some(kw => 
                         kw.toLowerCase().includes(queryLower)
                     );
                     
                     return basicMatch || tagsMatch || keywordsMatch;
                 });
-                
-                console.log(`🗺️ tea_regions 필터링:  ${regionsData.length} → ${filteredRegions.length}`);
             }
+            
+            console.log(`🗺️ tea_regions:  ${regionsData.length} → ${filteredRegions.length}`);
             
             results.push(...filteredRegions.map(region => ({
                 name: region.name_ko,
-                nameEn: region. name_en,
-                category:  `${region.tea_type} 🗺️`,
+                nameEn: region.name_en,
+                category: `${region.tea_type} 🗺️`,
                 description: region.description?.substring(0, 120) + '...',
                 image: region.image_url,
-                tags: region.tags || region.terroir_characteristics?.split(', ') || [],
+                tags: region. tags || region.terroir_characteristics?.split(', ') || [],
                 contentType: 'region',
-                detailPage:  `/tea_profiling/region_detail.html?id=${region. id}`
+                detailPage: `/tea_profiling/region_detail.html?id=${region.id}`
             })));
         }
         
         // 태그 필터링
         if (tag) {
-            results = results.filter(item => 
-                item.tags && item.tags.some(t => 
-                    t.toLowerCase().includes(tag.toLowerCase())
-                )
-            );
+            const tagLower = tag.toLowerCase();
+            results = results.filter(item => {
+                if (Array.isArray(item.tags)) {
+                    return item.tags.some(t => t.toLowerCase().includes(tagLower));
+                }
+                return false;
+            });
         }
         
         console.log('🔍 중복 제거 전:', results.length);
         
-        // ✅ 중복 제거
+        // 중복 제거
         results = removeDuplicates(results);
         
         console.log('✅ 검색 결과:', results.length);
