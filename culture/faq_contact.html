@@ -734,7 +734,7 @@
 
         // Supabase 초기화
         const SUPABASE_URL = 'https://sebjmsqyaspkmgxpuggv.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_aP48wgJuxq2YxEK6exl3qw_EtOrrqIv';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlYmptc3F5YXNwa21neHB1Z2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzODAyMDgsImV4cCI6MjA4MDk1NjIwOH0.zzJBoLANypVVQHJDPQAYfA4hiOo9Eja32PcLynyQ4d4';
 
         const supabase = window.supabase. createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -928,22 +928,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const totalCount = document.querySelectorAll('.faq-item').length;
             updateResultCount(totalCount, false);
-        });
-
-        // 폼 제출
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(e. target);
-            const message = formData.get('message');
-            
-            if (message.length < 10) {
-                alert('문의 내용을 최소 10자 이상 입력해주세요.');
-                return;
-            }
-            
-            alert('문의가 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
-            e.target.reset();
         });
 
         // 폼 제출 처리 (Supabase 연동)

@@ -200,6 +200,13 @@
 
     <!-- JavaScript 파일 링크 -->
     <script src="/resources/js/scripts.js"></script>
-    <script src="../resources/js/regions.js"></script>
+    <script src="/resources/js/regions.js"></script>
+
+    <!-- Supabase 초기화 -->
+    <script>
+        const SUPABASE_URL = 'https://sebjmsqyaspkmgxpuggv.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlYmptc3F5YXNwa21neHB1Z2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzODAyMDgsImV4cCI6MjA4MDk1NjIwOH0.zzJBoLANypVVQHJDPQAYfA4hiOo9Eja32PcLynyQ4d4';
+        const supabase = window.supabase. createClient(SUPABASE_URL, SUPABASE_KEY);
+    </script>
 </body>
 </html>

@@ -89,8 +89,8 @@ function renderResults(results) {
         <a href="${item.detailPage}" class="result-card">
             <div class="result-image">
                 <img src="${item.image || '/resources/style/placeholder.jpg'}" 
-                     alt="${item.name}" 
-                     onerror="this.src='/resources/style/placeholder.jpg'">
+                    alt="${item.name}" 
+                    onerror="this.src='/resources/style/placeholder.jpg'">
             </div>
             <div class="result-content">
                 <div class="category">${item.category || item.contentType}</div>

@@ -12,35 +12,32 @@ if (!regionId) {
         '<a href="teas_by_region.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background:  #4F7B60; color: white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
 } else {
     // JSON 데이터 로드
-    fetch('/data/tea_regions.json')  // ✅ 공백 제거! 
-        .then(response => {
-            console.log('📡 Response Status:', response.status);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+    (async () => {
+        try {
+            // Supabase에서 특정 산지 데이터 가져오기
+            const { data:  regions, error } = await supabase
+                .from('tea_regions')
+                .select('*')
+                .eq('id', regionId)  // ID로 필터링
+                . single();  // 단일 결과만
+        
+            if (error) {
+                throw error;
             }
-            return response.json();
-        })
-        .then(regions => {
-            console. log('✅ Loaded regions:', regions.length);
-            console.log('First region:', regions[0]);
-            
-            // String으로 타입 통일
-            const region = regions.find(r => String(r.id) === String(regionId));
-            
-            if (region) {
-                console. log('🎯 Found region:', region.name_ko);
-                displayRegionDetail(region);
-                initDetailMap(region);
+        
+            if (regions) {
+                console.log('✅ Found region:', regions. name_ko);
+                displayRegionDetail(regions);
+                initDetailMap(regions);
             } else {
-                console.error('❌ Region not found for ID:', regionId);
-                console.log('Available IDs:', regions.map(r => r.id));
                 showError();
             }
-        })
-        .catch(error => {
-            console. error('❌ Fetch Error:', error);
+        
+        } catch (error) {
+            console.error('❌ 데이터 로드 실패:', error);
             showError();
-        });
+        }
+    })();
 }
 
 // 산지 상세 정보 표시

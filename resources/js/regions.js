@@ -104,25 +104,30 @@ function resetMap() {
     }
 }
 
-// JSON 파일 로드
-function loadRegions() {
-    fetch('/data/tea_regions.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('JSON 파일을 찾을 수 없습니다.');
-            }
-            return response.json();
-        })
-        .then(regions => {
-            regionsData = regions;
-            displayRegionCards(regions);
-            addMapMarkers(regions);
-        })
-        .catch(error => {
-            console.error('데이터 로드 실패:', error);
-            document.getElementById('regions-container').innerHTML = 
-                '<p style="text-align: center; color: red;">데이터를 불러올 수 없습니다. </p>';
-        });
+// 산지 데이터 로드
+async function loadRegions() {
+    try {
+        // Supabase에서 데이터 가져오기
+        const { data:  regions, error } = await supabase
+            .from('tea_regions')
+            .select('*')
+            .order('id', { ascending: true });
+        
+        if (error) {
+            throw error;
+        }
+        
+        console.log('✅ Loaded regions from Supabase:', regions. length);
+        
+        regionsData = regions;
+        displayRegionCards(regions);
+        addMapMarkers(regions);
+        
+    } catch (error) {
+        console.error('❌ 데이터 로드 실패:', error);
+        document.getElementById('regions-container').innerHTML = 
+            '<p style="text-align: center; color: red;">데이터를 불러올 수 없습니다.</p>';
+    }
 }
 
 // 산지 카드 표시
@@ -139,8 +144,8 @@ function displayRegionCards(regions) {
             <div class="origin-card">
                 <div class="origin-card-image">
                     <img src="${region.image_url}" 
-                         alt="${region.name_ko} 차밭"
-                         onerror="this.src='../resources/style/placeholder_tea.jpg'">
+                        alt="${region.name_ko} 차밭"
+                        onerror="this.src='../resources/style/placeholder_tea.jpg'">
                 </div>
                 <div class="origin-card-content">
                     <h3>${region.name_en}</h3>
