@@ -13,6 +13,50 @@
     <!-- CSS 파일 링크 -->
     <link rel="stylesheet" href="/resources/css/styles.css"> 
     <link rel="stylesheet" href="/resources/css/subpage.css">
+
+    <style>
+        /* 지도 스타일 */
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            box-shadow:  0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            #map {
+                height: 350px;
+                border-radius: 8px;
+            }
+        }
+        
+        .transport-info {
+            margin-top: 40px;
+            padding: 30px;
+            background-color:  #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .transport-info h3 {
+            font-family: 'GFS Didot', serif;
+            color: #AA3624;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        
+        .transport-info ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .parking-info {
+            margin-top: 20px;
+            padding: 30px;
+            background-color:  #f0f7f4;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
 
@@ -120,35 +164,66 @@
 
         <div class="sub-page-container">
             <section id="our-location" class="content-section" style="border-bottom: none;">
-                <h2>플래그십 스토어: The Tea Atelier, Seoul</h2>
+                <h2>The Tea Atelier 본사</h2>
 
-                <div class="map-placeholder">
-                    지도 표시 영역 (실제 지도는 API 필요)
-                </div>
+                <!-- 카카오맵 -->
+                <div id="map"></div>
 
                 <div class="location-info-grid">
                     <div class="location-item">
-                        <h3>매장 주소 (플래그십)</h3>
-                        <p>서울시 강남구 테헤란로 123 (역삼동)</p>
-                        <p>The Tea Atelier (Atelier Building 1F)</p>
+                        <h3>본사 주소</h3>
+                        <p>전라남도 순천시 중앙로 255</p>
+                        <p>The Tea Atelier 본사</p>
+                        <p style="margin-top: 10px; font-size: 14px; color: #888;">
+                            📍 우편번호: 57956
+                        </p>
                     </div>
                     <div class="location-item">
                         <h3>연락처</h3>
-                        <p>대표 전화: 02-1234-5678</p>
+                        <p>대표 전화:  061-1234-5678</p>
                         <p>고객 문의: 1544-XXXX</p>
                         <p>Email: contact@theteaatelier.com</p>
+                        <p>Fax: 061-1234-5679</p>
                     </div>
                     <div class="location-item">
-                        <h3>영업 시간</h3>
-                        <p>평일: 11:00 - 21:00</p>
-                        <p>주말/공휴일: 10:00 - 22:00</p>
-                        <p>매월 첫째 주 월요일 정기 휴무</p>
+                        <h3>업무 시간</h3>
+                        <p>평일: 09:00 - 18:00</p>
+                        <p>점심시간: 12:00 - 13:00</p>
+                        <p>토/일/공휴일 휴무</p>
                     </div>
                 </div>
 
-                <p class="note">
-                    참고: 회사 본사(법적 주소)는 푸터에 기재된 "전남 순천시 중앙로 255" 입니다.
-                </p>
+                <!-- 대중교통 안내 -->
+                <div class="transport-info">
+                    <h3>🚇 대중교통 이용 안내</h3>
+                    <p><strong>기차:</strong></p>
+                    <ul>
+                        <li>KTX/SRT 순천역 하차 → 택시 약 10분 (약 5km)</li>
+                        <li>순천역에서 버스 이용 시 약 15분 소요</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>버스:</strong></p>
+                    <ul>
+                        <li>시내버스: 11번, 15번, 60번, 100번</li>
+                        <li>정류장: '중앙로' 또는 '순천시청' 하차</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>고속버스:</strong></p>
+                    <ul>
+                        <li>순천종합버스터미널 하차 → 택시 약 5분</li>
+                    </ul>
+                </div>
+
+                <!-- 주차 안내 -->
+                <div class="parking-info">
+                    <h3>🚗 자가용 이용 안내</h3>
+                    <p><strong>내비게이션 주소:</strong> 전남 순천시 중앙로 255</p>
+                    <p><strong>주차: </strong> 건물 내 주차장 이용 가능 (무료)</p>
+                    <p style="margin-top: 15px;"><strong>주요 도시에서 소요 시간:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                        <li>서울 → 순천: 약 3시간 30분 (경부고속도로 → 호남고속도로)</li>
+                        <li>광주 → 순천: 약 1시간 (남해고속도로)</li>
+                        <li>부산 → 순천: 약 2시간 (남해고속도로)</li>
+                    </ul>
+                </div>
             </section>
         </div>
     </main>
@@ -206,5 +281,47 @@
 
     <!-- JavaScript 파일 링크 -->
     <script src="/resources/js/scripts.js"></script>
+
+    <!-- 카카오맵 API -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91bc5a8b4de66dd2b8312704c71e30b7"></script>
+
+    <script>
+        // 순천시 중앙로 255 좌표
+        var latitude = 34.96969;   // 위도
+        var longitude = 127.48102; // 경도
+
+        // 지도 초기화
+        var mapContainer = document.getElementById('map');
+        var mapOption = { 
+            center: new kakao.maps.LatLng(latitude, longitude),
+            level: 3 // 확대 레벨
+        };
+
+        var map = new kakao.maps. Map(mapContainer, mapOption);
+
+        // 마커 생성
+        var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        marker.setMap(map);
+
+        // 인포윈도우 (말풍선)
+        var iwContent = '<div style="padding:  15px; text-align:  center; font-family: \'Noto Sans KR\', sans-serif;">' +
+                        '<h4 style="margin: 0 0 10px 0; color:#AA3624; font-size: 16px;">The Tea Atelier 본사</h4>' +
+                        '<p style="margin: 0; font-size:13px; color:#555;">전남 순천시 중앙로 255</p>' +
+                        '</div>';
+        
+        var infowindow = new kakao. maps.InfoWindow({
+            position: markerPosition,
+            content: iwContent 
+        });
+        infowindow.open(map, marker);
+
+        // 마커 클릭 시 카카오맵 앱/웹 열기
+        kakao.maps.event.addListener(marker, 'click', function() {
+            window.open('https://map.kakao.com/link/map/The Tea Atelier 본사,' + latitude + ',' + longitude);
+        });
+    </script>
 </body>
 </html>
