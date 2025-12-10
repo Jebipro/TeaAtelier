@@ -4,9 +4,9 @@ const regionId = parseInt(urlParams.get('id'));
 
 console.log('Region ID:', regionId);
 
-// JSON 데이터 로드
-fetch('data/tea_regions.json')
-    .then(response => response.json())
+// JSON 데이터 로드 (경로 수정!)
+fetch('../data/tea_regions.json')  // ✅ ../data로 수정
+    .then(response => response. json())
     .then(regions => {
         const region = regions.find(r => r.id === regionId);
         
@@ -30,7 +30,7 @@ function displayRegionDetail(region) {
     document.getElementById('detail-map').style.display = 'block';
     
     // 페이지 제목 변경
-    document.getElementById('page-title').textContent = region. name_en;
+    document.getElementById('page-title').textContent = region.name_en;
     document.getElementById('page-subtitle').textContent = `${region.name_ko} - ${region.country}`;
     document.getElementById('breadcrumb-current').textContent = region.name_ko;
     document.title = `The Tea Atelier | ${region.name_ko}`;
@@ -83,36 +83,35 @@ function initDetailMap(region) {
         lng: parseFloat(region.longitude)
     };
     
-    const map = new google.maps.Map(document.getElementById('detail-map'), {
+    const map = new google.maps. Map(document.getElementById('detail-map'), {
         zoom: 10,
         center: position,
-        mapTypeId: 'hybrid',  // ✨ 위성 지도
-        mapTypeControl: true,  // ✨ 지도 타입 전환 버튼
+        mapTypeId: 'hybrid',
+        mapTypeControl: true,
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position: google.maps.ControlPosition.TOP_RIGHT,
+            position: google.maps. ControlPosition.TOP_RIGHT,
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain']
         },
-        streetViewControl:  false,
+        streetViewControl: false,
         fullscreenControl: true,
         zoomControl: true,
         styles: [
             {
                 featureType: 'poi',
                 elementType: 'labels',
-                stylers:  [{ visibility: 'off' }]
+                stylers: [{ visibility: 'off' }]
             }
         ]
     });
     
-    // 마커 생성
-    const marker = new google.maps. Marker({
+    const marker = new google.maps.Marker({
         position: position,
         map: map,
         title: region.name_ko,
         animation: google.maps.Animation.DROP,
         icon: {
-            path: google. maps.SymbolPath. CIRCLE,
+            path: google.maps.SymbolPath.CIRCLE,
             scale: 14,
             fillColor: '#AA3624',
             fillOpacity: 1,
@@ -121,17 +120,16 @@ function initDetailMap(region) {
         }
     });
     
-    // 정보창
     const infoWindow = new google.maps.InfoWindow({
         content: `
             <div style="padding: 15px; font-family: 'Noto Sans KR', sans-serif;">
                 <h3 style="margin: 0 0 8px 0; color: #AA3624; font-family: 'GFS Didot', serif; font-size: 18px;">
-                    ${region.name_en}
+                    ${region. name_en}
                 </h3>
-                <p style="margin: 3px 0; font-size:  14px; color: #555;">
+                <p style="margin: 3px 0; font-size: 14px; color: #555;">
                     ${region.country_flag} ${region.country}
                 </p>
-                <p style="margin: 3px 0; font-size: 13px; color: #4F7B60; font-weight:  600;">
+                <p style="margin: 3px 0; font-size:  13px; color: #4F7B60; font-weight: 600;">
                     ${region.tea_type}
                 </p>
                 <p style="margin: 3px 0; font-size: 12px; color: #888;">
@@ -141,10 +139,8 @@ function initDetailMap(region) {
         `
     });
     
-    // 정보창 자동으로 열기
     infoWindow.open(map, marker);
     
-    // 마커 클릭 시 정보창 토글
     marker.addListener('click', () => {
         if (infoWindow.getMap()) {
             infoWindow. close();
@@ -157,7 +153,7 @@ function initDetailMap(region) {
 // 오류 표시
 function showError() {
     document.getElementById('loading').innerHTML = 
-        '<p style="color: red;">산지 정보를 찾을 수 없습니다.</p>';
-    document. getElementById('region-detail').style.display = 'none';
+        '<p style="color: red;">산지 정보를 찾을 수 없습니다. </p>';
+    document.getElementById('region-detail').style.display = 'none';
     document.getElementById('detail-map').style.display = 'none';
 }

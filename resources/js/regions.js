@@ -106,7 +106,7 @@ function resetMap() {
 
 // JSON 파일 로드
 function loadRegions() {
-    fetch('/resources/data/tea_regions.json')
+    fetch('/data/tea_regions.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('JSON 파일을 찾을 수 없습니다.');
