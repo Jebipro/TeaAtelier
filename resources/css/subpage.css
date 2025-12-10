@@ -24,9 +24,9 @@
     margin-bottom: 0;
 }
 
-/* ---------------------------------------------------- */
-/* 9. HORIZONTAL LNB (수평 메뉴) - sticky 제거 */
-/* ---------------------------------------------------- */
+/* ================================================== */
+/* 9. HORIZONTAL LNB - Active 표시 강화 */
+/* ================================================== */
 .horizontal-lnb-wrapper {
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
@@ -40,14 +40,14 @@
     display: flex;
     justify-content: center;
     max-width: 1200px;
-    margin:  0 auto;
+    margin: 0 auto;
     padding: 0 20px;
 }
 
 .horizontal-lnb ul {
-    list-style:  none;
+    list-style: none;
     padding: 0;
-    margin: 0;
+    margin:  0;
     display: flex;
 }
 
@@ -62,9 +62,10 @@
     font-size: 16px;
     color: #555;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.2s, background-color 0.2s;
     font-weight: 500;
     white-space: nowrap;
+    border-radius: 4px 4px 0 0;
 }
 
 .horizontal-lnb ul li a::after {
@@ -73,26 +74,33 @@
     left: 50%;
     bottom:  0;
     height: 3px;
-    width: 80%;
+    width: 0;
     background-color: transparent;
     transform: translateX(-50%);
     transition: all 0.3s ease;
 }
 
-.horizontal-lnb ul li a :hover {
+.horizontal-lnb ul li a:hover {
     color: #4F7B60;
+    background-color: #f7f7f7;
 }
 
 .horizontal-lnb ul li a:hover::after {
+    width: 80%;
     background-color: #4F7B60;
 }
 
-.horizontal-lnb ul li .active a {
+/* Active 상태 - 강조된 스타일 */
+.horizontal-lnb ul li.active a,
+.horizontal-lnb ul li a.active {
     color: #AA3624;
     font-weight: 700;
+    background-color: #fff5f5;
 }
-.horizontal-lnb ul li .active a::after {
-    width: 80%;
+
+.horizontal-lnb ul li .active a::after,
+.horizontal-lnb ul li a .active::after {
+    width:  80%;
     background-color: #AA3624;
 }
 
@@ -335,10 +343,7 @@
     border-radius: 12px;
     box-shadow:  0 5px 15px rgba(0, 0, 0, 0.05);
     transition: box-shadow 0.3s ease;
-}
-
-.content-section .content-block :nth-child(even) {
-    background-color: #ffffff;
+    border: 1px solid #f0f0f0;
 }
 
 .content-block-image {
@@ -401,13 +406,13 @@
 /* ======================================================== */
 
 /* ---------------------------------------------------- */
-/* TEA PROFILING:  6대 다류 (the_six_tea. html) */
+/* TEA PROFILING:   6대 다류 (the_six_tea. html) - 이미지 비율 개선 */
 /* ---------------------------------------------------- */
 .tea-type-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px;
-    margin-top: 40px;
+    margin-top:  40px;
 }
 
 .tea-card {
@@ -424,15 +429,20 @@
 
 .tea-image {
     height: 250px;
-    background-color:  #f7f7f7;
+    background-color:  #fdfdfd;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tea-image img {
     width:  100%;
     height: 100%;
-    object-fit:  cover;
+    object-fit:  contain; /* cover → contain으로 변경 */
+    padding: 20px; /* 이미지 주변 여백 추가 */
+    display: block;
 }
 
 .tea-content {
@@ -468,6 +478,12 @@
 }
 .brewing-note strong {
     color: #000;
+}
+
+@media (max-width: 1024px) {
+    .tea-type-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ---------------------------------------------------- */
