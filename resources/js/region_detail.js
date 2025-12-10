@@ -9,27 +9,40 @@ if (!regionId) {
     console.error('❌ No region ID in URL');
     document.getElementById('loading').innerHTML = 
         '<p style="color: red;">잘못된 접근입니다. URL에 ID가 없습니다.</p>' +
-        '<a href="teas_by_region.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background:  #4F7B60; color: white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
+        '<a href="teas_by_region.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: #4F7B60; color: white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
 } else {
-    // JSON 데이터 로드
+    // Supabase에서 데이터 로드
     (async () => {
         try {
+            console.log('📡 Supabase에서 데이터 로드 중.. .');
+            
             // Supabase에서 특정 산지 데이터 가져오기
-            const { data:  regions, error } = await supabase
-                .from('tea_regions')
+            const { data:  region, error } = await window.supabaseClient
+                . from('tea_regions')
                 .select('*')
-                .eq('id', regionId)  // ID로 필터링
+                .eq('id', regionId)
                 .single();  // 단일 결과만
         
             if (error) {
                 throw error;
             }
         
-            if (regions) {
-                console.log('✅ Found region:', regions. name_ko);
-                displayRegionDetail(regions);
-                initDetailMap(regions);
+            if (region) {
+                console.log('✅ Found region:', region.name_ko);
+                displayRegionDetail(region);
+                
+                // DOM이 준비된 후 지도 초기화 (약간의 딜레이)
+                setTimeout(() => {
+                    const mapElement = document.getElementById('detail-map');
+                    if (mapElement) {
+                        console.log('✅ Map element found, initializing...');
+                        initDetailMap(region);
+                    } else {
+                        console.error('❌ Map element not found');
+                    }
+                }, 100);
             } else {
+                console.error('❌ Region not found');
                 showError();
             }
         
@@ -42,19 +55,21 @@ if (!regionId) {
 
 // 산지 상세 정보 표시
 function displayRegionDetail(region) {
+    console.log('📝 Displaying region detail.. .');
+    
     document.getElementById('loading').style.display = 'none';
     document.getElementById('region-detail').style.display = 'block';
     document.getElementById('detail-map').style.display = 'block';
     
     document.getElementById('page-title').textContent = region. name_en;
-    document.getElementById('page-subtitle').textContent = `${region.name_ko} - ${region.country}`;
+    document. getElementById('page-subtitle').textContent = `${region.name_ko} - ${region.country}`;
     document.getElementById('breadcrumb-current').textContent = region.name_ko;
     document.title = `The Tea Atelier | ${region.name_ko}`;
     
     document.getElementById('region-detail').innerHTML = `
         <div class="featured-hero">
             <img src="${region.image_hero_url}" 
-                alt="${region.name_ko}"
+                alt="${region. name_ko}"
                 onerror="this.src='${region.image_url}'">
         </div>
         
@@ -86,36 +101,46 @@ function displayRegionDetail(region) {
             <p>${region.harvest_season}</p>
             
             <h3>산지 위치</h3>
-            <p>위도: ${region.latitude}°, 경도: ${region.longitude}°</p>
+            <p>위도: ${region. latitude}°, 경도:  ${region.longitude}°</p>
         </div>
     `;
+    
+    console.log('✅ Region detail displayed');
 }
 
 // Google Maps 표시
 function initDetailMap(region) {
     console.log('🗺️ Initializing map for:', region.name_ko);
     
+    const mapElement = document.getElementById('detail-map');
+    if (!mapElement) {
+        console.error('❌ Map container element not found! ');
+        return;
+    }
+    
     const position = {
         lat: parseFloat(region.latitude),
         lng: parseFloat(region.longitude)
     };
     
-    const map = new google.maps.Map(document.getElementById('detail-map'), {
+    console.log('📍 Position:', position);
+    
+    const map = new google.maps.Map(mapElement, {
         zoom: 10,
-        center: position,
-        mapTypeId: 'hybrid',
+        center:  position,
+        mapTypeId:  'hybrid',
         mapTypeControl: true,
         mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            style:  google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position: google.maps. ControlPosition.TOP_RIGHT,
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain']
         },
         streetViewControl: false,
-        fullscreenControl: true,
-        zoomControl: true,
+        fullscreenControl:  true,
+        zoomControl:  true,
         styles: [
             {
-                featureType: 'poi',
+                featureType:  'poi',
                 elementType: 'labels',
                 stylers: [{ visibility: 'off' }]
             }
@@ -126,9 +151,9 @@ function initDetailMap(region) {
         position: position,
         map: map,
         title: region.name_ko,
-        animation: google.maps.Animation.DROP,
+        animation: google. maps.Animation.DROP,
         icon: {
-            path: google.maps.SymbolPath.CIRCLE,
+            path: google.maps.SymbolPath. CIRCLE,
             scale: 14,
             fillColor: '#AA3624',
             fillOpacity: 1,
@@ -137,9 +162,9 @@ function initDetailMap(region) {
         }
     });
     
-    const infoWindow = new google.maps.InfoWindow({
+    const infoWindow = new google.maps. InfoWindow({
         content: `
-            <div style="padding: 15px; font-family: 'Noto Sans KR', sans-serif;">
+            <div style="padding:  15px; font-family:  'Noto Sans KR', sans-serif;">
                 <h3 style="margin: 0 0 8px 0; color: #AA3624; font-family: 'GFS Didot', serif; font-size: 18px;">
                     ${region. name_en}
                 </h3>
@@ -149,7 +174,7 @@ function initDetailMap(region) {
                 <p style="margin: 3px 0; font-size: 13px; color: #4F7B60; font-weight: 600;">
                     ${region.tea_type}
                 </p>
-                <p style="margin: 3px 0; font-size: 12px; color: #888;">
+                <p style="margin: 3px 0; font-size:  12px; color: #888;">
                     📍 ${region.altitude}
                 </p>
             </div>
@@ -159,7 +184,7 @@ function initDetailMap(region) {
     infoWindow.open(map, marker);
     
     marker.addListener('click', () => {
-        if (infoWindow.getMap()) {
+        if (infoWindow. getMap()) {
             infoWindow.close();
         } else {
             infoWindow.open(map, marker);
@@ -173,7 +198,7 @@ function initDetailMap(region) {
 function showError() {
     document.getElementById('loading').innerHTML = 
         '<p style="color: red;">산지 정보를 찾을 수 없습니다.</p>' +
-        '<a href="teas_by_region.html" style="display: inline-block; margin-top:  20px; padding: 10px 20px; background: #4F7B60; color:  white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
+        '<a href="teas_by_region.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: #4F7B60; color: white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
     document.getElementById('region-detail').style.display = 'none';
     document.getElementById('detail-map').style.display = 'none';
 }

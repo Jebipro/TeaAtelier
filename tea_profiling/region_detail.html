@@ -273,10 +273,27 @@
         </div>
     </footer>
 
+    <!-- JavaScript 파일 링크 -->
+    <script src="/resources/js/scripts.js"></script>
+
+    <!-- Supabase SDK 로드 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 3. Supabase 초기화 -->
+    <script>
+        console.log('🔧 Supabase 초기화 시작...');
+        
+        const SUPABASE_URL = 'https://sebjmsqyaspkmgxpuggv.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlYmptc3F5YXNwa21neHB1Z2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzODAyMDgsImV4cCI6MjA4MDk1NjIwOH0.zzJBoLANypVVQHJDPQAYfA4hiOo9Eja32PcLynyQ4d4';
+        
+        window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log('✅ Supabase 초기화 완료');
+    </script>
+
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQflnVdfP0EWbmfjqh2PnvbhdANc69DeM"></script>
-    
-    <script src="../resources/js/scripts.js"></script>
-    <script src="../resources/js/region_detail.js"></script>
+
+    <!-- 지역 데이터 및 지도 스크립트 -->
+    <script src="/resources/js/regions.js"></script>
 </body>
 </html>
