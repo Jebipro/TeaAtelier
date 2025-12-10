@@ -1,21 +1,8 @@
-// search.js - 검색 및 필터 로직
-let teaData = null;
-
-// JSON 데이터 로드
-async function loadData() {
-    try {
-        const response = await fetch('/resources/data/tea_data.json');
-        teaData = await response.json();
-        return teaData;
-    } catch (error) {
-        console.error('데이터 로드 실패:', error);
-        return { teas: [], pairings: [] };
-    }
-}
+// search.js - Supabase 버전
 
 // URL 쿼리 파라미터 읽기
 function getQueryParams() {
-    const params = new URLSearchParams(window.location. search);
+    const params = new URLSearchParams(window.location.search);
     return {
         tag: params.get('tag'),
         query: params.get('q'),
@@ -23,49 +10,89 @@ function getQueryParams() {
     };
 }
 
-// 검색 실행
-function performSearch(query, tag, type) {
-    if (!teaData) return [];
-    
-    let results = [];
-    
-    // 모든 항목 합치기
-    const allItems = [
-        ...teaData.teas.map(item => ({ ...item, contentType: 'tea' })),
-        ...teaData.pairings.map(item => ({ ...item, contentType: 'pairing' }))
-    ];
-    
-    // 필터링
-    results = allItems.filter(item => {
-        let match = true;
+// Supabase 검색 실행 (3개 테이블 통합 검색)
+async function performSearch(query, tag, type) {
+    try {
+        console.log('🔍 검색 시작:', { query, tag, type });
         
-        // 태그 필터
-        if (tag) {
-            match = match && item.tags && item.tags.some(t => 
-                t.toLowerCase().includes(tag.toLowerCase())
-            );
-        }
+        let results = [];
         
-        // 타입 필터
-        if (type) {
-            match = match && (item.type === type || item.teaType === type);
-        }
+        // 1. teas 테이블 검색
+        let teasQuery = window.supabaseClient.from('teas').select('*');
         
-        // 텍스트 검색
         if (query) {
-            const searchLower = query.toLowerCase();
-            match = match && (
-                (item.name && item.name.toLowerCase().includes(searchLower)) ||
-                (item.nameEn && item.nameEn. toLowerCase().includes(searchLower)) ||
-                (item.description && item.description.toLowerCase().includes(searchLower)) ||
-                (item.searchKeywords && item.searchKeywords.some(kw => kw.includes(searchLower)))
+            teasQuery = teasQuery.or(`name. ilike.%${query}%,name_en.ilike.%${query}%,description.ilike.%${query}%,origin.ilike.%${query}%`);
+        }
+        
+        if (type) {
+            teasQuery = teasQuery.eq('type', type);
+        }
+        
+        const { data:  teasData, error: teasError } = await teasQuery;
+        
+        if (! teasError && teasData) {
+            results. push(...teasData. map(tea => ({
+                ... tea,
+                contentType: 'tea',
+                detailPage: tea.detail_page
+            })));
+        }
+        
+        // 2. pairings 테이블 검색
+        let pairingsQuery = window.supabaseClient.from('pairings').select('*');
+        
+        if (query) {
+            pairingsQuery = pairingsQuery.or(`name.ilike.%${query}%,name_en.ilike.%${query}%,description.ilike.%${query}%`);
+        }
+        
+        const { data: pairingsData, error: pairingsError } = await pairingsQuery;
+        
+        if (!pairingsError && pairingsData) {
+            results.push(...pairingsData.map(pairing => ({
+                ...pairing,
+                contentType: 'pairing',
+                detailPage: pairing.detail_page
+            })));
+        }
+        
+        // 3. tea_regions 테이블 검색 (산지)
+        let regionsQuery = window.supabaseClient.from('tea_regions').select('*');
+        
+        if (query) {
+            regionsQuery = regionsQuery.or(`name_ko.ilike.%${query}%,name_en.ilike.%${query}%,country.ilike.%${query}%,description.ilike.%${query}%`);
+        }
+        
+        const { data: regionsData, error: regionsError } = await regionsQuery;
+        
+        if (!regionsError && regionsData) {
+            results.push(...regionsData.map(region => ({
+                name: region.name_ko,
+                nameEn: region.name_en,
+                category: region.tea_type,
+                description: region.description. substring(0, 120) + '...',
+                image: region.image_url,
+                tags: region.terroir_characteristics. split(', '),
+                contentType:  'region',
+                detailPage: `/tea_profiling/region_detail.html?id=${region.id}`
+            })));
+        }
+        
+        // 태그 필터링 (클라이언트 측)
+        if (tag) {
+            results = results.filter(item => 
+                item.tags && item.tags.some(t => 
+                    t.toLowerCase().includes(tag.toLowerCase())
+                )
             );
         }
         
-        return match;
-    });
-    
-    return results;
+        console.log('✅ 검색 결과:', results. length);
+        return results;
+        
+    } catch (error) {
+        console.error('❌ 검색 실패:', error);
+        return [];
+    }
 }
 
 // 결과 카드 렌더링
@@ -86,7 +113,7 @@ function renderResults(results) {
     countEl.textContent = `${results.length}개의 결과`;
     
     grid.innerHTML = results.map(item => `
-        <a href="${item.detailPage}" class="result-card">
+        <a href="${item.detailPage || item.detail_page}" class="result-card">
             <div class="result-image">
                 <img src="${item.image || '/resources/style/placeholder.jpg'}" 
                     alt="${item.name}" 
@@ -97,7 +124,7 @@ function renderResults(results) {
                 <h3>${item.name}</h3>
                 <p>${item.description}</p>
                 <div class="result-tags">
-                    ${item.tags ?  item.tags.map(tag => `<span>${tag}</span>`).join('') : ''}
+                    ${item.tags ?  item.tags.slice(0, 5).map(tag => `<span>${tag}</span>`).join('') : ''}
                 </div>
             </div>
         </a>
@@ -128,7 +155,7 @@ function renderActiveFilters(params) {
     container.innerHTML = filters.map(filter => `
         <div class="filter-tag">
             ${filter.label}
-            <span class="remove" onclick="removeFilter('${filter.type}')">✕</span>
+            <span class="remove" onclick="removeFilter('${filter. type}')">✕</span>
         </div>
     `).join('');
 }
@@ -140,16 +167,26 @@ function removeFilter(type) {
     window.location.search = params.toString();
 }
 
-// 검색 버튼 이벤트
+// 페이지 로드 시 실행
 document.addEventListener('DOMContentLoaded', async function() {
-    // 데이터 로드
-    await loadData();
+    console.log('🚀 검색 페이지 로드');
+    
+    // Supabase 연결 확인
+    if (!window.supabaseClient) {
+        console.error('❌ Supabase 클라이언트가 없습니다!');
+        document.getElementById('no-results').style.display = 'block';
+        document.getElementById('no-results').innerHTML = `
+            <h2>오류 발생</h2>
+            <p>데이터베이스 연결에 실패했습니다. </p>
+        `;
+        return;
+    }
     
     // URL 파라미터 읽기
     const params = getQueryParams();
     
     // 검색 실행
-    const results = performSearch(params.query, params.tag, params.type);
+    const results = await performSearch(params.query, params.tag, params.type);
     
     // 결과 렌더링
     renderResults(results);
@@ -163,7 +200,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // 검색 버튼 클릭
     document.getElementById('search-btn').addEventListener('click', function() {
-        const query = searchInput.value.trim();
+        const query = searchInput. value.trim();
         if (query) {
             const newParams = new URLSearchParams(window. location.search);
             newParams.set('q', query);
