@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[이벤트] 12월 '겨울의 낭만' 시즌 한정 블렌딩 출시 안내 | The Tea Atelier</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/resources/css/styles.css"> 
+    <link rel="stylesheet" href="/resources/css/subpage.css">
+    
+    <style>
+        .notice-detail-header {
+            text-align: center;
+            padding: 80px 40px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .notice-detail-header h1 {
+            font-size: 36px;
+            font-family: 'GFS Didot', serif;
+            color: #4F7B60;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .notice-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+        }
+        
+        .notice-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .notice-category-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: #4F7B60;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .notice-body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px 80px;
+            font-size: 17px;
+            line-height:  1.9;
+            color: #333;
+        }
+        
+        .notice-body h2 {
+            font-size: 26px;
+            font-family:  'GFS Didot', serif;
+            color: #4F7B60;
+            margin-top: 50px;
+            margin-bottom:  20px;
+            padding-top: 20px;
+            border-top:  2px solid #f0f0f0;
+        }
+        
+        .notice-body h2:first-child {
+            border-top: none;
+            margin-top: 0;
+        }
+        
+        .notice-body p {
+            margin-bottom: 20px;
+        }
+        
+        .notice-body ul {
+            margin:  20px 0;
+            padding-left: 25px;
+        }
+        
+        .notice-body ul li {
+            margin-bottom:  10px;
+            line-height: 1.8;
+        }
+        
+        .notice-highlight-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #AA3624;
+            padding: 20px 25px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .notice-highlight-box strong {
+            color: #AA3624;
+            font-size:  18px;
+        }
+        
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .product-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            background-color: #fafafa;
+            transition:  box-shadow 0.3s;
+        }
+        
+        .product-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-item h3 {
+            font-size: 22px;
+            font-family: 'GFS Didot', serif;
+            color: #AA3624;
+            margin-bottom: 10px;
+        }
+        
+        .product-item .price {
+            font-size:  20px;
+            font-weight: 700;
+            color: #4F7B60;
+            margin-bottom: 15px;
+        }
+        
+        .product-item .description {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .product-item .tasting-notes {
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .event-benefits {
+            background-color: #fff5f5;
+            border: 2px solid #AA3624;
+            padding: 25px;
+            border-radius:  8px;
+            margin: 30px 0;
+        }
+        
+        .event-benefits h3 {
+            font-size: 20px;
+            color: #AA3624;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .event-benefits ul {
+            list-style:  none;
+            padding: 0;
+        }
+        
+        .event-benefits ul li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .event-benefits ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .event-benefits ul li::before {
+            content: '🎁 ';
+            margin-right: 8px;
+        }
+        
+        .notice-footer {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .notice-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .notice-nav a {
+            flex:  1;
+            padding: 15px 20px;
+            background-color:  #f7f7f7;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notice-nav a:hover {
+            background-color:  #4F7B60;
+            color: white;
+        }
+        
+        .notice-nav .prev::before {
+            content: '←';
+        }
+        
+        .notice-nav .next::after {
+            content: '→';
+            margin-left: auto;
+        }
+        
+        .back-to-list {
+            display: block;
+            text-align: center;
+            padding: 12px 30px;
+            background-color: #4F7B60;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+        
+        .back-to-list:hover {
+            background-color: #3d6249;
+        }
+        
+        @media (max-width: 768px) {
+            .notice-detail-header h1 {
+                font-size: 28px;
+            }
+            .notice-body {
+                padding:  40px 20px 60px;
+                font-size:  16px;
+            }
+            .notice-nav {
+                flex-direction: column;
+            }
+            .product-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/index. html">The Tea Atelier</a>
+            </div>
+
+            <nav class="gnb">
+                <ul>
+                    <li><a href="/philosophy/brand_vision.html">우리의 철학</a></li>
+                    <li><a href="/tea_profiling/the_six_tea. html">티 프로파일링</a></li>
+                    <li><a href="/pairing/tea_food_pairing.html">페어링 & 블렌딩</a></li>
+                    <li><a href="/culture/tea_culture_magazine.html">문화 & 소식</a></li>
+                </ul>
+            </nav>
+
+            <div class="utility">
+                <img src="/resources/style/black_search.png" alt="검색" class="search-icon">
+                <div class="lang-switcher">
+                    <a href="#" id="language-switcher-link">
+                        <img src="/resources/style/korea.png" alt="한국어" class="flag-icon" id="language-flag-img">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- MEGA DROP DOWN WRAPPER (구조적 통일성 유지) -->
+        <div class="mega-menu-wrapper">
+            <div class="mega-menu-inner-content">
+                <!-- 스페이서 DIVs 유지 -->
+                <div class="mega-menu-spacer-left">
+                    <div class="logo" style="visibility: hidden;">
+                        <a href="index.html">The Tea Atelier</a>
+                    </div>
+                </div>
+                <div class="sub-menu-columns-row">
+                    <!-- 하위 메뉴 링크 -->
+                    <div class="sub-menu-column">
+                        <a href="/philosophy/brand_vision.html">브랜드 비전</a>
+                        <a href="/philosophy/craftsmanship.html">장인 정신</a>
+                        <a href="/philosophy/ethics_management.html">윤리 경영</a>
+                        <a href="/philosophy/directions.html">오시는 길</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="/tea_profiling/the_six_tea.html">6대 다류</a>
+                        <a href="/tea_profiling/tea_of_the_month.html">이달의 차(茶)</a>
+                        <a href="/tea_profiling/brewing_guide.html">브루잉 가이드</a>
+                        <a href="/tea_profiling/teas_by_region.html">산지별 티</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="/pairing/tea_food_pairing.html">티 푸드 페어링</a>
+                        <a href="/pairing/blending_lab.html">블렌딩 연구소</a>
+                        <a href="/pairing/seasonal_pairings.html">시즌별 페어링</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="/culture/tea_culture_magazine.html">티 문화 매거진</a>
+                        <a href="/culture/notices.html">공지사항</a>
+                        <a href="/culture/faq_contact.html">FAQ &amp; 문의</a>
+                        <a href="/culture/media_press.html">미디어 &amp; 보도</a>
+                    </div>
+                </div>
+                <!-- 스페이서 DIVs 유지 -->
+                <div class="mega-menu-spacer-right">
+                    <div class="utility" style="visibility: hidden;">
+                        <img src="/resources/style/black_search.png" alt="검색" class="search-icon">
+                        <div class="lang-switcher">
+                            <img src="/resources/style/korea.png" alt="한국어" class="flag-icon" id="language-flag">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="notice-detail-header">
+        <span class="notice-category-badge">이벤트</span>
+        <h1>[이벤트] 12월 '겨울의 낭만' 시즌 한정 블렌딩 출시 안내</h1>
+        <div class="notice-meta">
+            <span>📅 작성일: 2025.12.01</span>
+            <span>👁 조회수: 1,200</span>
+        </div>
+    </div>
+
+    <article class="notice-body">
+        
+        <p>
+            안녕하세요, The Tea Atelier입니다.  
+        </p>
+        
+        <p>
+            겨울의 따뜻한 감성을 담은 <strong>'겨울의 낭만(Winter Romance)' 시즌 한정 블렌딩</strong>을 출시합니다. 
+            계피, 생강, 오렌지 필, 클로브가 어우러진 따뜻하고 향긋한 블렌드로, 추운 겨울을 포근하게 감싸줄 것입니다.  
+        </p>
+
+        <div class="notice-highlight-box">
+            <strong>❄️ 출시 일정 및 판매 기간</strong>
+            <p style="margin-top: 10px; margin-bottom: 0;">
+                • 출시일: <strong>2025년 12월 5일(목) 오전 10:00</strong><br>
+                • 판매 기간: 12월 5일 ~ 12월 31일 (수량 소진 시 조기 종료)<br>
+                • 한정 수량: 각 제품당 500세트 (선착순)
+            </p>
+        </div>
+
+        <h2>☕ 신제품 라인업</h2>
+        
+        <div class="product-showcase">
+            
+            <div class="product-item">
+                <h3>🎄 Winter Spice Chai</h3>
+                <p class="price">25,000원 (50g)</p>
+                <p class="description">
+                    인도 아쌈 홍차 베이스에 계피, 생강, 카다몸, 클로브를 블렌딩한 스파이시 차이입니다. 
+                    우유와 함께 마시면 크리미한 맛이 일품입니다.
+                </p>
+                <div class="tasting-notes">
+                    <strong>테이스팅 노트: </strong> 따뜻한 스파이스, 달콤한 계피, 생강의 알싸함, 크리미한 질감
+                </div>
+            </div>
+            
+            <div class="product-item">
+                <h3>🍊 Citrus Cinnamon Blend</h3>
+                <p class="price">28,000원 (50g)</p>
+                <p class="description">
+                    스리랑카 실론 홍차에 오렌지 필, 레몬 제스트, 계피 스틱을 더한 상큼하면서도 따뜻한 블렌드입니다. 
+                    겨울 오후의 티타임에 제격입니다.
+                </p>
+                <div class="tasting-notes">
+                    <strong>테이스팅 노트:</strong> 상큼한 시트러스, 은은한 계피 향, 깔끔한 뒷맛, 밝은 호박색
+                </div>
+            </div>
+            
+            <div class="product-item">
+                <h3>🌰 Roasted Chestnut Oolong</h3>
+                <p class="price">32,000원 (50g)</p>
+                <p class="description">
+                    대만 우롱차에 로스팅한 밤과 호두 향을 더한 고소하고 부드러운 블렌드입니다. 
+                    겨울 저녁 독서와 함께 즐기기 좋습니다.
+                </p>
+                <div class="tasting-notes">
+                    <strong>테이스팅 노트:</strong> 고소한 밤, 부드러운 견과류, 캐러멜 단맛, 긴 여운
+                </div>
+            </div>
+            
+            <div class="product-item">
+                <h3>🎁 Winter Romance Gift Set</h3>
+                <p class="price">75,000원 (3종 세트, 각 30g)</p>
+                <p class="description">
+                    위 3가지 블렌드를 모두 담은 선물 세트입니다. 고급 패키지에 담겨 있어 연말 선물로 완벽합니다.  
+                    <strong>한정 300세트! </strong>
+                </p>
+                <div class="tasting-notes">
+                    <strong>구성품:</strong> Winter Spice Chai 30g + Citrus Cinnamon Blend 30g + Roasted Chestnut Oolong 30g + 우드 티스푼
+                </div>
+            </div>
+            
+        </div>
+
+        <h2>🎉 출시 기념 이벤트</h2>
+        
+        <div class="event-benefits">
+            <h3>🎁 겨울의 낭만 출시 기념 특별 혜택</h3>
+            <ul>
+                <li><strong>얼리버드 할인:</strong> 출시 당일(12/5) 오전 10시~오후 2시 구매 시 <strong>20% 할인</strong></li>
+                <li><strong>무료 배송:</strong> 3만원 이상 구매 시 전국 무료 배송 (제주/도서산간 포함)</li>
+                <li><strong>기프트 박스 증정:</strong> 5만원 이상 구매 시 프리미엄 기프트 박스 무료 제공</li>
+                <li><strong>티 스푼 증정:</strong> Gift Set 구매 고객 대상 티타늄 티스푼 추가 증정</li>
+                <li><strong>후기 이벤트:</strong> 구매 후 인스타그램 후기 작성 시 추첨을 통해 <strong>다음 시즌 신제품 무료 증정</strong> (10명)</li>
+            </ul>
+        </div>
+
+        <h2>🍰 추천 페어링</h2>
+        <p>
+            겨울의 낭만 블렌드와 잘 어울리는 페어링을 소개합니다: 
+        </p>
+        
+        <ul>
+            <li><strong>Winter Spice Chai + 진저브레드 쿠키:</strong> 스파이스의 조화가 완벽합니다.</li>
+            <li><strong>Citrus Cinnamon Blend + 레몬 파운드케이크:</strong> 상큼함이 배가됩니다.</li>
+            <li><strong>Roasted Chestnut Oolong + 몽블랑 케이크:</strong> 밤의 풍미가 시너지를 냅니다.</li>
+            <li><strong>Gift Set + 크리스마스 슈톨렌:</strong> 연말 파티에 최고의 조합입니다.</li>
+        </ul>
+
+        <h2>📦 구매 방법</h2>
+        <p>
+            <strong>온라인 구매:</strong> The Tea Atelier 웹사이트 메인 페이지에서 '겨울의 낭만' 배너 클릭<br>
+            <strong>전화 주문:</strong> 고객센터 1544-XXXX (평일 10:00 ~ 17:00)<br>
+            <strong>방문 구매:</strong> The Tea Atelier 오프라인 매장 (전남 순천시 중앙로 255)
+        </p>
+
+        <h2>❓ 자주 묻는 질문</h2>
+        
+        <p>
+            <strong>Q. 재입고 계획이 있나요?</strong><br>
+            A. 시즌 한정 상품으로, 12월에만 판매되며 재입고는 없습니다.  조기 품절될 수 있으니 서둘러 주세요! 
+        </p>
+        
+        <p>
+            <strong>Q. 카페인이 포함되어 있나요?</strong><br>
+            A. Winter Spice Chai와 Citrus Cinnamon Blend는 홍차 베이스로 카페인이 포함되어 있습니다. 
+            Roasted Chestnut Oolong은 우롱차 베이스로 중간 정도의 카페인이 있습니다.
+        </p>
+        
+        <p>
+            <strong>Q. 선물 포장이 가능한가요?</strong><br>
+            A. 네, 모든 제품은 무료 선물 포장 서비스를 제공합니다. 주문 시 "선물 포장 요청" 옵션을 선택해 주세요.
+        </p>
+        
+        <p>
+            <strong>Q. 후기 이벤트는 어떻게 참여하나요?</strong><br>
+            A. 인스타그램에 제품 사진과 후기를 게시하고 <strong>#TheTeaAtelier #겨울의낭만</strong> 해시태그를 달아주세요.  
+            계정을 공개로 설정해야 추첨 대상이 됩니다.
+        </p>
+
+        <h2>☃️ 마무리 인사</h2>
+        <p>
+            겨울은 차 한 잔의 따뜻함이 더욱 소중한 계절입니다. The Tea Atelier의 '겨울의 낭만' 블렌딩과 함께 
+            올 겨울을 더욱 포근하고 향기롭게 보내시길 바랍니다.  
+        </p>
+        
+        <p>
+            사랑하는 사람과 나누는 차 한 잔, 혼자만의 시간에 즐기는 여유로운 티타임...  
+            어떤 순간이든 '겨울의 낭만'이 함께하겠습니다.  
+        </p>
+        
+        <p style="margin-top: 40px; text-align: right; font-weight: 600;">
+            따뜻한 겨울 보내세요.  <br>
+            The Tea Atelier 드림
+        </p>
+
+    </article>
+
+    <div class="notice-footer">
+        <div class="notice-nav">
+            <a href="/culture/notices/notice_004.html" class="prev">
+                시스템 점검 및 개선 작업 안내 (12/15)
+            </a>
+            <span style="flex:  1; padding:  15px 20px; background-color: #f0f0f0; color: #999; border-radius: 4px; font-size: 14px;">
+                다음 글이 없습니다 →
+            </span>
+        </div>
+        <a href="/culture/notices.html" class="back-to-list">← 목록으로</a>
+    </div>
+
+    <!-- 3. FOOTER 영역 (index.html 기반) -->
+    <footer>
+        <div class="footer-wrapper">
+            
+            <div class="footer-column footer-info">
+                <h3 class="footer-logo">The Tea Atelier</h3>
+                <p>대표: 김홍차 | 사업자등록번호: 123-45-67890</p>
+                <p>주소: 전남 순천시 중앙로 255 | 이메일: contact@theteaatelier.com</p>
+                <p>고객센터: 1544-XXXX (평일 10:00 ~ 17:00)</p>
+                <p class="copyright">© 2025 The Tea Atelier. All rights reserved.</p>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4>사이트맵</h4>
+                <ul>
+                    <li><a href="/philosophy/brand_vision.html">우리의 철학</a></li>
+                    <li><a href="/tea_profiling/the_six_tea.html">티 프로파일링</a></li>
+                    <li><a href="/pairing/tea_food_pairing.html">페어링 & 블렌딩</a></li>
+                    <li><a href="/culture/tea_culture_magazine.html">문화 & 소식</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column footer-legal">
+                <h4>Legal & Support</h4>
+                <ul>
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">법적고지</a></li>
+                    <li><a href="faq_contact.html">FAQ & 문의</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://www.instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                            <path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"/>
+                        </svg>
+                    </a>
+                    <a href="https://x.com" target="_blank" class="social-icon" aria-label="X (Twitter)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                            <path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com" target="_blank" class="social-icon" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                            <path d="M581.7 188.1C575.5 164.4 556.9 145.8 533.4 139.5C490.9 128 320.1 128 320.1 128C320.1 128 149.3 128 106.7 139.5C83.2 145.8 64.7 164.4 58.4 188.1C47 231 47 320.4 47 320.4C47 320.4 47 409.8 58.4 452.7C64.7 476.3 83.2 494.2 106.7 500.5C149.3 512 320.1 512 320.1 512C320.1 512 490.9 512 533.5 500.5C557 494.2 575.5 476.3 581.8 452.7C593.2 409.8 593.2 320.4 593.2 320.4C593.2 320.4 593.2 231 581.8 188.1zM264.2 401.6L264.2 239.2L406.9 320.4L264.2 401.6z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 파일 링크 -->
+    <script src="/resources/js/scripts.js"></script>
+</body>
+</html>

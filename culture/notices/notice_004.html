@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 점검 및 개선 작업 안내 (12/15) | The Tea Atelier</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/resources/css/styles.css"> 
+    <link rel="stylesheet" href="/resources/css/subpage.css">
+    
+    <style>
+        .notice-detail-header {
+            text-align: center;
+            padding: 80px 40px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .notice-detail-header h1 {
+            font-size: 36px;
+            font-family: 'GFS Didot', serif;
+            color: #4F7B60;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        .notice-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+        }
+        
+        .notice-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .notice-category-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: #AA3624;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .notice-body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px 80px;
+            font-size:  17px;
+            line-height:  1.9;
+            color: #333;
+        }
+        
+        .notice-body h2 {
+            font-size: 26px;
+            font-family:  'GFS Didot', serif;
+            color: #4F7B60;
+            margin-top: 50px;
+            margin-bottom:  20px;
+            padding-top: 20px;
+            border-top:  2px solid #f0f0f0;
+        }
+        
+        .notice-body h2:first-child {
+            border-top: none;
+            margin-top: 0;
+        }
+        
+        .notice-body p {
+            margin-bottom: 20px;
+        }
+        
+        .notice-body ul {
+            margin:  20px 0;
+            padding-left: 25px;
+        }
+        
+        .notice-body ul li {
+            margin-bottom:  10px;
+            line-height: 1.8;
+        }
+        
+        .notice-highlight-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #AA3624;
+            padding: 20px 25px;
+            margin:  30px 0;
+            border-radius: 4px;
+        }
+        
+        .notice-highlight-box strong {
+            color: #AA3624;
+            font-size: 18px;
+        }
+        
+        .info-box {
+            background-color: #f0f5f0;
+            border: 1px solid #4F7B60;
+            padding: 20px;
+            border-radius: 6px;
+            margin:  30px 0;
+        }
+        
+        .info-box h3 {
+            font-size: 18px;
+            color: #4F7B60;
+            margin-bottom: 15px;
+        }
+        
+        .notice-footer {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .notice-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .notice-nav a {
+            flex: 1;
+            padding: 15px 20px;
+            background-color:  #f7f7f7;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notice-nav a:hover {
+            background-color: #4F7B60;
+            color: white;
+        }
+        
+        .notice-nav .prev::before {
+            content: '←';
+        }
+        
+        .notice-nav .next::after {
+            content: '→';
+            margin-left: auto;
+        }
+        
+        .back-to-list {
+            display: block;
+            text-align: center;
+            padding: 12px 30px;
+            background-color:  #4F7B60;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+        
+        .back-to-list:hover {
+            background-color: #3d6249;
+        }
+        
+        @media (max-width: 768px) {
+            .notice-detail-header h1 {
+                font-size: 28px;
+            }
+            .notice-body {
+                padding: 40px 20px 60px;
+                font-size: 16px;
+            }
+            .notice-nav {
+                flex-direction:  column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/index.html">The Tea Atelier</a>
+            </div>
+
+            <nav class="gnb">
+                <ul>
+                    <li><a href="/philosophy/brand_vision.html">우리의 철학</a></li>
+                    <li><a href="/tea_profiling/the_six_tea.html">티 프로파일링</a></li>
+                    <li><a href="/pairing/tea_food_pairing. html">페어링 & 블렌딩</a></li>
+                    <li><a href="/culture/tea_culture_magazine.html">문화 & 소식</a></li>
+                </ul>
+            </nav>
+
+            <div class="utility">
+                <img src="/resources/style/black_search.png" alt="검색" class="search-icon">
+                <div class="lang-switcher">
+                    <a href="#" id="language-switcher-link">
+                        <img src="/resources/style/korea.png" alt="한국어" class="flag-icon" id="language-flag-img">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- MEGA DROP DOWN WRAPPER (구조적 통일성 유지) -->
+        <div class="mega-menu-wrapper">
+            <div class="mega-menu-inner-content">
+                <!-- 스페이서 DIVs 유지 -->
+                <div class="mega-menu-spacer-left">
+                    <div class="logo" style="visibility: hidden;">
+                        <a href="index.html">The Tea Atelier</a>
+                    </div>
+                </div>
+                <div class="sub-menu-columns-row">
+                    <!-- 하위 메뉴 링크 -->
+                    <div class="sub-menu-column">
+                        <a href="/philosophy/brand_vision.html">브랜드 비전</a>
+                        <a href="/philosophy/craftsmanship.html">장인 정신</a>
+                        <a href="/philosophy/ethics_management.html">윤리 경영</a>
+                        <a href="/philosophy/directions.html">오시는 길</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="/tea_profiling/the_six_tea.html">6대 다류</a>
+                        <a href="/tea_profiling/tea_of_the_month.html">이달의 차(茶)</a>
+                        <a href="/tea_profiling/brewing_guide.html">브루잉 가이드</a>
+                        <a href="/tea_profiling/teas_by_region.html">산지별 티</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="/pairing/tea_food_pairing.html">티 푸드 페어링</a>
+                        <a href="/pairing/blending_lab.html">블렌딩 연구소</a>
+                        <a href="/pairing/seasonal_pairings.html">시즌별 페어링</a>
+                    </div>
+                    <div class="sub-menu-column">
+                        <a href="/culture/tea_culture_magazine.html">티 문화 매거진</a>
+                        <a href="/culture/notices.html">공지사항</a>
+                        <a href="/culture/faq_contact.html">FAQ &amp; 문의</a>
+                        <a href="/culture/media_press.html">미디어 &amp; 보도</a>
+                    </div>
+                </div>
+                <!-- 스페이서 DIVs 유지 -->
+                <div class="mega-menu-spacer-right">
+                    <div class="utility" style="visibility: hidden;">
+                        <img src="/resources/style/black_search.png" alt="검색" class="search-icon">
+                        <div class="lang-switcher">
+                            <img src="/resources/style/korea.png" alt="한국어" class="flag-icon" id="language-flag">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="notice-detail-header">
+        <span class="notice-category-badge">공지</span>
+        <h1>시스템 점검 및 개선 작업 안내 (12/15)</h1>
+        <div class="notice-meta">
+            <span>📅 작성일: 2025.11.28</span>
+            <span>👁 조회수: 450</span>
+        </div>
+    </div>
+
+    <article class="notice-body">
+        
+        <p>
+            안녕하세요, The Tea Atelier입니다.  
+        </p>
+        
+        <p>
+            보다 안정적이고 편리한 서비스 제공을 위해 <strong>시스템 점검 및 개선 작업</strong>을 진행합니다.  
+            점검 시간 동안 웹사이트 이용이 일시적으로 제한되오니 양해 부탁드립니다.  
+        </p>
+
+        <div class="notice-highlight-box">
+            <strong>⏰ 시스템 점검 일정</strong>
+            <p style="margin-top: 10px; margin-bottom: 0;">
+                • 점검 일시: <strong>2025년 12월 15일(일) 오전 2:00 ~ 오전 6:00 (약 4시간)</strong><br>
+                • 점검 사유: 서버 안정화 및 결제 시스템 개선
+            </p>
+        </div>
+
+        <h2>🔧 주요 점검 및 개선 사항</h2>
+        
+        <p><strong>1. 서버 안정화 작업</strong></p>
+        <ul>
+            <li>피크 시간대 접속 지연 현상 개선</li>
+            <li>데이터베이스 최적화로 페이지 로딩 속도 30% 향상</li>
+            <li>보안 패치 및 시스템 업데이트</li>
+        </ul>
+
+        <p><strong>2. 결제 시스템 개선</strong></p>
+        <ul>
+            <li>간편 결제 옵션 추가 (카카오페이, 네이버페이, 토스)</li>
+            <li>해외 결제 수단 지원 (PayPal, Alipay)</li>
+            <li>결제 오류 발생 시 자동 재시도 기능 추가</li>
+        </ul>
+
+        <p><strong>3. 사용자 경험 개선</strong></p>
+        <ul>
+            <li>장바구니 담기 후 바로 구매 가능한 팝업 추가</li>
+            <li>상품 상세 페이지 이미지 확대 기능 개선</li>
+            <li>모바일 반응형 UI 최적화</li>
+        </ul>
+
+        <p><strong>4. 신규 기능 추가</strong></p>
+        <ul>
+            <li>"위시리스트(찜하기)" 기능 오픈</li>
+            <li>"최근 본 상품" 자동 저장 기능</li>
+            <li>정기 구독 서비스 신청 페이지 개설</li>
+        </ul>
+
+        <h2>🚫 점검 시간 동안 이용 제한 사항</h2>
+        
+        <div class="info-box">
+            <h3>⚠️ 이용 불가 서비스</h3>
+            <ul style="margin:  0; padding-left: 20px;">
+                <li>웹사이트 접속 및 열람</li>
+                <li>회원가입 및 로그인</li>
+                <li>상품 주문 및 결제</li>
+                <li>마이페이지 조회 및 수정</li>
+                <li>고객센터 1: 1 문의 (이메일 문의는 가능)</li>
+            </ul>
+        </div>
+
+        <p>
+            <strong>📌 주의사항:</strong> 점검 시작 5분 전부터 주문 및 결제가 제한됩니다. 점검 시작 시간 직전에 진행 중인 주문은 자동 취소될 수 있으니 유의해 주시기 바랍니다.  
+        </p>
+
+        <h2>💡 점검 전 미리 준비하세요</h2>
+        
+        <ul>
+            <li><strong>장바구니 확인: </strong> 장바구니에 담아둔 상품이 있다면 12월 14일까지 주문을 완료해 주세요.</li>
+            <li><strong>쿠폰 사용: </strong> 12월 만료 예정 쿠폰이 있다면 점검 전에 사용하시는 것을 권장합니다.</li>
+            <li><strong>문의 사항:</strong> 긴급한 문의는 점검 전 고객센터(1544-XXXX) 또는 이메일(contact@theteaatelier.com)로 남겨주세요.</li>
+        </ul>
+
+        <h2>📧 점검 완료 후 혜택</h2>
+        <p>
+            시스템 점검으로 인한 불편을 드려 죄송합니다. 보상으로 다음과 같은 혜택을 제공합니다: 
+        </p>
+        
+        <ul>
+            <li><strong>전체 회원 대상:</strong> 5,000원 할인 쿠폰 지급 (12월 16일 자동 지급, 유효기간 1개월)</li>
+            <li><strong>정기 구독 신청 고객:</strong> 첫 달 구독료 20% 할인</li>
+            <li><strong>10만원 이상 구매 고객:</strong> 프리미엄 티 샘플 3종 세트 증정</li>
+        </ul>
+
+        <h2>❓ 자주 묻는 질문</h2>
+        
+        <p>
+            <strong>Q.  점검 시간이 연장될 수 있나요? </strong><br>
+            A.  예상 점검 시간은 4시간이나, 작업 진행 상황에 따라 최대 1시간 연장될 수 있습니다.  
+            연장 시 웹사이트 및 SNS를 통해 안내드립니다.
+        </p>
+        
+        <p>
+            <strong>Q. 점검 중 주문한 상품 배송은 정상 진행되나요?</strong><br>
+            A. 네, 이미 주문 완료된 상품의 배송은 정상 진행됩니다. 
+        </p>
+        
+        <p>
+            <strong>Q. 모바일 앱도 점검 대상인가요?</strong><br>
+            A. 현재 The Tea Atelier는 모바일 앱을 별도로 제공하지 않으며, 모바일 웹도 동일하게 점검 대상입니다.
+        </p>
+
+        <p style="margin-top: 40px;">
+            이용에 불편을 드려 죄송하며, 더 나은 서비스로 보답하겠습니다.
+        </p>
+        
+        <p style="margin-top: 40px; text-align: right; font-weight: 600;">
+            감사합니다.  <br>
+            The Tea Atelier 드림
+        </p>
+
+    </article>
+
+    <div class="notice-footer">
+        <div class="notice-nav">
+            <a href="/culture/notices/notice_003.html" class="prev">
+                [당첨자 발표] Autumn Flush 테이스팅 키트 후기 이벤트
+            </a>
+            <a href="/culture/notices/notice_005.html" class="next">
+                [이벤트] 12월 '겨울의 낭만' 시즌 한정 블렌딩 출시 안내
+            </a>
+        </div>
+        <a href="/culture/notices.html" class="back-to-list">← 목록으로</a>
+    </div>
+
+    <!-- 3. FOOTER 영역 (index.html 기반) -->
+    <footer>
+        <div class="footer-wrapper">
+            
+            <div class="footer-column footer-info">
+                <h3 class="footer-logo">The Tea Atelier</h3>
+                <p>대표: 김홍차 | 사업자등록번호: 123-45-67890</p>
+                <p>주소: 전남 순천시 중앙로 255 | 이메일: contact@theteaatelier.com</p>
+                <p>고객센터: 1544-XXXX (평일 10:00 ~ 17:00)</p>
+                <p class="copyright">© 2025 The Tea Atelier. All rights reserved.</p>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4>사이트맵</h4>
+                <ul>
+                    <li><a href="/philosophy/brand_vision.html">우리의 철학</a></li>
+                    <li><a href="/tea_profiling/the_six_tea.html">티 프로파일링</a></li>
+                    <li><a href="/pairing/tea_food_pairing.html">페어링 & 블렌딩</a></li>
+                    <li><a href="/culture/tea_culture_magazine.html">문화 & 소식</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column footer-legal">
+                <h4>Legal & Support</h4>
+                <ul>
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">법적고지</a></li>
+                    <li><a href="faq_contact.html">FAQ & 문의</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://www.instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                            <path d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z"/>
+                        </svg>
+                    </a>
+                    <a href="https://x.com" target="_blank" class="social-icon" aria-label="X (Twitter)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                            <path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com" target="_blank" class="social-icon" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                            <path d="M581.7 188.1C575.5 164.4 556.9 145.8 533.4 139.5C490.9 128 320.1 128 320.1 128C320.1 128 149.3 128 106.7 139.5C83.2 145.8 64.7 164.4 58.4 188.1C47 231 47 320.4 47 320.4C47 320.4 47 409.8 58.4 452.7C64.7 476.3 83.2 494.2 106.7 500.5C149.3 512 320.1 512 320.1 512C320.1 512 490.9 512 533.5 500.5C557 494.2 575.5 476.3 581.8 452.7C593.2 409.8 593.2 320.4 593.2 320.4C593.2 320.4 593.2 231 581.8 188.1zM264.2 401.6L264.2 239.2L406.9 320.4L264.2 401.6z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 파일 링크 -->
+    <script src="/resources/js/scripts.js"></script>
+</body>
+</html>
