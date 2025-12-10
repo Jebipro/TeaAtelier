@@ -511,3 +511,54 @@ footer {
     fill: #fff;
     vertical-align: middle;
 }
+
+/* ================================================== */
+/* 모바일 헤더 반응형 개선 (추가) */
+/* ================================================== */
+@media (max-width: 768px) {
+    /* 헤더 컨테이너 */
+    header .nav-container {
+        padding: 15px 20px;
+    }
+    
+    /* 로고 크기 축소 */
+    header .logo a {
+        font-size:  20px;
+    }
+    
+    /* 메뉴 텍스트 크기 축소 */
+    header .gnb ul li a {
+        font-size: 13px;
+        padding: 0 10px;
+    }
+    
+    /* 유틸리티 (검색/언어) 간격 */
+    header .utility {
+        gap: 10px;
+    }
+    
+    /* 아이콘 크기 축소 */
+    header .search-icon,
+    header .flag-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 375px) {
+    /* 더 작은 화면 */
+    header .logo a {
+        font-size: 18px;
+    }
+    
+    header .gnb ul li a {
+        font-size: 12px;
+        padding: 0 8px;
+    }
+    
+    header .search-icon,
+    header .flag-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
