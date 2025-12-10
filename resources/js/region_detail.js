@@ -19,7 +19,7 @@ if (!regionId) {
                 .from('tea_regions')
                 .select('*')
                 .eq('id', regionId)  // ID로 필터링
-                . single();  // 단일 결과만
+                .single();  // 단일 결과만
         
             if (error) {
                 throw error;

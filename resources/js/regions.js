@@ -104,11 +104,13 @@ function resetMap() {
     }
 }
 
-// 산지 데이터 로드
+// JSON 파일 로드
 async function loadRegions() {
     try {
+        console.log('📡 Supabase에서 데이터 로드 중.. .');
+        
         // Supabase에서 데이터 가져오기
-        const { data: regions, error } = await supabase
+        const { data: regions, error } = await window.supabaseClient
             .from('tea_regions')
             .select('*')
             .order('id', { ascending: true });
@@ -126,7 +128,7 @@ async function loadRegions() {
     } catch (error) {
         console.error('❌ 데이터 로드 실패:', error);
         document.getElementById('regions-container').innerHTML = 
-            '<p style="text-align: center; color: red;">데이터를 불러올 수 없습니다.</p>';
+            '<p style="text-align: center; color: red;">데이터를 불러올 수 없습니다. </p>';
     }
 }
 
@@ -247,3 +249,17 @@ if (typeof google === 'undefined') {
 } else {
     initMap();
 }
+
+// 페이지 로드 시 실행
+window.addEventListener('load', () => {
+    console.log('🚀 페이지 로드 완료');
+    
+    if (typeof google !== 'undefined' && typeof window.supabaseClient !== 'undefined') {
+        console.log('✅ Google Maps & Supabase 준비 완료');
+        initMap();
+    } else {
+        console.error('❌ 필요한 라이브러리가 로드되지 않았습니다.');
+        if (typeof google === 'undefined') console.error('- Google Maps 없음');
+        if (typeof window.supabaseClient === 'undefined') console.error('- Supabase 없음');
+    }
+});
