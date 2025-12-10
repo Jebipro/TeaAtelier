@@ -1,41 +1,59 @@
 // URL에서 ID 가져오기
 const urlParams = new URLSearchParams(window.location.search);
-const regionId = parseInt(urlParams.get('id'));
+const regionId = urlParams.get('id');
 
-console.log('Region ID:', regionId);
+console.log('🔍 Region ID:', regionId);
 
-// JSON 데이터 로드 (경로 수정!)
-fetch('../data/tea_regions.json')  // ✅ ../data로 수정
-    .then(response => response. json())
-    .then(regions => {
-        const region = regions.find(r => r.id === regionId);
-        
-        if (region) {
-            displayRegionDetail(region);
-            initDetailMap(region);
-        } else {
+// ID가 없으면 오류 표시
+if (!regionId) {
+    console.error('❌ No region ID in URL');
+    document.getElementById('loading').innerHTML = 
+        '<p style="color: red;">잘못된 접근입니다. URL에 ID가 없습니다.</p>' +
+        '<a href="teas_by_region.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background:  #4F7B60; color: white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
+} else {
+    // JSON 데이터 로드
+    fetch('/data/tea_regions.json')  // ✅ 공백 제거! 
+        .then(response => {
+            console.log('📡 Response Status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(regions => {
+            console. log('✅ Loaded regions:', regions.length);
+            console.log('First region:', regions[0]);
+            
+            // String으로 타입 통일
+            const region = regions.find(r => String(r.id) === String(regionId));
+            
+            if (region) {
+                console. log('🎯 Found region:', region.name_ko);
+                displayRegionDetail(region);
+                initDetailMap(region);
+            } else {
+                console.error('❌ Region not found for ID:', regionId);
+                console.log('Available IDs:', regions.map(r => r.id));
+                showError();
+            }
+        })
+        .catch(error => {
+            console. error('❌ Fetch Error:', error);
             showError();
-        }
-    })
-    .catch(error => {
-        console.error('데이터 로드 실패:', error);
-        showError();
-    });
+        });
+}
 
 // 산지 상세 정보 표시
 function displayRegionDetail(region) {
-    // 로딩 숨기기
     document.getElementById('loading').style.display = 'none';
     document.getElementById('region-detail').style.display = 'block';
     document.getElementById('detail-map').style.display = 'block';
     
-    // 페이지 제목 변경
-    document.getElementById('page-title').textContent = region.name_en;
+    document.getElementById('page-title').textContent = region. name_en;
     document.getElementById('page-subtitle').textContent = `${region.name_ko} - ${region.country}`;
     document.getElementById('breadcrumb-current').textContent = region.name_ko;
     document.title = `The Tea Atelier | ${region.name_ko}`;
     
-    // 상세 정보 HTML 생성
     document.getElementById('region-detail').innerHTML = `
         <div class="featured-hero">
             <img src="${region.image_hero_url}" 
@@ -78,12 +96,14 @@ function displayRegionDetail(region) {
 
 // Google Maps 표시
 function initDetailMap(region) {
+    console.log('🗺️ Initializing map for:', region.name_ko);
+    
     const position = {
         lat: parseFloat(region.latitude),
         lng: parseFloat(region.longitude)
     };
     
-    const map = new google.maps. Map(document.getElementById('detail-map'), {
+    const map = new google.maps.Map(document.getElementById('detail-map'), {
         zoom: 10,
         center: position,
         mapTypeId: 'hybrid',
@@ -129,7 +149,7 @@ function initDetailMap(region) {
                 <p style="margin: 3px 0; font-size: 14px; color: #555;">
                     ${region.country_flag} ${region.country}
                 </p>
-                <p style="margin: 3px 0; font-size:  13px; color: #4F7B60; font-weight: 600;">
+                <p style="margin: 3px 0; font-size: 13px; color: #4F7B60; font-weight: 600;">
                     ${region.tea_type}
                 </p>
                 <p style="margin: 3px 0; font-size: 12px; color: #888;">
@@ -143,17 +163,20 @@ function initDetailMap(region) {
     
     marker.addListener('click', () => {
         if (infoWindow.getMap()) {
-            infoWindow. close();
+            infoWindow.close();
         } else {
             infoWindow.open(map, marker);
         }
     });
+    
+    console.log('✅ Map initialized successfully');
 }
 
 // 오류 표시
 function showError() {
     document.getElementById('loading').innerHTML = 
-        '<p style="color: red;">산지 정보를 찾을 수 없습니다. </p>';
+        '<p style="color: red;">산지 정보를 찾을 수 없습니다.</p>' +
+        '<a href="teas_by_region.html" style="display: inline-block; margin-top:  20px; padding: 10px 20px; background: #4F7B60; color:  white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
     document.getElementById('region-detail').style.display = 'none';
     document.getElementById('detail-map').style.display = 'none';
 }

@@ -211,8 +211,8 @@ function addMapMarkers(regions) {
                     <p style="margin: 5px 0; font-size: 12px; color: #888;">
                         📍 ${region.altitude}
                     </p>
-                    <a href="region_detail.html? id=${region.id}" 
-                       style="display: inline-block; margin-top: 10px; color: #AA3624; text-decoration: none; font-weight: 600; font-size: 13px;">
+                    <a href="region_detail.html?id=${region.id}" 
+                        style="display: inline-block; margin-top: 10px; color: #AA3624; text-decoration: none; font-weight: 600; font-size: 13px;">
                         자세히 보기 →
                     </a>
                 </div>
