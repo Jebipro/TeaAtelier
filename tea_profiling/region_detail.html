@@ -3,16 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Tea Atelier | 산지별 티</title>
-
-    <!-- GFS Didot 폰트 링크 -->
+    <title>The Tea Atelier | 산지 상세</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap" rel="stylesheet">
     
-    <!-- CSS 파일 링크 -->
-    <link rel="stylesheet" href="/resources/css/styles.css"> 
-    <link rel="stylesheet" href="/resources/css/subpage.css">
+    <link rel="stylesheet" href="../resources/css/styles.css"> 
+    <link rel="stylesheet" href="../resources/css/subpage.css">
+    
+    <style>
+        .region-detail-map {
+            width: 100%;
+            height: 450px;
+            border-radius: 12px;
+            margin-top: 40px;
+            box-shadow:  0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .region-detail-intro {
+            margin:  40px 0;
+        }
+        
+        .region-detail-intro h2 {
+            font-family:  'GFS Didot', serif;
+            font-size:  36px;
+            color: #AA3624;
+            margin-bottom: 20px;
+        }
+        
+        .region-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .meta-item {
+            padding: 10px 20px;
+            background-color:  #f0f7f4;
+            border-radius: 25px;
+            font-size:  15px;
+            color: #555;
+        }
+        
+        .region-detail-content h3 {
+            font-family: 'GFS Didot', serif;
+            font-size: 24px;
+            color: #AA3624;
+            margin:  40px 0 15px 0;
+        }
+        
+        .region-detail-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            margin:  60px auto 0;
+            padding: 15px 40px;
+            background-color: #4F7B60;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-back:hover {
+            background-color: #3d6249;
+        }
+        
+        .featured-hero {
+            width: 100%;
+            max-height: 500px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow:  0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .featured-hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -68,7 +146,7 @@
                     <div class="sub-menu-column">
                         <a href="/pairing/tea_food_pairing.html">티 푸드 페어링</a>
                         <a href="/pairing/blending_lab.html">블렌딩 연구소</a>
-                        <a href="/pairing/seasonal_pairings.html">시즌별 페어링</a>
+                        <a href="/pairing/seasonal_pairing.html">시즌별 페어링</a>
                     </div>
                     <div class="sub-menu-column">
                         <a href="/culture/tea_culture_magazine.html">티 문화 매거진</a>
@@ -90,16 +168,12 @@
         </div>
     </header>
 
-    <!-- 2. MAIN 콘텐츠 영역 시작 -->
     <main>
-        
-        <!-- 상단 제목 영역 -->
         <div class="page-header">
-            <h1>티 프로파일링</h1>
-            <p>Tea Profiling: The Comprehensive Archive of Tea Knowledge</p>
+            <h1 id="page-title">티 프로파일링</h1>
+            <p id="page-subtitle">Tea Region Details</p>
         </div>
         
-        <!-- ❗ 수평 LNB (Sub Menu Bar) -->
         <div class="horizontal-lnb-wrapper">
             <nav class="horizontal-lnb">
                 <ul>
@@ -111,35 +185,39 @@
             </nav>
         </div>
         
-        <!-- ❗ Breadcrumb 경로 표시: LNB 아래에 배치 -->
         <div class="breadcrumb-wrapper">
             <div class="breadcrumb">
-                <a href="/index.html">HOME</a>
+                <a href="../index.html">HOME</a>
                 <span>&gt;</span>
                 <a href="the_six_tea.html">티 프로파일링</a>
                 <span>&gt;</span>
-                <span class="current-page">산지별 티</span>
+                <a href="teas_by_region.html">산지별 티</a>
+                <span>&gt;</span>
+                <span class="current-page" id="breadcrumb-current">로딩 중...</span>
             </div>
         </div>
         
-        <!-- 1단 레이아웃 컨테이너 (메인 콘텐츠) -->
         <div class="sub-page-container">
-            
-            <section id="origin-map-section" class="content-section" style="border-bottom: none;">
-                <h2>전 세계 다원(茶園) 지도 및 떼루아(Terroir) 이해</h2>
-                <p class="intro-text" style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
-                    차의 품질은 토양, 기후, 고도 등 산지의 자연적 환경(떼루아)에 의해 좌우됩니다. 세계 주요 다원의 지리적 특성을 이해하는 것은 프리미엄 티를 감별하는 첫 걸음입니다.
-                </p>
+            <section class="content-section" style="border-bottom: none;">
                 
-                <!-- Google Maps (세계 지도 + 마커) -->
-                <div id="world-map" style="width: 100%; height: 500px; border-radius: 12px; margin-bottom: 60px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
-                
-                <div class="origin-highlight-grid" id="regions-container">
-                    <!-- JavaScript로 동적 생성 -->
-                    <div style="text-align: center; padding: 40px;">
-                        <p>데이터를 불러오는 중... </p>
-                    </div>
+                <!-- 로딩 메시지 -->
+                <div id="loading" style="text-align: center; padding: 100px 0;">
+                    <p>데이터를 불러오는 중...</p>
                 </div>
+                
+                <!-- 산지 상세 정보 -->
+                <div id="region-detail" style="display: none;">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+                
+                <!-- 지도 -->
+                <div id="detail-map" class="region-detail-map" style="display: none;"></div>
+                
+                <!-- 뒤로 가기 -->
+                <div style="text-align: center;">
+                    <a href="teas_by_region.html" class="btn-back">← 산지 목록으로 돌아가기</a>
+                </div>
+
             </section>
         </div>
     </main>
@@ -196,10 +274,9 @@
     </footer>
 
     <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQflnVdfP0EWbmfjqh2PnvbhdANc69DeM&callback=initMap" async defer></script>
-
-    <!-- JavaScript 파일 링크 -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQflnVdfP0EWbmfjqh2PnvbhdANc69DeM"></script>
+    
     <script src="/resources/js/scripts.js"></script>
-    <script src="../resources/js/regions.js"></script>
+    <script src="/resources/js/region_detail.js"></script>
 </body>
 </html>
