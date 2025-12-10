@@ -98,9 +98,9 @@
     background-color: #fff5f5;
 }
 
-.horizontal-lnb ul li .active a::after,
-.horizontal-lnb ul li a .active::after {
-    width:  80%;
+.horizontal-lnb ul li.active a::after,
+.horizontal-lnb ul li a.active::after {
+    width: 80%;
     background-color: #AA3624;
 }
 
@@ -203,8 +203,8 @@
     height: 100%;
 }
 
-.value-card :hover {
-    transform:  translateY(-5px);
+.value-card:hover {
+    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
@@ -219,13 +219,13 @@
     white-space: nowrap;
 }
 
-.value-card h3 ::after {
+.value-card h3::after {
     content: '';
     display: block;
     width: 50px;
     height: 2px;
     background-color: #4F7B60;
-    margin:  0 auto;
+    margin: 0 auto;
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -279,24 +279,24 @@
 }
 
 .brand-story .reverse {
-    flex-direction:  row-reverse;
+    flex-direction: row-reverse;
 }
 
-/* 새로운 이미지 스타일 - 직접 img 사용 */
+/* 이미지 스타일 */
 .story-image-direct {
     flex: 0 0 50%;
     width: 50%;
     max-width: 600px;
     height: auto;
-    max-height: 400px; /* 최대 높이 제한 */
-    border-radius: 8px;
-    box-shadow:  0 4px 12px rgba(0, 0, 0, 0.08);
+    max-height: 400px;
+    border-radius:  8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     object-fit: cover;
     object-position: center center;
 }
 
 .story-content {
-    flex: 1;
+    flex:  1;
 }
 
 .story-content h3 {
@@ -312,7 +312,7 @@
     display: block;
     width: 60px;
     height: 3px;
-    background-color:#AA3624;
+    background-color: #AA3624;
     margin-top: 10px;
 }
 
@@ -327,40 +327,47 @@
 /* 14. CRAFTSMANSHIP CONTENT BLOCK */
 /* ---------------------------------------------------- */
 .content-block {
-    display: flex;
-    align-items: center;
-    gap:  50px;
-    margin-bottom: 80px;
-    padding: 40px;
-    background-color: #fafafa;
-    border-radius:  12px;
+    display:  flex;
+    align-items:  center;
+    gap: 60px;
+    margin-bottom:  100px;
+    /* 배경색, 패딩, border-radius 제거 - 브랜드 비전과 통일 */
 }
 
-.content-block.right-image {
+.content-block .right-image {
     flex-direction: row-reverse;
 }
 
-/* 새로운 이미지 스타일 */
+/* 이미지 스타일 */
 .block-image-direct {
-    flex: 0 0 45%;
-    width: 45%;
-    max-width: 500px;
+    flex: 0 0 48%;
+    width: 48%;
+    max-width: 550px;
     height: auto;
-    max-height: 320px;
-    border-radius: 8px;
-    box-shadow:  0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 380px;
+    border-radius:  8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     object-fit: cover;
     object-position: center center;
 }
 
 .content-block-text {
-    flex: 1;
+    flex:  1;
 }
 
 .content-block-text h3 {
-    font-size: 26px;
+    font-size: 28px;
     font-family:  'GFS Didot', serif;
     color: #AA3624;
+    margin-bottom: 15px;
+}
+
+.content-block-text .subtitle {
+    font-size: 13px;
+    color: #999;
+    font-weight: 600;
+    text-transform:  uppercase;
+    letter-spacing:  1.5px;
     margin-bottom: 20px;
 }
 
@@ -368,7 +375,11 @@
     font-size: 16px;
     line-height: 1.8;
     color: #555;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
+}
+
+.content-block-text p:last-child {
+    margin-bottom: 0;
 }
 
 /* ======================================================== */
@@ -426,14 +437,14 @@
     margin-bottom: 5px;
 }
 
-.tea-content p .classification {
+.tea-content p.classification {
     font-size: 14px;
     color: #AA3624;
     font-weight: 600;
     margin-bottom: 15px;
 }
 
-.tea-content p .description {
+.tea-content p.description {
     font-size: 15px;
     color: #666;
     line-height: 1.7;
@@ -488,14 +499,14 @@
     padding-top: 0;
 }
 
-.tea-profile-intro p .date {
+.tea-profile-intro p.date {
     font-size: 16px;
     color: #4F7B60;
     font-weight: 600;
     margin-bottom: 30px;
 }
 
-.tea-profile-intro p .summary {
+.tea-profile-intro p.summary {
     font-size: 16px;
     line-height: 1.7;
     color: #333;
@@ -579,7 +590,7 @@
     border: 1px solid #ddd;
 }
 
-.tea-brewing-table tbody tr :nth-child(even) {
+.tea-brewing-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
@@ -632,16 +643,16 @@
     margin-bottom: 5px;
 }
 
-.origin-card p .region {
+.origin-card p.region {
     font-size: 16px;
     color: #4F7B60;
     font-weight: 600;
     margin-bottom: 15px;
     border-bottom: 1px dashed #eee;
-    padding-bottom:  10px;
+    padding-bottom: 10px;
 }
 
-.origin-card p .description {
+.origin-card p.description {
     font-size: 15px;
     color: #666;
     line-height: 1.7;
@@ -672,7 +683,7 @@
     margin-bottom: 5px;
 }
 
-.pairing-card p .theme {
+.pairing-card p.theme {
     font-size: 16px;
     color: #AA3624;
     font-weight: 600;
@@ -721,7 +732,7 @@
     padding-top: 0;
 }
 
-.blending-lab-intro p .summary {
+.blending-lab-intro p.summary {
     font-size: 18px;
     line-height: 1.7;
     color: #333;
@@ -745,8 +756,8 @@
     flex-direction: column;
 }
 
-.recipe-card :hover {
-    box-shadow:  0 8px 20px rgba(0, 0, 0, 0.1);
+.recipe-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .recipe-header {
@@ -762,7 +773,7 @@
     margin-bottom: 5px;
 }
 
-.recipe-header p .tea-type {
+.recipe-header p.tea-type {
     font-size: 14px;
     color: #4F7B60;
     font-weight: 600;
@@ -844,7 +855,7 @@
     background-color: #fafafa;
 }
 
-.season-card :hover {
+.season-card:hover {
     background-color: #f5f5f5;
 }
 
@@ -901,19 +912,19 @@
 }
 
 /* 클릭 불가능한 카드 스타일 */
-.article-card .disabled {
+.article-card.disabled {
     opacity: 0.7;
     cursor: default;
     pointer-events: none;
 }
 
-.article-card .disabled:hover {
+.article-card.disabled:hover {
     transform: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.article-card .disabled .article-content h3,
-.article-card .disabled .article-content p {
+.article-card.disabled .article-content h3,
+.article-card.disabled .article-content p {
     color: #999;
 }
 
@@ -940,13 +951,13 @@
     font-weight: 700;
 }
 
-.article-content p date {
+.article-content p.date {
     font-size: 13px;
     color: #AA3624;
     margin-bottom: 15px;
 }
 
-.article-content p .summary {
+.article-content p.summary {
     font-size: 14px;
     color: #666;
     line-height: 1.6;
@@ -999,7 +1010,7 @@
     transition: background-color 0.2s;
 }
 
-.notice-list tbody tr :hover {
+.notice-list tbody tr:hover {
     background-color: #fcfcfc;
 }
 
@@ -1028,7 +1039,7 @@
     transition: color 0.2s;
 }
 
-.notice-list .title a :hover {
+.notice-list .title a:hover {
     color: #AA3624;
 }
 
@@ -1062,7 +1073,7 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-.pagination a :hover {
+.pagination a:hover {
     background-color: #4F7B60;
     color: white;
 }
@@ -1118,7 +1129,7 @@
     transition: background-color 0.2s;
 }
 
-.faq-question :hover {
+.faq-question:hover {
     background-color: #f7f7f7;
 }
 
@@ -1160,7 +1171,7 @@
     transition: transform 0.3s;
 }
 
-.faq-item .active .icon {
+.faq-item.active .icon {
     transform: rotate(180deg);
 }
 
@@ -1184,7 +1195,7 @@
     transition: all 0.2s;
 }
 
-.media-filter button :hover, .media-filter button.active {
+.media-filter button:hover, .media-filter button.active {
     background-color: #4F7B60;
     color: white;
     border-color: #4F7B60;
@@ -1206,7 +1217,7 @@
     transition: box-shadow 0.3s ease;
 }
 
-.media-card :hover {
+.media-card:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -1231,16 +1242,16 @@
     font-weight:  600;
 }
 
-.media-content p .source {
+.media-content p.source {
     font-size: 13px;
     color: #4F7B60;
     margin-bottom: 10px;
 }
 
-.media-content p .summary {
+.media-content p.summary {
     font-size: 14px;
     color: #666;
-    line-height:  1.5;
+    line-height: 1.5;
     height: 65px;
     overflow: hidden;
 }
@@ -1313,7 +1324,7 @@
     
     /* Brand Vision Story - 새로운 이미지 스타일 반응형 */
     .brand-story,
-    .brand-story.reverse {
+    .brand-story .reverse {
         flex-direction: column;
         gap:  30px;
         margin-top: 60px;
