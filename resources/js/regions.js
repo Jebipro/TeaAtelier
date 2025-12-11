@@ -9,7 +9,7 @@ function initMap() {
     // 세계 지도 중심 (아시아 중심)
     map = new google.maps.Map(document.getElementById('world-map'), {
         zoom: initialZoom,
-        center:  initialCenter,
+        center: initialCenter,
         mapTypeId: 'hybrid',  // ✨ 위성 지도 (hybrid = 위성 + 라벨)
         mapTypeControl: true,  // ✨ 지도 타입 전환 버튼
         mapTypeControlOptions: {
@@ -53,7 +53,7 @@ function addResetButton() {
         cursor: pointer;
         font-family: 'Noto Sans KR', sans-serif;
         font-size: 14px;
-        font-weight:  600;
+        font-weight: 600;
         margin: 10px;
         padding: 12px 20px;
         transition: all 0.3s;

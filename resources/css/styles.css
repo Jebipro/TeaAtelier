@@ -233,7 +233,7 @@ header.scrolled .gnb ul li:hover > a {
     color: #F1ECC4;
 }
 .title-main { 
-    font-size: 56px;  
+    font-size: 56px;
     font-weight: 400;
     color: #AA3624;
     margin-top: 5px;
@@ -522,7 +522,7 @@ footer {
     
     /* 로고 크기 축소 */
     header .logo a {
-        font-size:  20px;
+        font-size: 20px;
     }
     
     /* 메뉴 텍스트 크기 축소 */

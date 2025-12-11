@@ -8,13 +8,13 @@
 .page-header {
     padding-top: 0;
     background-color: transparent;
-    padding:  80px 80px 30px 80px;
+    padding: 80px 80px 30px 80px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
 .page-header h1 {
     font-size: 48px;
-    font-family:  'GFS Didot', serif;
+    font-family: 'GFS Didot', serif;
     color: #AA3624;
     margin-bottom: 10px;
 }
@@ -47,7 +47,7 @@
 .horizontal-lnb ul {
     list-style: none;
     padding: 0;
-    margin:  0;
+    margin: 0;
     display: flex;
 }
 
@@ -72,7 +72,7 @@
     content: '';
     position: absolute;
     left: 50%;
-    bottom:  0;
+    bottom: 0;
     height: 3px;
     width: 0;
     background-color: transparent;
@@ -128,7 +128,7 @@
     color: #4F7B60;
 }
 .breadcrumb span {
-    margin:  0 8px;
+    margin: 0 8px;
 }
 .breadcrumb .current-page {
     color: #AA3624;
@@ -150,8 +150,8 @@
 
 .content-section {
     padding-bottom: 80px;
-    margin-bottom:  50px;
-    border-bottom:  1px solid #eee;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #eee;
 }
 .content-section:last-child { 
     border-bottom: none; 
@@ -159,7 +159,7 @@
 
 .content-section h2 {
     font-size: 38px;
-    font-family:  'GFS Didot', serif;
+    font-family: 'GFS Didot', serif;
     color: #4F7B60;
     margin-bottom: 50px;
     padding-top: 0;
@@ -233,14 +233,14 @@
 }
 
 .value-card p {
-    font-size:  15px;
+    font-size: 15px;
     color: #666;
     line-height: 1.7;
     margin-top: 20px;
 }
 
 /* ================================================== */
-/* 검색창 구현 (search)  */
+/* 검색창 구현 (search) */
 /* ================================================== */
 
 .search-header {
@@ -267,8 +267,8 @@
 .search-box input {
     flex: 1;
     padding: 15px 20px;
-    font-size:  16px;
-    border:  2px solid #4F7B60;
+    font-size: 16px;
+    border: 2px solid #4F7B60;
     border-radius: 30px;
     outline: none;
     transition: border-color 0.3s;
@@ -310,7 +310,7 @@
     background: #AA3624;
     color: white;
     padding: 8px 15px;
-    border-radius:  20px;
+    border-radius: 20px;
     font-size: 14px;
     display: inline-flex;
     align-items: center;
@@ -380,7 +380,7 @@
     font-size: 13px;
     color: #4F7B60;
     font-weight: 600;
-    margin-bottom:  10px;
+    margin-bottom: 10px;
 }
 
 .result-content p {
@@ -399,9 +399,9 @@
 .result-tags span {
     background: #f0f0f0;
     padding: 4px 10px;
-    border-radius:  12px;
-    font-size:  12px;
-    color:  #555;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #555;
 }
 
 .no-results {
@@ -420,7 +420,7 @@
 /* ---------------------------------------------------- */
 #brand-vision .intro-text {
     font-size: 18px;
-    line-height:  1.8;
+    line-height: 1.8;
     color: #333;
     text-align: center;
     max-width: 900px;
@@ -430,11 +430,11 @@
 
 .vision-hero {
     width: 100%;
-    height:  450px;
+    height: 450px;
     overflow: hidden;
     margin-bottom: 70px;
     border-radius: 10px;
-    box-shadow:  0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 .vision-hero img {
     width: 100%;
@@ -462,14 +462,14 @@
     max-width: 600px;
     height: auto;
     max-height: 400px;
-    border-radius:  8px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     object-fit: cover;
     object-position: center center;
 }
 
 .story-content {
-    flex:  1;
+    flex: 1;
 }
 
 .story-content h3 {
@@ -500,10 +500,10 @@
 /* PHILOSOPHY: 윤리 경영 (craftsmanship.html) */
 /* ---------------------------------------------------- */
 .content-block {
-    display:  flex;
-    align-items:  center;
+    display: flex;
+    align-items: center;
     gap: 60px;
-    margin-bottom:  100px;
+    margin-bottom: 100px;
     /* 배경색, 패딩, border-radius 제거 - 브랜드 비전과 통일 */
 }
 
@@ -518,19 +518,19 @@
     max-width: 550px;
     height: auto;
     max-height: 380px;
-    border-radius:  8px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     object-fit: cover;
     object-position: center center;
 }
 
 .content-block-text {
-    flex:  1;
+    flex: 1;
 }
 
 .content-block-text h3 {
     font-size: 28px;
-    font-family:  'GFS Didot', serif;
+    font-family: 'GFS Didot', serif;
     color: #AA3624;
     margin-bottom: 15px;
 }
@@ -539,8 +539,8 @@
     font-size: 13px;
     color: #999;
     font-weight: 600;
-    text-transform:  uppercase;
-    letter-spacing:  1.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
     margin-bottom: 20px;
 }
 
@@ -563,7 +563,7 @@
     width: 100%;
     height: 500px;
     border-radius: 12px;
-    box-shadow:  0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 50px;
 }
 
@@ -577,7 +577,7 @@
 .transport-info {
     margin-top: 40px;
     padding: 30px;
-    background-color:  #f9f9f9;
+    background-color: #f9f9f9;
     border-radius: 8px;
 }
 
@@ -596,18 +596,18 @@
 .parking-info {
     margin-top: 20px;
     padding: 30px;
-    background-color:  #f0f7f4;
+    background-color: #f0f7f4;
     border-radius: 8px;
 }
 
 /* ---------------------------------------------------- */
-/* TEA PROFILING:  6대 다류 (the_six_tea.html) */
+/* TEA PROFILING: 6대 다류 (the_six_tea.html) */
 /* ---------------------------------------------------- */
 .tea-type-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px;
-    margin-top:  40px;
+    margin-top: 40px;
 }
 
 .tea-card {
@@ -633,9 +633,9 @@
 }
 
 .tea-image img {
-    width:  100%;
+    width: 100%;
     height: 100%;
-    object-fit:  contain; /* cover → contain으로 변경 */
+    object-fit: contain; /* cover → contain으로 변경 */
     padding: 20px; /* 이미지 주변 여백 추가 */
     display: block;
 }
@@ -700,8 +700,8 @@
 }
 
 .tea-profile-intro h2 {
-    font-size:  40px;
-    font-family:  'GFS Didot', serif;
+    font-size: 40px;
+    font-family: 'GFS Didot', serif;
     color: #AA3624;
     margin-bottom: 5px;
     padding-top: 0;
@@ -722,7 +722,7 @@
 
 .tasting-notes-grid {
     display: grid;
-    grid-template-columns:  repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 40px 0;
     margin-bottom: 80px;
@@ -782,7 +782,7 @@
 
 .tea-brewing-table {
     width: 100%;
-    margin:  50px auto;
+    margin: 50px auto;
     border-collapse: collapse;
     font-size: 15px;
 }
@@ -829,7 +829,7 @@
 
 /* 산지 카드 그리드 */
 .origin-highlight-grid {
-    display:  grid;
+    display: grid;
     grid-template-columns: 1fr;
     gap: 40px;
 }
@@ -843,14 +843,14 @@
 }
 
 .origin-card-link:hover {
-    transform:  translateY(-5px);
+    transform: translateY(-5px);
 }
 
 /* 개별 산지 카드 */
 .origin-card {
     display: flex;
     gap: 40px;
-    align-items:  flex-start;
+    align-items: flex-start;
     padding-bottom: 40px;
     border-bottom: 1px solid #e0e0e0;
     transition: box-shadow 0.3s;
@@ -892,8 +892,8 @@
 }
 
 .origin-card-content .region {
-    font-size:  16px;
-    color:  #4F7B60;
+    font-size: 16px;
+    color: #4F7B60;
     font-weight: 600;
     margin-bottom: 5px;
 }
@@ -915,17 +915,17 @@
 .terroir-tags {
     display: flex;
     gap: 10px;
-    flex-wrap:  wrap;
-    margin-bottom:  15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
 .terroir-tags .tag {
     display: inline-block;
     padding: 6px 14px;
-    background-color:  #f0f7f4;
+    background-color: #f0f7f4;
     color: #4F7B60;
     font-size: 13px;
-    border-radius:  20px;
+    border-radius: 20px;
     font-weight: 500;
 }
 
@@ -943,7 +943,7 @@
 }
 
 /* 반응형 */
-@media (max-width:  1024px) {
+@media (max-width: 1024px) {
     .origin-card {
         flex-direction: column;
         gap: 25px;
@@ -994,16 +994,16 @@
     height: 450px;
     border-radius: 12px;
     margin-top: 40px;
-    box-shadow:  0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .region-detail-intro {
-    margin:  40px 0;
+    margin: 40px 0;
 }
 
 .region-detail-intro h2 {
-    font-family:  'GFS Didot', serif;
-    font-size:  36px;
+    font-family: 'GFS Didot', serif;
+    font-size: 36px;
     color: #AA3624;
     margin-bottom: 20px;
 }
@@ -1017,9 +1017,9 @@
 
 .meta-item {
     padding: 10px 20px;
-    background-color:  #f0f7f4;
+    background-color: #f0f7f4;
     border-radius: 25px;
-    font-size:  15px;
+    font-size: 15px;
     color: #555;
 }
 
@@ -1027,7 +1027,7 @@
     font-family: 'GFS Didot', serif;
     font-size: 24px;
     color: #AA3624;
-    margin:  40px 0 15px 0;
+    margin: 40px 0 15px 0;
 }
 
 .region-detail-content p {
@@ -1038,7 +1038,7 @@
 
 .btn-back {
     display: inline-block;
-    margin:  60px auto 0;
+    margin: 60px auto 0;
     padding: 15px 40px;
     background-color: #4F7B60;
     color: white;
@@ -1053,7 +1053,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* PAIRING:  티 푸드 페어링 (tea_food_pairing.html) */
+/* PAIRING: 티 푸드 페어링 (tea_food_pairing.html) */
 /* ---------------------------------------------------- */
 .pairing-guide-grid {
     display: grid;
@@ -1066,13 +1066,13 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 30px;
-    box-shadow:  0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     background-color: #fafafa;
 }
 
 .pairing-card h3 {
-    font-size:  26px;
-    font-family:  'GFS Didot', serif;
+    font-size: 26px;
+    font-family: 'GFS Didot', serif;
     color: #4F7B60;
     margin-bottom: 5px;
 }
@@ -1094,7 +1094,7 @@
     font-size: 15px;
     line-height: 1.7;
     color: #555;
-    margin:  5px 0;
+    margin: 5px 0;
 }
 
 .food-image {
@@ -1120,7 +1120,7 @@
 
 .blending-lab-intro h2 {
     font-size: 42px;
-    font-family:  'GFS Didot', serif;
+    font-family: 'GFS Didot', serif;
     color: #4F7B60;
     margin-bottom: 20px;
     padding-top: 0;
@@ -1156,13 +1156,13 @@
 
 .recipe-header {
     padding: 20px 25px;
-    background-color:  #f7f7f7;
+    background-color: #f7f7f7;
     border-bottom: 2px solid #AA3624;
 }
 
 .recipe-header h3 {
     font-size: 24px;
-    font-family:  'GFS Didot', serif;
+    font-family: 'GFS Didot', serif;
     color: #000;
     margin-bottom: 5px;
 }
@@ -1179,16 +1179,16 @@
 }
 
 .recipe-body h4 {
-    font-size:  18px;
-    color:  #AA3624;
+    font-size: 18px;
+    color: #AA3624;
     margin-bottom: 10px;
     font-weight: 700;
 }
 
 .recipe-body ul {
     list-style: disc;
-    margin:  0 0 20px 20px;
-    padding:  0;
+    margin: 0 0 20px 20px;
+    padding: 0;
     font-size: 15px;
     color: #555;
     line-height: 1.7;
@@ -1210,7 +1210,7 @@
 .season-container {
     margin-bottom: 80px;
     padding: 40px;
-    border:  1px solid #e0e0e0;
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     background-color: #ffffff;
@@ -1218,12 +1218,12 @@
 
 .season-container h3 {
     font-size: 32px;
-    font-family:  'GFS Didot', serif;
+    font-family: 'GFS Didot', serif;
     color: #4F7B60;
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom:  2px solid #AA3624;
+    border-bottom: 2px solid #AA3624;
     display: inline-block;
 }
 
@@ -1234,7 +1234,7 @@
 
 .season-card-grid {
     display: grid;
-    grid-template-columns:  repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
     margin-top: 30px;
 }
@@ -1279,7 +1279,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* CULTURE:  티 문화 매거진 (culture_magazine.html) */
+/* CULTURE: 티 문화 매거진 (culture_magazine.html) */
 /* ---------------------------------------------------- */
 .magazine-grid {
     display: grid;
@@ -1294,7 +1294,7 @@
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-decoration:  none;
+    text-decoration: none;
     color: inherit;
     display: block;
     cursor: pointer;
@@ -1365,7 +1365,7 @@
     }
 }
 
-@media (max-width:  768px) {
+@media (max-width: 768px) {
     .magazine-grid {
         grid-template-columns: 1fr;
     }
@@ -1411,7 +1411,7 @@
 .notice-list .category {
     font-size: 12px;
     font-weight: 700;
-    padding:  4px 8px;
+    padding: 4px 8px;
     border-radius: 4px;
     margin-right: 8px;
     display: inline-block;
@@ -1446,9 +1446,9 @@
 
 .notice-list .views {
     width: 60px;
-    text-align:  center;
-    font-size:  14px;
-    color:  #888;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
 }
 
 .pagination {
@@ -1510,7 +1510,7 @@
 }
 
 .faq-category-filter button.active {
-    background-color:  #AA3624;
+    background-color: #AA3624;
     color: white;
     border-color: #AA3624;
 }
@@ -1538,7 +1538,7 @@
 }
 
 #clearSearchBtn {
-    position:  absolute;
+    position: absolute;
     right: -50px;
     top: 50%;
     transform: translateY(-50%);
@@ -1548,19 +1548,19 @@
     background-color: #ccc;
     color: white;
     border-radius: 50%;
-    font-size:  20px;
+    font-size: 20px;
     line-height: 1;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 #clearSearchBtn:hover {
-    background-color:  #AA3624;
+    background-color: #AA3624;
 }
 
 /* 검색 결과 카운트 */
 #searchResultCount {
-    font-weight:  600;
+    font-weight: 600;
     color: #4F7B60;
     text-align: center;
     margin-bottom: 20px;
@@ -1605,7 +1605,7 @@
 }
 
 .faq-item {
-    border-bottom:  1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 
 .faq-question {
@@ -1613,8 +1613,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 18px 20px;
-    cursor:  pointer;
-    font-size:  16px;
+    cursor: pointer;
+    font-size: 16px;
     font-weight: 600;
     color: #333;
     background-color: #fff;
@@ -1649,12 +1649,12 @@
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    padding:  0 20px;
+    padding: 0 20px;
     background-color: #fcfcfc;
-    border-top:  1px solid #f0f0f0;
-    transition:  max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
-    font-size:  15px;
-    color:  #555;
+    border-top: 1px solid #f0f0f0;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    font-size: 15px;
+    color: #555;
     line-height: 1.7;
 }
 
@@ -1663,7 +1663,7 @@
 }
 
 .faq-item.active .faq-answer {
-    max-height:  500px;
+    max-height: 500px;
     padding: 20px;
 }
 
@@ -1694,7 +1694,7 @@
     display: block;
     font-size: 15px;
     font-weight: 600;
-    color:  #333;
+    color: #333;
     margin-bottom: 8px;
 }
 
@@ -1708,9 +1708,9 @@
 .form-group textarea {
     width: 100%;
     padding: 12px 15px;
-    border:  1px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 6px;
-    font-size:  15px;
+    font-size: 15px;
     font-family: 'Noto Sans KR', sans-serif;
     transition: border-color 0.3s;
 }
@@ -1746,7 +1746,7 @@
     border: none;
     border-radius: 6px;
     font-size: 16px;
-    font-weight:  600;
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -1758,13 +1758,13 @@
 /* 문의 채널 카드 */
 .contact-channels {
     display: grid;
-    grid-template-columns:  repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-top: 40px;
 }
 
 .channel-card {
-    background-color:  #ffffff;
+    background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 30px;
@@ -1797,8 +1797,8 @@
     color: white;
     text-decoration: none;
     border-radius: 4px;
-    font-size:  14px;
-    transition:  background-color 0.3s;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
 .channel-card a:hover {
@@ -1806,7 +1806,7 @@
 }
 
 /* 반응형 */
-@media (max-width:  1024px) {
+@media (max-width: 1024px) {
     .contact-channels {
         grid-template-columns: 1fr;
     }
@@ -1817,7 +1817,7 @@
 
 @media (max-width: 768px) {
     .faq-category-filter {
-        gap:  8px;
+        gap: 8px;
     }
     .faq-category-filter button {
         padding: 8px 15px;
@@ -1826,7 +1826,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* CULTURE:  미디어 & 보도 (media_press.html) */
+/* CULTURE: 미디어 & 보도 (media_press.html) */
 /* ---------------------------------------------------- */
 
 /* 미디어 필터 버튼 */
@@ -1834,12 +1834,12 @@
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom:  50px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
 }
 
 .media-filter button {
-    padding:  10px 20px;
+    padding: 10px 20px;
     background-color: #f7f7f7;
     border: 1px solid #ddd;
     border-radius: 20px;
@@ -1851,8 +1851,8 @@
 }
 
 .media-filter button:hover {
-    background-color:  #4F7B60;
-    color:  white;
+    background-color: #4F7B60;
+    color: white;
     border-color: #4F7B60;
 }
 
@@ -1969,7 +1969,7 @@
 }
 
 .press-kit-item .icon {
-    font-size:  48px;
+    font-size: 48px;
     margin-bottom: 15px;
     display: block;
 }
@@ -1991,7 +1991,7 @@
 .press-kit-item a {
     display: inline-block;
     padding: 10px 25px;
-    background-color:  #4F7B60;
+    background-color: #4F7B60;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -2004,7 +2004,7 @@
 }
 
 /* 반응형 */
-@media (max-width:  1024px) {
+@media (max-width: 1024px) {
     .media-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -2013,7 +2013,7 @@
     }
 }
 
-@media (max-width:  768px) {
+@media (max-width: 768px) {
     .media-grid {
         grid-template-columns: 1fr;
     }
@@ -2021,7 +2021,7 @@
         gap: 8px;
     }
     .media-filter button {
-        padding:  8px 15px;
+        padding: 8px 15px;
         font-size: 13px;
     }
 }
@@ -2044,7 +2044,7 @@
     .brand-story,
     .brand-story .reverse {
         flex-direction: column;
-        gap:  30px;
+        gap: 30px;
         margin-top: 60px;
     }
     
@@ -2061,7 +2061,7 @@
 
     .story-content h3 {
         font-size: 24px;
-        text-align:  center;
+        text-align: center;
     }
     
     .story-content h3 .underline {
@@ -2077,7 +2077,7 @@
     }
     
     .block-image-direct {
-        flex:  none;
+        flex: none;
         width: 100%;
         max-width: 100%;
         max-height: 300px; /* 태블릿에서 높이 제한 */
@@ -2190,7 +2190,7 @@
     }
     
     .page-header h1 {
-        font-size:  32px;
+        font-size: 32px;
     }
     
     /* Brand Vision Story */
@@ -2236,7 +2236,7 @@
     .value-grid-container {
         grid-template-columns: 1fr;
         gap: 15px;
-        margin-bottom:  50px;
+        margin-bottom: 50px;
     }
     
     .value-card {
@@ -2250,7 +2250,7 @@
     }
     
     .value-card h3 {
-        font-size:  18px;
+        font-size: 18px;
     }
     
     .value-card p {
@@ -2286,7 +2286,7 @@
     }
     
     .brew-guide-grid {
-        grid-template-columns:  1fr;
+        grid-template-columns: 1fr;
     }
     
     /* Origin & Region 페이지 */
@@ -2349,7 +2349,7 @@
     
     /* Content Block */
     .block-image-direct {
-        max-height:  230px;
+        max-height: 230px;
     }
 
     .content-block-text h3 {
@@ -2368,7 +2368,7 @@
     .value-icon {
         width: 65px;
         height: 65px;
-        background-size:  85px 85px;
+        background-size: 85px 85px;
         margin-bottom: 15px;
     }
     
@@ -2380,7 +2380,7 @@
     
     .value-card p {
         font-size: 14px;
-        line-height:  1.75;
+        line-height: 1.75;
     }
     
     /* Tea Profiling 페이지 */
@@ -2394,7 +2394,7 @@
 }
 
 /* ===== 초소형 화면 (360px 이하) ===== */
-@media (max-width:  360px) {
+@media (max-width: 360px) {
     /* 페이지 헤더 */
     .page-header h1 {
         font-size: 28px;
@@ -2423,7 +2423,7 @@
     }
     
     .content-block-text p {
-        font-size:  13px;
+        font-size: 13px;
     }
     
     /* Value 카드 */
@@ -2434,7 +2434,7 @@
     .value-icon {
         width: 60px;
         height: 60px;
-        background-size:  80px 80px;
+        background-size: 80px 80px;
     }
     
     .value-card h3 {
