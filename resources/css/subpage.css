@@ -1370,6 +1370,124 @@
         grid-template-columns: 1fr;
     }
 }
+/* ---------------------------------------------------- */
+/* CULTURE: 티 문화 매거진 - 기사 상세페이지 (article) */
+/* ---------------------------------------------------- */
+.article-header {
+    text-align: center;
+    padding: 80px 40px 40px;
+    border-bottom: 1px solid #e0e0e0;
+    }
+
+.article-header h1 {
+    font-size: 42px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.article-meta {
+    font-size: 15px;
+    color: #AA3624;
+    margin-bottom: 10px;
+}
+
+.article-author {
+    font-size: 14px;
+    color: #666;
+}
+
+.article-hero-image {
+    width: 100%;
+    max-width: 1000px;
+    height: 500px;
+    margin: 40px auto;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.article-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+    font-size: 17px;
+    line-height: 1.9;
+    color: #333;
+}
+
+.article-body h2 {
+    font-size: 30px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-top: 60px;
+    margin-bottom: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.article-body h2 :first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.article-body p {
+    margin-bottom: 20px;
+}
+
+.article-body blockquote {
+    border-left: 4px solid #AA3624;
+    padding-left: 20px;
+    margin: 30px 0;
+    font-style: italic;
+    color: #555;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.article-footer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #4F7B60;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #3d6249;
+}
+
+@media (max-width: 768px) {
+    .article-header h1 {
+        font-size: 32px;
+    }
+    .article-hero-image {
+        height: 300px;
+    }
+    .article-body {
+        padding: 30px 20px 60px;
+        font-size: 16px;
+    }
+}
 
 /* ---------------------------------------------------- */
 /* CULTURE: 공지사항 (notices.html) */
@@ -1476,6 +1594,335 @@
     background-color: #AA3624;
     color: white;
     border-color: #AA3624;
+}
+
+/* ---------------------------------------------------- */
+/* CULTURE: 공지사항 상세페이지 */
+/* ---------------------------------------------------- */
+.notice-category-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background-color: #AA3624;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.notice-detail-header {
+    text-align: center;
+    padding: 80px 40px 40px;
+    border-bottom: 1px solid #e0e0e0;
+}
+ 
+.notice-detail-header h1 {
+    font-size: 36px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.notice-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 14px;
+    color: #666;
+    margin-top: 15px;
+}
+
+.notice-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.notice-body {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+    font-size: 17px;
+    line-height: 1.9;
+    color: #333;
+}
+
+.notice-body h2 {
+    font-size: 26px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.notice-body h2:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.notice-body p {
+    margin-bottom: 20px;
+}
+
+.notice-body ul {
+    margin: 20px 0;
+    padding-left: 25px;
+}
+
+.notice-body ul li {
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.notice-highlight-box {
+    background-color: #f9f9f9;
+    border-left: 4px solid #AA3624;
+    padding: 20px 25px;
+    margin: 30px 0;
+    border-radius: 4px;
+}
+
+.notice-highlight-box strong {
+    color: #AA3624;
+    font-size: 18px;
+}
+
+.notice-footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.notice-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.notice-nav a {
+    flex: 1;
+    padding: 15px 20px;
+    background-color: #f7f7f7;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notice-nav a:hover {
+    background-color: #4F7B60;
+    color: white;
+}
+
+.notice-nav .prev::before {
+    content: '←';
+}
+
+.notice-nav .next::after {
+    content: '→';
+    margin-left: auto;
+}
+
+.back-to-list {
+    display: block;
+    text-align: center;
+    padding: 12px 30px;
+    background-color: #4F7B60;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.back-to-list:hover {
+    background-color: #3d6249;
+}
+
+.notice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+}
+
+.notice-table th,
+.notice-table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.notice-table th {
+    background-color: #4F7B60;
+    color: white;
+    font-weight: 600;
+}
+
+.notice-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.notice-category-badge {
+    background-color: #4F7B60;
+}
+
+.winner-list {
+    background-color: #f0f5f0;
+    padding: 25px;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.winner-list h3 {
+    font-size: 20px;
+    color: #4F7B60;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.winner-list ol {
+    list-style: none;
+    padding: 0;
+    counter-reset: winner-counter;
+}
+
+.winner-list ol li {
+    counter-increment: winner-counter;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 4px;
+    border-left: 3px solid #4F7B60;
+}
+
+.winner-list ol li::before {
+    content: counter(winner-counter) "등 ";
+    font-weight: 700;
+    color: #AA3624;
+    margin-right: 10px;
+}
+
+.info-box {
+    background-color: #f0f5f0;
+    border: 1px solid #4F7B60;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 30px 0;
+}
+
+.info-box h3 {
+    font-size: 18px;
+    color: #4F7B60;
+    margin-bottom: 15px;
+}
+
+.product-showcase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.product-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 25px;
+    background-color: #fafafa;
+    transition: box-shadow 0.3s;
+}
+
+.product-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-item h3 {
+    font-size: 22px;
+    font-family: 'GFS Didot', serif;
+    color: #AA3624;
+    margin-bottom: 10px;
+}
+
+.product-item .price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #4F7B60;
+    margin-bottom: 15px;
+}
+
+.product-item .description {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.product-item .tasting-notes {
+    background-color: white;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+}
+
+.event-benefits {
+    background-color: #fff5f5;
+    border: 2px solid #AA3624;
+    padding: 25px;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.event-benefits h3 {
+    font-size: 20px;
+    color: #AA3624;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.event-benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.event-benefits ul li {
+    padding: 10px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.event-benefits ul li:last-child {
+    border-bottom: none;
+}
+
+.event-benefits ul li::before {
+    content: '🎁 ';
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .notice-detail-header h1 {
+        font-size: 28px;
+    }
+    .notice-body {
+        padding: 40px 20px 60px;
+        font-size: 16px;
+    }
+    .notice-nav {
+        flex-direction: column;
+    }
+    .product-showcase {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ---------------------------------------------------- */
