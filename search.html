@@ -11,184 +11,10 @@
     
     <link rel="stylesheet" href="/resources/css/styles.css">
     <link rel="stylesheet" href="/resources/css/subpage.css">
-    
-    <style>
-        .search-header {
-            padding: 120px 80px 40px;
-            text-align: center;
-            background: linear-gradient(135deg, #f7f7f7 0%, #ffffff 100%);
-        }
-        
-        .search-header h1 {
-            font-size: 42px;
-            font-family: 'GFS Didot', serif;
-            color: #4F7B60;
-            margin-bottom: 20px;
-        }
-        
-        .search-box {
-            max-width: 700px;
-            margin: 0 auto 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .search-box input {
-            flex: 1;
-            padding: 15px 20px;
-            font-size:  16px;
-            border:  2px solid #4F7B60;
-            border-radius: 30px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        
-        .search-box input:focus {
-            border-color: #AA3624;
-        }
-        
-        .search-box button {
-            flex-shrink: 0;
-            background: #4F7B60;
-            border: none;
-            padding: 15px 35px;
-            border-radius: 30px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            white-space: nowrap;
-        }
-        
-        .search-box button:hover {
-            background: #3d6249;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(79, 123, 96, 0.3);
-        }
-        
-        .active-filters {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        
-        .filter-tag {
-            background: #AA3624;
-            color: white;
-            padding: 8px 15px;
-            border-radius:  20px;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .filter-tag.remove {
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .results-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 80px;
-        }
-        
-        .results-count {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .result-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.3s;
-            background: white;
-        }
-        
-        .result-card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .result-image {
-            width: 100%;
-            height: 200px;
-            background: #f7f7f7;
-            overflow: hidden;
-        }
-        
-        .result-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .result-content {
-            padding: 20px;
-        }
-        
-        .result-content h3 {
-            font-size: 20px;
-            color: #AA3624;
-            margin-bottom: 8px;
-        }
-        
-        .result-content .category {
-            font-size: 13px;
-            color: #4F7B60;
-            font-weight: 600;
-            margin-bottom:  10px;
-        }
-        
-        .result-content p {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .result-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        
-        .result-tags span {
-            background: #f0f0f0;
-            padding: 4px 10px;
-            border-radius:  12px;
-            font-size:  12px;
-            color:  #555;
-        }
-        
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        
-        .no-results h2 {
-            font-size: 32px;
-            color: #999;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
 
-    <!-- 1. HEADER 영역 (구조 통일) -->
+    <!-- 1. HEADER 영역 -->
     <header>
         <div class="nav-container">
             <div class="logo">
@@ -214,7 +40,7 @@
             </div>
         </div>
         
-        <!-- MEGA DROP DOWN WRAPPER (구조적 통일성 유지) -->
+        <!-- MEGA DROP DOWN WRAPPER -->
         <div class="mega-menu-wrapper">
             <div class="mega-menu-inner-content">
                 <!-- 스페이서 DIVs 유지 -->
@@ -270,7 +96,7 @@
             <button id="search-btn">검색</button>
         </div>
         <div class="active-filters" id="active-filters">
-            <!-- 활성 필터가 여기 표시됨 -->
+            <!-- 활성 필터 표시 -->
         </div>
     </div>
 
@@ -280,7 +106,6 @@
             <!-- 결과 개수 표시 -->
         </div>
         <div class="result-grid" id="results-grid">
-            <!-- 검색 결과 카드들이 여기 동적으로 삽입됨 -->
         </div>
         <div class="no-results" id="no-results" style="display: none;">
             <h2>검색 결과가 없습니다</h2>
