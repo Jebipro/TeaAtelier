@@ -193,4 +193,271 @@ document.addEventListener('DOMContentLoaded', function() {
         searchIcon.style.cursor = 'pointer';
     }
 
+    // 필터 버튼 클릭 이벤트
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 버튼 active 상태 변경
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            
+            // 미디어 카드 필터링
+            document.querySelectorAll('.media-card').forEach(card => {
+                if (filter === 'all') {
+                    card.style. display = 'block';
+                } else if (card.dataset.year === filter || card.dataset.category === filter) {
+                    card.style. display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+
+    // FAQ 아코디언 기능
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.icon').textContent = '+';
+            });
+            
+            if (!isActive) {
+                    faqItem.classList.add('active');
+                    question.querySelector('.icon').textContent = '−';
+            }
+        });
+    });
+
+    // 카테고리 필터 기능
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const searchInput = document.getElementById('faqSearchInput');
+            searchInput.value = '';
+            document.getElementById('clearSearchBtn').style.display = 'none';
+            removeHighlights();
+            
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const category = btn.dataset.category;
+            removeNoResultsMessage();
+            
+            let visibleCount = 0;
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (category === 'all' || item. dataset.category === category) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('active');
+                    item.querySelector('.icon').textContent = '+';
+                }
+            });
+            
+            updateResultCount(visibleCount, false);
+        });
+    });
+
+    // 검색 기능
+    const searchInput = document.getElementById('faqSearchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        
+        clearBtn.style.display = searchTerm ? 'block' : 'none';
+        removeHighlights();
+        removeNoResultsMessage();
+        
+        if (! searchTerm) {
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.style.display = 'block';
+            });
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+            updateResultCount(document.querySelectorAll('.faq-item').length, false);
+            return;
+        }
+        
+        let visibleCount = 0;
+        let firstVisibleItem = null;
+        
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const questionEl = item.querySelector('.faq-question');
+            const answerEl = item.querySelector('.faq-answer');
+            
+            const questionText = questionEl.textContent. toLowerCase();
+            const answerText = answerEl.textContent.toLowerCase();
+            
+            if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                item.style.display = 'block';
+                visibleCount++;
+                
+                if (! firstVisibleItem) {
+                    firstVisibleItem = item;
+                }
+                
+                // 답변에만 하이라이팅 적용
+                highlightText(answerEl, searchTerm);
+                
+            } else {
+                item.style.display = 'none';
+                item. classList.remove('active');
+                item.querySelector('.icon').textContent = '+';
+            }
+        });
+        
+        updateResultCount(visibleCount, true, searchTerm);
+        
+        if (visibleCount === 0) {
+            showNoResultsMessage(searchTerm);
+        } else {
+            if (firstVisibleItem) {
+                firstVisibleItem.classList. add('active');
+                firstVisibleItem. querySelector('.icon').textContent = '−';
+            }
+        }
+        
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    });
+    
+    // 초기화 버튼
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        clearBtn.style.display = 'none';
+        removeHighlights();
+        removeNoResultsMessage();
+        
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.style. display = 'block';
+            item.classList.remove('active');
+            item.querySelector('.icon').textContent = '+';
+        });
+        
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+        
+        updateResultCount(document.querySelectorAll('.faq-item').length, false);
+        searchInput.focus();
+    });
+    
+    // 하이라이팅 함수 (답변에만 적용)
+        function highlightText(element, searchTerm) {
+        const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
+        const textContent = element.textContent;
+        const highlightedHTML = textContent.replace(regex, '<span class="highlight">$1</span>');
+        element.innerHTML = highlightedHTML;
+    }
+    
+    // 하이라이팅 제거
+    function removeHighlights() {
+        document.querySelectorAll('.highlight').forEach(highlight => {
+            const parent = highlight.parentNode;
+            parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+            parent.normalize();
+        });
+    }
+    
+    // 정규식 이스케이프
+    function escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    
+    // 결과 개수 업데이트
+    function updateResultCount(count, isSearch, searchTerm = '') {
+        const countEl = document.getElementById('searchResultCount');
+        if (isSearch) {
+            countEl.innerHTML = `"<strong>${searchTerm}</strong>" 검색 결과:  <span class="count">${count}개</span>`;
+        } else {
+            countEl.innerHTML = `총 <span class="count">${count}개</span>의 FAQ`;
+        }
+    }
+    
+    // 빈 결과 메시지
+    function showNoResultsMessage(searchTerm) {
+        removeNoResultsMessage();
+        
+        const noResultsDiv = document.createElement('div');
+        noResultsDiv.className = 'no-results';
+        noResultsDiv.id = 'noResultsMessage';
+        noResultsDiv.innerHTML = `
+            <h3>🔍 검색 결과가 없습니다</h3>
+            <p>"${searchTerm}"에 대한 FAQ를 찾을 수 없습니다.</p>
+            <p style="margin-top: 10px; color: #4F7B60;">다른 키워드로 검색하시거나, 아래 <strong>1: 1 문의</strong>를 이용해주세요.</p>
+        `;
+        
+        document.querySelector('.faq-accordion').appendChild(noResultsDiv);
+    }
+    
+    function removeNoResultsMessage() {
+        const existing = document.getElementById('noResultsMessage');
+        if (existing) {
+            existing.remove();
+        }
+    }
+    
+    // 초기 로드
+    document.addEventListener('DOMContentLoaded', () => {
+        const totalCount = document.querySelectorAll('.faq-item').length;
+        updateResultCount(totalCount, false);
+    });
+    // 폼 제출 처리 (Supabase 연동)
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e. target);
+        const message = formData.get('message');
+
+        // 클라이언트 검증
+        if (message.length < 10) {
+            alert('문의 내용을 최소 10자 이상 입력해주세요.');
+            return;
+        }
+
+        // 제출 버튼 비활성화
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = '전송 중...';
+
+        try {
+            // Supabase에 데이터 삽입
+            const { data, error } = await supabase
+                .from('contact_inquiries')
+                .insert([
+                    {
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone') || null,
+                        category:  formData.get('category'),
+                        subject: formData.get('subject'),
+                        message:  formData.get('message')
+                    }
+                ])
+                .select();
+                
+            if (error) {
+                throw error;
+            }
+        
+            // 성공
+            console.log('저장된 데이터:', data);
+            alert('✅ 문의가 성공적으로 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
+            e.target.reset();
+        
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ 전송 중 오류가 발생했습니다.\n' + error.message);
+        } finally {
+            // 버튼 복구
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
 });

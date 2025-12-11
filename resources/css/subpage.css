@@ -1,7 +1,7 @@
-/* subpage.css (LNB 고정 제거 버전) */
+/* subpage.css */
 
 /* ---------------------------------------------------- */
-/* 8. SUB PAGE Layout (페이지 제목 및 1단 레이아웃) */
+/* SUB PAGE Layout (페이지 제목 및 1단 레이아웃) */
 /* ---------------------------------------------------- */
 
 /* 상단 페이지 제목 영역 (page-header) */
@@ -25,7 +25,7 @@
 }
 
 /* ================================================== */
-/* 9. HORIZONTAL LNB - Active 표시 강화 */
+/* HORIZONTAL LNB - Active 표시 강화 */
 /* ================================================== */
 .horizontal-lnb-wrapper {
     background-color: #ffffff;
@@ -105,7 +105,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* 9. 5 BREADCRUMB (경로 표시) */
+/* BREADCRUMB (경로 표시) */
 /* ---------------------------------------------------- */
 .breadcrumb-wrapper {
     background-color: #ffffff;
@@ -136,14 +136,14 @@
 }
 
 /* ---------------------------------------------------- */
-/* 10. MAIN CONTENT CONTAINER */
+/* MAIN CONTENT CONTAINER */
 /* ---------------------------------------------------- */
 .sub-page-container {
     display: block;
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 50px;
-    padding-left:  80px;
+    padding-left: 80px;
     padding-right: 80px;
     padding-bottom: 50px;
 }
@@ -168,7 +168,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* 11. VALUE GRID (핵심 가치 카드) */
+/* VALUE GRID (핵심 가치 카드) */
 /* ---------------------------------------------------- */
 .value-grid-container {
     display: grid;
@@ -239,8 +239,184 @@
     margin-top: 20px;
 }
 
+/* ================================================== */
+/* 검색창 구현 (search)  */
+/* ================================================== */
+
+.search-header {
+    padding: 120px 80px 40px;
+    text-align: center;
+    background: linear-gradient(135deg, #f7f7f7 0%, #ffffff 100%);
+}
+
+.search-header h1 {
+    font-size: 42px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 15px 20px;
+    font-size:  16px;
+    border:  2px solid #4F7B60;
+    border-radius: 30px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-box input:focus {
+    border-color: #AA3624;
+}
+
+.search-box button {
+    flex-shrink: 0;
+    background: #4F7B60;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 30px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.search-box button:hover {
+    background: #3d6249;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 123, 96, 0.3);
+}
+
+.active-filters {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-tag {
+    background: #AA3624;
+    color: white;
+    padding: 8px 15px;
+    border-radius:  20px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+        
+.filter-tag .remove {
+    cursor: pointer;
+    font-weight: bold;
+}
+        
+.results-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 80px;
+}
+        
+.results-count {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+        
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.result-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s;
+    background: white;
+}
+
+.result-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.result-image {
+    width: 100%;
+    height: 200px;
+    background: #f7f7f7;
+    overflow: hidden;
+}
+
+.result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.result-content {
+    padding: 20px;
+}
+
+.result-content h3 {
+    font-size: 20px;
+    color: #AA3624;
+    margin-bottom: 8px;
+}
+
+.result-content .category {
+    font-size: 13px;
+    color: #4F7B60;
+    font-weight: 600;
+    margin-bottom:  10px;
+}
+
+.result-content p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.result-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.result-tags span {
+    background: #f0f0f0;
+    padding: 4px 10px;
+    border-radius:  12px;
+    font-size:  12px;
+    color:  #555;
+}
+
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.no-results h2 {
+    font-size: 32px;
+    color: #999;
+    margin-bottom: 20px;
+}
+
 /* ---------------------------------------------------- */
-/* 12. BRAND VISION SPECIFIC STYLES */
+/* PHILOSOPHY: 브랜드 비전 (brand_vision.html) */
 /* ---------------------------------------------------- */
 #brand-vision .intro-text {
     font-size: 18px;
@@ -267,9 +443,6 @@
     display: block;
 }
 
-/* ---------------------------------------------------- */
-/* 13. BRAND STORY (이미지 교차 블록) */
-/* ---------------------------------------------------- */
 /* Brand Story */
 .brand-story {
     display: flex;
@@ -324,7 +497,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* 14. CRAFTSMANSHIP CONTENT BLOCK */
+/* PHILOSOPHY: 윤리 경영 (craftsmanship.html) */
 /* ---------------------------------------------------- */
 .content-block {
     display:  flex;
@@ -382,12 +555,53 @@
     margin-bottom: 0;
 }
 
-/* ======================================================== */
-/* 아래부터 개별 서브페이지 스타일 추가 */
-/* ======================================================== */
+/* ---------------------------------------------------- */
+/* PHILOSOPHY: 오시는 길 (direction.html) */
+/* ---------------------------------------------------- */
+/* 지도 스타일 */
+#map {
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    box-shadow:  0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+@media (max-width: 768px) {
+    #map {
+        height: 350px;
+        border-radius: 8px;
+    }
+}
+
+.transport-info {
+    margin-top: 40px;
+    padding: 30px;
+    background-color:  #f9f9f9;
+    border-radius: 8px;
+}
+
+.transport-info h3 {
+    font-family: 'GFS Didot', serif;
+    color: #AA3624;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.transport-info ul {
+    margin-left: 20px;
+    line-height: 1.8;
+}
+
+.parking-info {
+    margin-top: 20px;
+    padding: 30px;
+    background-color:  #f0f7f4;
+    border-radius: 8px;
+}
 
 /* ---------------------------------------------------- */
-/* TEA PROFILING:   6대 다류 (the_six_tea.html) */
+/* TEA PROFILING:  6대 다류 (the_six_tea.html) */
 /* ---------------------------------------------------- */
 .tea-type-grid {
     display: grid;
@@ -462,7 +676,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* TEA PROFILING: 이달의 차 (tea_of_the_month.html) */
+/* TEA PROFILING: 이달의 차(茶) (tea_of_the_month.html) */
 /* ---------------------------------------------------- */
 .featured-hero {
     width: 100%;
@@ -592,6 +806,252 @@
     background-color: #f0f5f0;
     font-weight: 500;
 }
+
+/* ================================================== */
+/* TEA PROFILING: 산지별 티 (teas_by_region.html) */
+/* ================================================== */
+
+/* 지도 컨테이너 */
+.origin-map-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.origin-map-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 산지 카드 그리드 */
+.origin-highlight-grid {
+    display:  grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+
+/* 카드 링크 */
+.origin-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.origin-card-link:hover {
+    transform:  translateY(-5px);
+}
+
+/* 개별 산지 카드 */
+.origin-card {
+    display: flex;
+    gap: 40px;
+    align-items:  flex-start;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: box-shadow 0.3s;
+}
+
+.origin-card-link:hover .origin-card {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.origin-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* 산지 카드 이미지 */
+.origin-card-image {
+    flex: 0 0 350px;
+    width: 350px;
+}
+
+.origin-card-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 산지 카드 콘텐츠 */
+.origin-card-content {
+    flex: 1;
+}
+
+.origin-card-content h3 {
+    font-family: 'GFS Didot', serif;
+    font-size: 28px;
+    color: #AA3624;
+    margin-bottom: 10px;
+}
+
+.origin-card-content .region {
+    font-size:  16px;
+    color:  #4F7B60;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.origin-card-content .location {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.origin-card-content .description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* 떼루아 태그 */
+.terroir-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap:  wrap;
+    margin-bottom:  15px;
+}
+
+.terroir-tags .tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color:  #f0f7f4;
+    color: #4F7B60;
+    font-size: 13px;
+    border-radius:  20px;
+    font-weight: 500;
+}
+
+/* 자세히 보기 */
+.read-more {
+    display: inline-block;
+    color: #AA3624;
+    font-weight: 600;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.origin-card-link:hover .read-more {
+    color: #8b2a1a;
+}
+
+/* 반응형 */
+@media (max-width:  1024px) {
+    .origin-card {
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .origin-card-image {
+        flex: none;
+        width: 100%;
+    }
+    
+    .origin-card-image img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .origin-map-container {
+        margin-bottom: 50px;
+    }
+    
+    .origin-highlight-grid {
+        gap: 30px;
+    }
+    
+    .origin-card {
+        padding-bottom: 30px;
+    }
+    
+    .origin-card-image img {
+        height: 250px;
+    }
+    
+    .origin-card-content h3 {
+        font-size: 24px;
+    }
+    
+    .origin-card-content .description {
+        font-size: 15px;
+    }
+}
+
+/* ================================================== */
+/* 산지별 티 상세 페이지 (region_detail.html) */
+/* ================================================== */
+
+.region-detail-map {
+    width: 100%;
+    height: 450px;
+    border-radius: 12px;
+    margin-top: 40px;
+    box-shadow:  0 4px 12px rgba(0,0,0,0.1);
+}
+
+.region-detail-intro {
+    margin:  40px 0;
+}
+
+.region-detail-intro h2 {
+    font-family:  'GFS Didot', serif;
+    font-size:  36px;
+    color: #AA3624;
+    margin-bottom: 20px;
+}
+
+.region-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.meta-item {
+    padding: 10px 20px;
+    background-color:  #f0f7f4;
+    border-radius: 25px;
+    font-size:  15px;
+    color: #555;
+}
+
+.region-detail-content h3 {
+    font-family: 'GFS Didot', serif;
+    font-size: 24px;
+    color: #AA3624;
+    margin:  40px 0 15px 0;
+}
+
+.region-detail-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+}
+
+.btn-back {
+    display: inline-block;
+    margin:  60px auto 0;
+    padding: 15px 40px;
+    background-color: #4F7B60;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-back:hover {
+    background-color: #3d6249;
+}
+
 /* ---------------------------------------------------- */
 /* PAIRING:  티 푸드 페어링 (tea_food_pairing.html) */
 /* ---------------------------------------------------- */
@@ -819,7 +1279,7 @@
 }
 
 /* ---------------------------------------------------- */
-/* CULTURE:  티 문화 매거진 - 클릭 가능/불가능 스타일 */
+/* CULTURE:  티 문화 매거진 (culture_magazine.html) */
 /* ---------------------------------------------------- */
 .magazine-grid {
     display: grid;
@@ -1366,36 +1826,49 @@
 }
 
 /* ---------------------------------------------------- */
-/* CULTURE: 미디어 & 보도 (media_press.html) */
+/* CULTURE:  미디어 & 보도 (media_press.html) */
 /* ---------------------------------------------------- */
+
+/* 미디어 필터 버튼 */
 .media-filter {
-    text-align: center;
-    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom:  50px;
+    flex-wrap: wrap;
 }
 
 .media-filter button {
+    padding:  10px 20px;
     background-color: #f7f7f7;
-    color: #333;
-    border:  1px solid #ddd;
-    padding: 8px 15px;
-    margin: 0 5px;
-    border-radius:  20px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
     font-size: 14px;
+    font-weight: 500;
+    color: #555;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
 }
 
-.media-filter button:hover, .media-filter button.active {
-    background-color: #4F7B60;
-    color: white;
+.media-filter button:hover {
+    background-color:  #4F7B60;
+    color:  white;
     border-color: #4F7B60;
 }
 
+.media-filter button.active {
+    background-color: #AA3624;
+    color: white;
+    border-color: #AA3624;
+}
+
+/* 미디어 그리드 */
 .media-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    margin-top:  30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .media-card {
@@ -1403,18 +1876,27 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color: #ffffff;
-    transition: box-shadow 0.3s ease;
 }
 
 .media-card:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.media-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .media-thumb {
-    height: 220px;
+    height: 200px;
     overflow: hidden;
+    background-color: #f7f7f7;
 }
+
 .media-thumb img {
     width: 100%;
     height: 100%;
@@ -1426,69 +1908,122 @@
 }
 
 .media-content h3 {
-    font-size:  18px;
-    color: #AA3624;
-    margin-bottom: 5px;
-    font-weight:  600;
+    font-size: 18px;
+    color: #4F7B60;
+    margin-bottom: 8px;
+    font-weight: 700;
+    line-height: 1.4;
 }
 
 .media-content p.source {
     font-size: 13px;
-    color: #4F7B60;
-    margin-bottom: 10px;
+    color: #AA3624;
+    margin-bottom: 12px;
+    font-weight: 600;
 }
 
 .media-content p.summary {
     font-size: 14px;
     color: #666;
-    line-height: 1.5;
+    line-height: 1.6;
     height: 65px;
     overflow: hidden;
 }
 
-/* ---------------------------------------------------- */
-/* PHILOSOPHY: 오시는 길 (direction.html) */
-/* ---------------------------------------------------- */
-/* 지도 스타일 */
-#map {
-    width: 100%;
-    height: 500px;
+/* 보도자료 다운로드 섹션 */
+.press-kit-section {
+    margin-top: 80px;
+    padding: 50px;
+    background-color: #f9f9f9;
     border-radius: 12px;
-    box-shadow:  0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-bottom: 50px;
+    border: 1px solid #e0e0e0;
 }
 
-@media (max-width: 768px) {
-    #map {
-        height: 350px;
-        border-radius: 8px;
+.press-kit-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 38px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+}
+
+.press-kit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.press-kit-item {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    transition: box-shadow 0.3s;
+}
+
+.press-kit-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.press-kit-item .icon {
+    font-size:  48px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.press-kit-item h3 {
+    font-size: 18px;
+    font-family: 'GFS Didot', serif;
+    color: #4F7B60;
+    margin-bottom: 10px;
+}
+
+.press-kit-item p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.press-kit-item a {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color:  #4F7B60;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.press-kit-item a:hover {
+    background-color: #3d6249;
+}
+
+/* 반응형 */
+@media (max-width:  1024px) {
+    .media-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .press-kit-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-.transport-info {
-    margin-top: 40px;
-    padding: 30px;
-    background-color:  #f9f9f9;
-    border-radius: 8px;
-}
-
-.transport-info h3 {
-    font-family: 'GFS Didot', serif;
-    color: #AA3624;
-    margin-bottom: 20px;
-    font-size: 22px;
-}
-
-.transport-info ul {
-    margin-left: 20px;
-    line-height: 1.8;
-}
-
-.parking-info {
-    margin-top: 20px;
-    padding: 30px;
-    background-color:  #f0f7f4;
-    border-radius: 8px;
+@media (max-width:  768px) {
+    .media-grid {
+        grid-template-columns: 1fr;
+    }
+    .media-filter {
+        gap: 8px;
+    }
+    .media-filter button {
+        padding:  8px 15px;
+        font-size: 13px;
+    }
 }
 
 /* ================================================== */
@@ -1922,184 +2457,6 @@
 }
 
 /* ================================================== */
-/* 산지별 티 (Teas by Region) */
-/* ================================================== */
-
-/* 지도 컨테이너 */
-.origin-map-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto 80px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.origin-map-container img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* 산지 카드 그리드 */
-.origin-highlight-grid {
-    display:  grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-}
-
-/* 카드 링크 */
-.origin-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: transform 0.3s;
-}
-
-.origin-card-link:hover {
-    transform:  translateY(-5px);
-}
-
-/* 개별 산지 카드 */
-.origin-card {
-    display: flex;
-    gap: 40px;
-    align-items:  flex-start;
-    padding-bottom: 40px;
-    border-bottom: 1px solid #e0e0e0;
-    transition: box-shadow 0.3s;
-}
-
-.origin-card-link:hover .origin-card {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.origin-card:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-/* 산지 카드 이미지 */
-.origin-card-image {
-    flex: 0 0 350px;
-    width: 350px;
-}
-
-.origin-card-image img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* 산지 카드 콘텐츠 */
-.origin-card-content {
-    flex: 1;
-}
-
-.origin-card-content h3 {
-    font-family: 'GFS Didot', serif;
-    font-size: 28px;
-    color: #AA3624;
-    margin-bottom: 10px;
-}
-
-.origin-card-content .region {
-    font-size:  16px;
-    color:  #4F7B60;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.origin-card-content .location {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 20px;
-}
-
-.origin-card-content .description {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-/* 떼루아 태그 */
-.terroir-tags {
-    display: flex;
-    gap: 10px;
-    flex-wrap:  wrap;
-    margin-bottom:  15px;
-}
-
-.terroir-tags .tag {
-    display: inline-block;
-    padding: 6px 14px;
-    background-color:  #f0f7f4;
-    color: #4F7B60;
-    font-size: 13px;
-    border-radius:  20px;
-    font-weight: 500;
-}
-
-/* 자세히 보기 */
-.read-more {
-    display: inline-block;
-    color: #AA3624;
-    font-weight: 600;
-    font-size: 14px;
-    transition: color 0.3s;
-}
-
-.origin-card-link:hover .read-more {
-    color: #8b2a1a;
-}
-
-/* 반응형 */
-@media (max-width:  1024px) {
-    .origin-card {
-        flex-direction: column;
-        gap: 25px;
-    }
-    
-    .origin-card-image {
-        flex: none;
-        width: 100%;
-    }
-    
-    .origin-card-image img {
-        height: 300px;
-    }
-}
-
-@media (max-width: 768px) {
-    .origin-map-container {
-        margin-bottom: 50px;
-    }
-    
-    .origin-highlight-grid {
-        gap: 30px;
-    }
-    
-    .origin-card {
-        padding-bottom: 30px;
-    }
-    
-    .origin-card-image img {
-        height: 250px;
-    }
-    
-    .origin-card-content h3 {
-        font-size: 24px;
-    }
-    
-    .origin-card-content .description {
-        font-size: 15px;
-    }
-}
-
-/* ================================================== */
 /* 지도 스타일 개선 */
 /* ================================================== */
 
@@ -2126,247 +2483,3 @@
 .map-reset-button:active {
     transform: scale(0.95) !important;
 }
-
-/* ================================================== */
-/* 검색창 구현 (search)  */
-/* ================================================== */
-
-.search-header {
-    padding: 120px 80px 40px;
-    text-align: center;
-    background: linear-gradient(135deg, #f7f7f7 0%, #ffffff 100%);
-}
-
-.search-header h1 {
-    font-size: 42px;
-    font-family: 'GFS Didot', serif;
-    color: #4F7B60;
-    margin-bottom: 20px;
-}
-
-.search-box {
-    max-width: 700px;
-    margin: 0 auto 30px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.search-box input {
-    flex: 1;
-    padding: 15px 20px;
-    font-size:  16px;
-    border:  2px solid #4F7B60;
-    border-radius: 30px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.search-box input:focus {
-    border-color: #AA3624;
-}
-
-.search-box button {
-    flex-shrink: 0;
-    background: #4F7B60;
-    border: none;
-    padding: 15px 35px;
-    border-radius: 30px;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-    white-space: nowrap;
-}
-
-.search-box button:hover {
-    background: #3d6249;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(79, 123, 96, 0.3);
-}
-
-.active-filters {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.filter-tag {
-    background: #AA3624;
-    color: white;
-    padding: 8px 15px;
-    border-radius:  20px;
-    font-size: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-        
-.filter-tag .remove {
-    cursor: pointer;
-    font-weight: bold;
-}
-        
-.results-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 80px;
-}
-        
-.results-count {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 30px;
-}
-        
-.result-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.result-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.3s;
-    background: white;
-}
-
-.result-card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.result-image {
-    width: 100%;
-    height: 200px;
-    background: #f7f7f7;
-    overflow: hidden;
-}
-
-.result-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.result-content {
-    padding: 20px;
-}
-
-.result-content h3 {
-    font-size: 20px;
-    color: #AA3624;
-    margin-bottom: 8px;
-}
-
-.result-content .category {
-    font-size: 13px;
-    color: #4F7B60;
-    font-weight: 600;
-    margin-bottom:  10px;
-}
-
-.result-content p {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.6;
-}
-
-.result-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 15px;
-}
-
-.result-tags span {
-    background: #f0f0f0;
-    padding: 4px 10px;
-    border-radius:  12px;
-    font-size:  12px;
-    color:  #555;
-}
-
-.no-results {
-    text-align: center;
-    padding: 60px 20px;
-}
-
-.no-results h2 {
-    font-size: 32px;
-    color: #999;
-    margin-bottom: 20px;
-}
-
-/* ================================================== */
-/* region detail  */
-/* ================================================== */
-
-.region-detail-map {
-            width: 100%;
-            height: 450px;
-            border-radius: 12px;
-            margin-top: 40px;
-            box-shadow:  0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .region-detail-intro {
-            margin:  40px 0;
-        }
-        
-        .region-detail-intro h2 {
-            font-family:  'GFS Didot', serif;
-            font-size:  36px;
-            color: #AA3624;
-            margin-bottom: 20px;
-        }
-        
-        .region-meta {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .meta-item {
-            padding: 10px 20px;
-            background-color:  #f0f7f4;
-            border-radius: 25px;
-            font-size:  15px;
-            color: #555;
-        }
-        
-        .region-detail-content h3 {
-            font-family: 'GFS Didot', serif;
-            font-size: 24px;
-            color: #AA3624;
-            margin:  40px 0 15px 0;
-        }
-        
-        .region-detail-content p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #555;
-        }
-        
-        .btn-back {
-            display: inline-block;
-            margin:  60px auto 0;
-            padding: 15px 40px;
-            background-color: #4F7B60;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .btn-back:hover {
-            background-color: #3d6249;
-        }
-        
