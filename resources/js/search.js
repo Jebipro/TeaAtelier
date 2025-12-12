@@ -1,5 +1,3 @@
-// search.js - Supabase 버전 (중복 제거 포함)
-
 // URL 쿼리 파라미터 읽기
 function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
@@ -16,11 +14,11 @@ function removeDuplicates(results) {
     
     return results.filter(item => {
         // 이름 기반 키 생성
-        const key = item. name.toLowerCase().replace(/\s+/g, '').replace(/[()]/g, '');
+        const key = item.name.toLowerCase().replace(/\s+/g, '').replace(/[()]/g, '');
         
         if (seen.has(key)) {
             // 이미 있으면 우선순위 비교
-            const existing = seen. get(key);
+            const existing = seen.get(key);
             
             // 제품(tea) > 페어링(pairing) > 산지(region) 순으로 우선순위
             const priority = { 'tea': 1, 'pairing': 2, 'region': 3 };

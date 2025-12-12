@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 현재 파일명 (정규화)
     const currentFile = normalizeName(getCurrentFileName());
 
-    // 그룹을 디렉터리(폴더) 기반으로 정의 — 실제 파일명(언더스코어)으로 맞춤
+    // 그룹을 디렉터리(폴더) 기반으로 정의
     const gnbGroups = {
         'philosophy': [
             'brand_vision.html',

@@ -17,11 +17,11 @@ if (!regionId) {
             console.log('📡 Supabase에서 데이터 로드 중.. .');
             
             // Supabase에서 특정 산지 데이터 가져오기
-            const { data:  region, error } = await window.supabaseClient
+            const { data: region, error } = await window.supabaseClient
                 . from('tea_regions')
                 .select('*')
                 .eq('id', regionId)
-                .single();  // 단일 결과만
+                .single(); // 단일 결과만
         
             if (error) {
                 throw error;
@@ -101,7 +101,7 @@ function displayRegionDetail(region) {
             <p>${region.harvest_season}</p>
             
             <h3>산지 위치</h3>
-            <p>위도: ${region. latitude}°, 경도:  ${region.longitude}°</p>
+            <p>위도: ${region. latitude}°, 경도: ${region.longitude}°</p>
         </div>
     `;
     
@@ -127,20 +127,20 @@ function initDetailMap(region) {
     
     const map = new google.maps.Map(mapElement, {
         zoom: 10,
-        center:  position,
-        mapTypeId:  'hybrid',
+        center: position,
+        mapTypeId: 'hybrid',
         mapTypeControl: true,
         mapTypeControlOptions: {
-            style:  google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position: google.maps. ControlPosition.TOP_RIGHT,
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain']
         },
         streetViewControl: false,
-        fullscreenControl:  true,
-        zoomControl:  true,
+        fullscreenControl: true,
+        zoomControl: true,
         styles: [
             {
-                featureType:  'poi',
+                featureType: 'poi',
                 elementType: 'labels',
                 stylers: [{ visibility: 'off' }]
             }
@@ -164,7 +164,7 @@ function initDetailMap(region) {
     
     const infoWindow = new google.maps. InfoWindow({
         content: `
-            <div style="padding:  15px; font-family:  'Noto Sans KR', sans-serif;">
+            <div style="padding: 15px; font-family: 'Noto Sans KR', sans-serif;">
                 <h3 style="margin: 0 0 8px 0; color: #AA3624; font-family: 'GFS Didot', serif; font-size: 18px;">
                     ${region. name_en}
                 </h3>
@@ -174,7 +174,7 @@ function initDetailMap(region) {
                 <p style="margin: 3px 0; font-size: 13px; color: #4F7B60; font-weight: 600;">
                     ${region.tea_type}
                 </p>
-                <p style="margin: 3px 0; font-size:  12px; color: #888;">
+                <p style="margin: 3px 0; font-size: 12px; color: #888;">
                     📍 ${region.altitude}
                 </p>
             </div>

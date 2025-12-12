@@ -1,8 +1,8 @@
 let regionsData = [];
 let map;
 let markers = [];
-const initialCenter = { lat: 25, lng: 100 };  // 초기 중심 좌표
-const initialZoom = 3;  // 초기 줌 레벨
+const initialCenter = { lat: 25, lng: 100 }; // 초기 중심 좌표
+const initialZoom = 3; // 초기 줌 레벨
 
 // Google Maps 초기화
 function initMap() {
@@ -10,21 +10,21 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('world-map'), {
         zoom: initialZoom,
         center: initialCenter,
-        mapTypeId: 'hybrid',  // ✨ 위성 지도 (hybrid = 위성 + 라벨)
-        mapTypeControl: true,  // ✨ 지도 타입 전환 버튼
+        mapTypeId: 'hybrid', // ✨ 위성 지도 (hybrid = 위성 + 라벨)
+        mapTypeControl: true, // ✨ 지도 타입 전환 버튼
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position:  google.maps.ControlPosition. TOP_RIGHT,
+            position: google.maps.ControlPosition. TOP_RIGHT,
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain']
         },
-        streetViewControl: false,  // 스트리트뷰 끄기
-        fullscreenControl: true,  // 전체화면 버튼
-        zoomControl: true,  // 줌 컨트롤
+        streetViewControl: false, // 스트리트뷰 끄기
+        fullscreenControl: true, // 전체화면 버튼
+        zoomControl: true, // 줌 컨트롤
         styles: [
             {
                 featureType: 'poi',
                 elementType: 'labels',
-                stylers: [{ visibility: 'off' }]  // 관심 지점 라벨 숨기기
+                stylers: [{ visibility: 'off' }] // 관심 지점 라벨 숨기기
             }
         ]
     });
@@ -147,7 +147,7 @@ function displayRegionCards(regions) {
                 <div class="origin-card-image">
                     <img src="${region.image_url}" 
                         alt="${region.name_ko} 차밭"
-                        onerror="this.src='../resources/style/placeholder_tea.jpg'">
+                        onerror="this.src='../resources/style/placeholder_noimage.svg'">
                 </div>
                 <div class="origin-card-content">
                     <h3>${region.name_en}</h3>
