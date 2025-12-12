@@ -243,7 +243,7 @@ function renderActiveFilters(params) {
     const container = document.getElementById('active-filters');
     const filters = [];
     
-    if (paramstag) {
+    if (params.tag) {
         filters.push({ type: 'tag', value: params.tag, label: `태그: ${params.tag}` });
     }
     if (params.query) {
