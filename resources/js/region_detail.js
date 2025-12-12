@@ -8,17 +8,17 @@ console.log('🔍 Region ID:', regionId);
 if (!regionId) {
     console.error('❌ No region ID in URL');
     document.getElementById('loading').innerHTML = 
-        '<p style="color: red;">잘못된 접근입니다. URL에 ID가 없습니다.</p>' +
+        '<p style="color: red;">잘못된 접근입니다.URL에 ID가 없습니다.</p>' +
         '<a href="teas_by_region.html" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: #4F7B60; color: white; text-decoration: none; border-radius: 5px;">← 목록으로 돌아가기</a>';
 } else {
     // Supabase에서 데이터 로드
     (async () => {
         try {
-            console.log('📡 Supabase에서 데이터 로드 중.. .');
+            console.log('📡 Supabase에서 데이터 로드 중...');
             
             // Supabase에서 특정 산지 데이터 가져오기
             const { data: region, error } = await window.supabaseClient
-                . from('tea_regions')
+                .from('tea_regions')
                 .select('*')
                 .eq('id', regionId)
                 .single(); // 단일 결과만
@@ -55,21 +55,21 @@ if (!regionId) {
 
 // 산지 상세 정보 표시
 function displayRegionDetail(region) {
-    console.log('📝 Displaying region detail.. .');
+    console.log('📝 Displaying region detail...');
     
     document.getElementById('loading').style.display = 'none';
     document.getElementById('region-detail').style.display = 'block';
     document.getElementById('detail-map').style.display = 'block';
     
-    document.getElementById('page-title').textContent = region. name_en;
-    document. getElementById('page-subtitle').textContent = `${region.name_ko} - ${region.country}`;
+    document.getElementById('page-title').textContent = region.name_en;
+    document.getElementById('page-subtitle').textContent = `${region.name_ko} - ${region.country}`;
     document.getElementById('breadcrumb-current').textContent = region.name_ko;
     document.title = `The Tea Atelier | ${region.name_ko}`;
     
     document.getElementById('region-detail').innerHTML = `
         <div class="featured-hero">
             <img src="${region.image_hero_url}" 
-                alt="${region. name_ko}"
+                alt="${region.name_ko}"
                 onerror="this.src='${region.image_url}'">
         </div>
         
@@ -101,7 +101,7 @@ function displayRegionDetail(region) {
             <p>${region.harvest_season}</p>
             
             <h3>산지 위치</h3>
-            <p>위도: ${region. latitude}°, 경도: ${region.longitude}°</p>
+            <p>위도: ${region.latitude}°, 경도: ${region.longitude}°</p>
         </div>
     `;
     
@@ -132,7 +132,7 @@ function initDetailMap(region) {
         mapTypeControl: true,
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position: google.maps. ControlPosition.TOP_RIGHT,
+            position: google.maps.ControlPosition.TOP_RIGHT,
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain']
         },
         streetViewControl: false,
@@ -151,9 +151,9 @@ function initDetailMap(region) {
         position: position,
         map: map,
         title: region.name_ko,
-        animation: google. maps.Animation.DROP,
+        animation: google.maps.Animation.DROP,
         icon: {
-            path: google.maps.SymbolPath. CIRCLE,
+            path: google.maps.SymbolPath.CIRCLE,
             scale: 14,
             fillColor: '#AA3624',
             fillOpacity: 1,
@@ -162,11 +162,11 @@ function initDetailMap(region) {
         }
     });
     
-    const infoWindow = new google.maps. InfoWindow({
+    const infoWindow = new google.maps.InfoWindow({
         content: `
             <div style="padding: 15px; font-family: 'Noto Sans KR', sans-serif;">
                 <h3 style="margin: 0 0 8px 0; color: #AA3624; font-family: 'GFS Didot', serif; font-size: 18px;">
-                    ${region. name_en}
+                    ${region.name_en}
                 </h3>
                 <p style="margin: 3px 0; font-size: 14px; color: #555;">
                     ${region.country_flag} ${region.country}
@@ -184,7 +184,7 @@ function initDetailMap(region) {
     infoWindow.open(map, marker);
     
     marker.addListener('click', () => {
-        if (infoWindow. getMap()) {
+        if (infoWindow.getMap()) {
             infoWindow.close();
         } else {
             infoWindow.open(map, marker);

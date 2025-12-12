@@ -55,15 +55,15 @@ async function performSearch(query, tag, type) {
             
             if (query) {
                 const queryLower = query.toLowerCase().trim();
-                filteredTeas = teasData. filter(tea => {
+                filteredTeas = teasData.filter(tea => {
                     const basicMatch = 
-                        tea.name?. toLowerCase().includes(queryLower) ||
+                        tea.name?.toLowerCase().includes(queryLower) ||
                         tea.name_en?.toLowerCase().includes(queryLower) ||
-                        tea. category?.toLowerCase().includes(queryLower) ||
+                        tea.category?.toLowerCase().includes(queryLower) ||
                         tea.description?.toLowerCase().includes(queryLower) ||
                         tea.origin?.toLowerCase().includes(queryLower);
                     
-                    const tagsMatch = tea.tags?. some(t => 
+                    const tagsMatch = tea.tags?.some(t => 
                         t.toLowerCase().includes(queryLower)
                     );
                     
@@ -101,14 +101,14 @@ async function performSearch(query, tag, type) {
             
             if (query) {
                 const queryLower = query.toLowerCase().trim();
-                filteredPairings = pairingsData. filter(pairing => {
+                filteredPairings = pairingsData.filter(pairing => {
                     const basicMatch = 
                         pairing.name?.toLowerCase().includes(queryLower) ||
                         pairing.name_en?.toLowerCase().includes(queryLower) ||
                         pairing.description?.toLowerCase().includes(queryLower) ||
                         pairing.category?.toLowerCase().includes(queryLower);
                     
-                    const tagsMatch = pairing.tags?. some(t => 
+                    const tagsMatch = pairing.tags?.some(t => 
                         t.toLowerCase().includes(queryLower)
                     );
                     
@@ -120,9 +120,9 @@ async function performSearch(query, tag, type) {
                 });
             }
             
-            console. log(`🍰 pairings: ${pairingsData.length} → ${filteredPairings.length}`);
+            console.log(`🍰 pairings: ${pairingsData.length} → ${filteredPairings.length}`);
             
-            results.push(... filteredPairings.map(pairing => ({
+            results.push(...filteredPairings.map(pairing => ({
                 ...pairing,
                 contentType: 'pairing',
                 category: `${pairing.category || '페어링'} 🍰`,
@@ -132,7 +132,7 @@ async function performSearch(query, tag, type) {
         
         // 3. tea_regions 테이블 검색
         const { data: regionsData, error: regionsError } = await window.supabaseClient
-            . from('tea_regions')
+            .from('tea_regions')
             .select('*');
         
         if (regionsError) {
@@ -145,7 +145,7 @@ async function performSearch(query, tag, type) {
                 filteredRegions = regionsData.filter(region => {
                     const basicMatch = 
                         region.name_ko?.toLowerCase().includes(queryLower) ||
-                        region. name_en?.toLowerCase().includes(queryLower) ||
+                        region.name_en?.toLowerCase().includes(queryLower) ||
                         region.country?.toLowerCase().includes(queryLower) ||
                         region.tea_type?.toLowerCase().includes(queryLower) ||
                         region.description?.toLowerCase().includes(queryLower) ||
@@ -171,7 +171,7 @@ async function performSearch(query, tag, type) {
                 category: `${region.tea_type} 🗺️`,
                 description: region.description?.substring(0, 120) + '...',
                 image: region.image_url,
-                tags: region. tags || region.terroir_characteristics?.split(', ') || [],
+                tags: region.tags || region.terroir_characteristics?.split(', ') || [],
                 contentType: 'region',
                 detailPage: `/tea_profiling/region_detail.html?id=${region.id}`
             })));
@@ -215,16 +215,16 @@ function renderResults(results) {
         return;
     }
     
-    grid. style.display = 'grid';
+    grid.style.display = 'grid';
     noResults.style.display = 'none';
     countEl.textContent = `${results.length}개의 결과`;
     
     grid.innerHTML = results.map(item => `
         <a href="${item.detailPage || item.detail_page}" class="result-card">
             <div class="result-image">
-                <img src="${item. image || '/resources/style/placeholder.jpg'}" 
+                <img src="${item.image || '/resources/style/placeholder.jpg'}" 
                     alt="${item.name}" 
-                    onerror="this. src='/resources/style/placeholder. jpg'">
+                    onerror="this.src='/resources/style/placeholder.jpg'">
             </div>
             <div class="result-content">
                 <div class="category">${item.category || item.contentType}</div>
@@ -243,7 +243,7 @@ function renderActiveFilters(params) {
     const container = document.getElementById('active-filters');
     const filters = [];
     
-    if (params. tag) {
+    if (paramstag) {
         filters.push({ type: 'tag', value: params.tag, label: `태그: ${params.tag}` });
     }
     if (params.query) {
@@ -253,7 +253,7 @@ function renderActiveFilters(params) {
         filters.push({ type: 'type', value: params.type, label: `타입: ${params.type}` });
     }
     
-    if (filters. length === 0) {
+    if (filters.length === 0) {
         container.style.display = 'none';
         return;
     }
@@ -262,14 +262,14 @@ function renderActiveFilters(params) {
     container.innerHTML = filters.map(filter => `
         <div class="filter-tag">
             ${filter.label}
-            <span class="remove" onclick="removeFilter('${filter. type}')">✕</span>
+            <span class="remove" onclick="removeFilter('${filter.type}')">✕</span>
         </div>
     `).join('');
 }
 
 // 필터 제거
 function removeFilter(type) {
-    const params = new URLSearchParams(window.location. search);
+    const params = new URLSearchParams(window.location.search);
     params.delete(type === 'query' ? 'q' : type);
     window.location.search = params.toString();
 }
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.getElementById('no-results').style.display = 'block';
         document.getElementById('no-results').innerHTML = `
             <h2>오류 발생</h2>
-            <p>데이터베이스 연결에 실패했습니다. </p>
+            <p>데이터베이스 연결에 실패했습니다.</p>
         `;
         return;
     }
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const params = getQueryParams();
     
     // 검색 실행
-    const results = await performSearch(params. query, params.tag, params. type);
+    const results = await performSearch(params.query, params.tag, params.type);
     
     // 결과 렌더링
     renderResults(results);
@@ -307,16 +307,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // 검색 버튼 클릭
     document.getElementById('search-btn').addEventListener('click', function() {
-        const query = searchInput. value.trim();
+        const query = searchInput.value.trim();
         if (query) {
-            const newParams = new URLSearchParams(window. location.search);
+            const newParams = new URLSearchParams(window.location.search);
             newParams.set('q', query);
             window.location.search = newParams.toString();
         }
     });
     
     // 엔터 키로 검색
-    searchInput. addEventListener('keypress', function(e) {
+    searchInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             document.getElementById('search-btn').click();
         }

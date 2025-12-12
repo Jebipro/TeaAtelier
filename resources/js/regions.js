@@ -14,7 +14,7 @@ function initMap() {
         mapTypeControl: true, // ✨ 지도 타입 전환 버튼
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position: google.maps.ControlPosition. TOP_RIGHT,
+            position: google.maps.ControlPosition.TOP_RIGHT,
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain']
         },
         streetViewControl: false, // 스트리트뷰 끄기
@@ -68,8 +68,8 @@ function addResetButton() {
     
     resetButton.addEventListener('mouseleave', () => {
         resetButton.style.backgroundColor = '#fff';
-        resetButton.style. color = '#4F7B60';
-        resetButton.style. transform = 'scale(1)';
+        resetButton.style.color = '#4F7B60';
+        resetButton.style.transform = 'scale(1)';
     });
     
     // 클릭 이벤트
@@ -78,7 +78,7 @@ function addResetButton() {
     });
     
     // 지도에 버튼 추가
-    map.controls[google.maps. ControlPosition.TOP_CENTER].push(resetButton);
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(resetButton);
 }
 
 // 지도 초기화 함수
@@ -90,7 +90,7 @@ function resetMap() {
     // 모든 정보창 닫기
     markers.forEach(marker => {
         if (marker.infoWindow) {
-            marker.infoWindow. close();
+            marker.infoWindow.close();
         }
     });
     
@@ -99,7 +99,7 @@ function resetMap() {
     if (resetButton) {
         resetButton.textContent = '✓ 초기화 완료! ';
         setTimeout(() => {
-            resetButton. textContent = '🌍 지도 초기화';
+            resetButton.textContent = '🌍 지도 초기화';
         }, 1000);
     }
 }
@@ -107,7 +107,7 @@ function resetMap() {
 // JSON 파일 로드
 async function loadRegions() {
     try {
-        console.log('📡 Supabase에서 데이터 로드 중.. .');
+        console.log('📡 Supabase에서 데이터 로드 중...');
         
         // Supabase에서 데이터 가져오기
         const { data: regions, error } = await window.supabaseClient
@@ -119,7 +119,7 @@ async function loadRegions() {
             throw error;
         }
         
-        console.log('✅ Loaded regions from Supabase:', regions. length);
+        console.log('✅ Loaded regions from Supabase:', regions.length);
         
         regionsData = regions;
         displayRegionCards(regions);
@@ -128,7 +128,7 @@ async function loadRegions() {
     } catch (error) {
         console.error('❌ 데이터 로드 실패:', error);
         document.getElementById('regions-container').innerHTML = 
-            '<p style="text-align: center; color: red;">데이터를 불러올 수 없습니다. </p>';
+            '<p style="text-align: center; color: red;">데이터를 불러올 수 없습니다.</p>';
     }
 }
 
@@ -158,7 +158,7 @@ function displayRegionCards(regions) {
                         📍 ${region.altitude} | ${region.climate}
                     </p>
                     <p class="description">
-                        ${region.description. substring(0, 120)}...
+                        ${region.description.substring(0, 120)}...
                     </p>
                     <div class="terroir-tags">
                         ${region.terroir_characteristics.split(', ')
@@ -180,14 +180,14 @@ function addMapMarkers(regions) {
     markers.forEach(marker => marker.setMap(null));
     markers = [];
     
-    regions. forEach((region, index) => {
+    regions.forEach((region, index) => {
         const position = {
             lat: parseFloat(region.latitude),
             lng: parseFloat(region.longitude)
         };
         
         // 마커 생성
-        const marker = new google.maps. Marker({
+        const marker = new google.maps.Marker({
             position: position,
             map: map,
             title: region.name_ko,
@@ -207,7 +207,7 @@ function addMapMarkers(regions) {
             content: `
                 <div style="padding: 15px; min-width: 220px; font-family: 'Noto Sans KR', sans-serif;">
                     <h3 style="margin: 0 0 10px 0; color: #AA3624; font-family: 'GFS Didot', serif; font-size: 18px;">
-                        ${region. name_en}
+                        ${region.name_en}
                     </h3>
                     <p style="margin: 5px 0; font-size: 14px; color: #555;">
                         ${region.country_flag} ${region.country}
@@ -230,7 +230,7 @@ function addMapMarkers(regions) {
         marker.addListener('click', () => {
             // 다른 정보창 닫기
             markers.forEach(m => {
-                if (m. infoWindow) m.infoWindow.close();
+                if (m.infoWindow) m.infoWindow.close();
             });
             
             infoWindow.open(map, marker);
@@ -247,7 +247,7 @@ function addMapMarkers(regions) {
 window.addEventListener('load', () => {
     console.log('🚀 페이지 로드 완료');
     
-    if (typeof google !== 'undefined' && typeof window. supabaseClient !== 'undefined') {
+    if (typeof google !== 'undefined' && typeof window.supabaseClient !== 'undefined') {
         console.log('✅ Google Maps & Supabase 준비 완료');
         console.log('Supabase Client:', window.supabaseClient);
         initMap();

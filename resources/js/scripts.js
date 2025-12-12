@@ -200,9 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // 미디어 카드 필터링
             document.querySelectorAll('.media-card').forEach(card => {
                 if (filter === 'all') {
-                    card.style. display = 'block';
+                    card.style.display = 'block';
                 } else if (card.dataset.year === filter || card.dataset.category === filter) {
-                    card.style. display = 'block';
+                    card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
                 }
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
                 let visibleCount = 0;
                 document.querySelectorAll('.faq-item').forEach(item => {
-                    if (category === 'all' || item. dataset.category === category) {
+                    if (category === 'all' || item.dataset.category === category) {
                         item.style.display = 'block';
                         visibleCount++;
                     } else {
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (searchInput && clearBtn) {
         searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target. value.toLowerCase().trim();
+            const searchTerm = e.target.value.toLowerCase().trim();
         
             clearBtn.style.display = searchTerm ? 'block' : 'none';
             removeHighlights();
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (! questionEl || !answerEl) return;
 
-                const questionText = questionEl.textContent. toLowerCase();
+                const questionText = questionEl.textContent.toLowerCase();
                 const answerText = answerEl.textContent.toLowerCase();
 
                 if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showNoResultsMessage(searchTerm);
             } else {
                 if (firstVisibleItem) {
-                    firstVisibleItem.classList. add('active');
+                    firstVisibleItem.classList.add('active');
                     const icon = firstVisibleItem.querySelector('.icon');
                     if (icon) icon.textContent = '−';
                 }
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     
         // 초기화 버튼
-        clearBtn. addEventListener('click', () => {
+        clearBtn.addEventListener('click', () => {
             searchInput.value = '';
             clearBtn.style.display = 'none';
             removeHighlights();
@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitBtn = e.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
-            submitBtn.textContent = '전송 중... ';
+            submitBtn.textContent = '전송 중...';
 
             try {
                 // Supabase에 데이터 삽입
@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             email: formData.get('email'),
                             phone: formData.get('phone') || null,
                             category: formData.get('category'),
-                            subject: formData. get('subject'),
+                            subject: formData.get('subject'),
                             message: formData.get('message')
                         }
                     ])
@@ -472,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } finally {
                 // 버튼 복구
                 submitBtn.disabled = false;
-                submitBtn. textContent = originalText;
+                submitBtn.textContent = originalText;
             }
         });
     }
