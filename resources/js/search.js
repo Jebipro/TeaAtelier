@@ -45,7 +45,7 @@ async function performSearch(query, tag, type) {
         let results = [];
         
         // 1. teas 테이블 검색
-        const { data:   teasData, error:   teasError } = await window. supabaseClient
+        const { data: teasData, error: teasError } = await window.supabaseClient
             .from('teas')
             .select('*');
         
@@ -81,10 +81,10 @@ async function performSearch(query, tag, type) {
                 filteredTeas = filteredTeas.filter(tea => tea.type === type);
             }
             
-            console.log(`🍵 teas:  ${teasData.length} → ${filteredTeas.length}`);
+            console.log(`🍵 teas: ${teasData.length} → ${filteredTeas.length}`);
             
-            results.push(...filteredTeas. map(tea => ({
-                ... tea,
+            results.push(...filteredTeas.map(tea => ({
+                ...tea,
                 contentType: 'tea',
                 category: `${tea.category} 🍵`,
                 detailPage: tea.detail_page
@@ -92,7 +92,7 @@ async function performSearch(query, tag, type) {
         }
         
         // 2. pairings 테이블 검색
-        const { data:  pairingsData, error: pairingsError } = await window.supabaseClient
+        const { data: pairingsData, error: pairingsError } = await window.supabaseClient
             .from('pairings')
             .select('*');
         
@@ -127,7 +127,7 @@ async function performSearch(query, tag, type) {
             results.push(... filteredPairings.map(pairing => ({
                 ...pairing,
                 contentType: 'pairing',
-                category:  `${pairing.category || '페어링'} 🍰`,
+                category: `${pairing.category || '페어링'} 🍰`,
                 detailPage: pairing.detail_page
             })));
         }
@@ -165,7 +165,7 @@ async function performSearch(query, tag, type) {
                 });
             }
             
-            console.log(`🗺️ tea_regions:  ${regionsData.length} → ${filteredRegions.length}`);
+            console.log(`🗺️ tea_regions: ${regionsData.length} → ${filteredRegions.length}`);
             
             results.push(...filteredRegions.map(region => ({
                 name: region.name_ko,
@@ -233,7 +233,7 @@ function renderResults(results) {
                 <h3>${item.name}</h3>
                 <p>${item.description}</p>
                 <div class="result-tags">
-                    ${item.tags ?  item.tags.slice(0, 5).map(tag => `<span>${tag}</span>`).join('') : ''}
+                    ${item.tags ? item.tags.slice(0, 5).map(tag => `<span>${tag}</span>`).join('') : ''}
                 </div>
             </div>
         </a>

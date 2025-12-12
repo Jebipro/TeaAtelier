@@ -1,8 +1,3 @@
-// scripts.js (LNB 스크롤/활성화 처리 — 수정본)
-// 주요 변경:
-// - currentFile과 href 비교 시 하이픈(-)을 언더스코어(_)로 정규화해서 비교
-// - gnbGroups를 디렉터리(그룹) 기준으로 구성하고, href가 해당 디렉터리를 포함하는지 확인
-
 document.addEventListener('DOMContentLoaded', function() {
     const header = document.querySelector('header');
     const megaMenu = document.querySelector('.mega-menu-wrapper');
@@ -373,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateResultCount(count, isSearch, searchTerm = '') {
         const countEl = document.getElementById('searchResultCount');
         if (isSearch) {
-            countEl.innerHTML = `"<strong>${searchTerm}</strong>" 검색 결과:  <span class="count">${count}개</span>`;
+            countEl.innerHTML = `"<strong>${searchTerm}</strong>" 검색 결과: <span class="count">${count}개</span>`;
         } else {
             countEl.innerHTML = `총 <span class="count">${count}개</span>의 FAQ`;
         }
@@ -435,9 +430,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         name: formData.get('name'),
                         email: formData.get('email'),
                         phone: formData.get('phone') || null,
-                        category:  formData.get('category'),
+                        category: formData.get('category'),
                         subject: formData.get('subject'),
-                        message:  formData.get('message')
+                        message: formData.get('message')
                     }
                 ])
                 .select();
