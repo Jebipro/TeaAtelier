@@ -243,7 +243,7 @@
 
     <script>
         // 카카오맵 SDK 로드 완료 대기
-        if (typeof kakao !== 'undefined' && kakao. maps) {
+        if (typeof kakao !== 'undefined' && kakao.maps) {
             initMap();
         } else {
             // SDK 로드 완료 시 실행
@@ -267,10 +267,10 @@
                 level: 3
             };
 
-            var map = new kakao. maps.Map(mapContainer, mapOption);
+            var map = new kakao.maps.Map(mapContainer, mapOption);
 
             // 마커 생성
-            var markerPosition = new kakao.maps. LatLng(latitude, longitude);
+            var markerPosition = new kakao.maps.LatLng(latitude, longitude);
             var marker = new kakao.maps.Marker({
                 position: markerPosition
             });
@@ -289,7 +289,7 @@
             infowindow.open(map, marker);
 
             // 마커 클릭 시 카카오맵 앱/웹 열기
-            kakao.maps. event.addListener(marker, 'click', function() {
+            kakao.maps.event.addListener(marker, 'click', function() {
                 window.open('https://map.kakao.com/link/map/The Tea Atelier 본사,' + latitude + ',' + longitude);
             });
         
