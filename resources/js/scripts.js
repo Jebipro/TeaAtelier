@@ -229,118 +229,135 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 카테고리 필터 기능
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const searchInput = document.getElementById('faqSearchInput');
-            searchInput.value = '';
-            document.getElementById('clearSearchBtn').style.display = 'none';
+    // 카테고리 필터 기능 (FAQ 페이지 전용)
+const faqFilterBtns = document.querySelectorAll('.faq-category-filter . filter-btn');
+    if (faqFilterBtns. length > 0) {
+        faqFilterBtns.forEach(btn => {
+            btn. addEventListener('click', () => {
+                const searchInput = document.getElementById('faqSearchInput');
+                const clearBtn = document.getElementById('clearSearchBtn');
+            
+                if (searchInput) searchInput.value = '';
+            if (clearBtn) clearBtn.style.display = 'none';
+                removeHighlights();
+            
+                faqFilterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            
+                const category = btn.dataset.category;
+                removeNoResultsMessage();
+            
+                let visibleCount = 0;
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (category === 'all' || item. dataset.category === category) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('active');
+                        const icon = item.querySelector('.icon');
+                        if (icon) icon.textContent = '+';
+                    }
+                });
+                
+                updateResultCount(visibleCount, false);
+            });
+        });
+    }
+
+    // 검색 기능 (FAQ 페이지 전용)
+    const searchInput = document.getElementById('faqSearchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+
+    if (searchInput && clearBtn) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target. value.toLowerCase().trim();
+        
+            clearBtn.style.display = searchTerm ? 'block' : 'none';
             removeHighlights();
-            
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const category = btn.dataset.category;
             removeNoResultsMessage();
-            
+        
+            if (! searchTerm) {
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.style.display = 'block';
+                });
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                const allBtn = document.querySelector('.filter-btn[data-category="all"]');
+                if (allBtn) allBtn.classList.add('active');
+                
+                const faqItems = document.querySelectorAll('.faq-item');
+                if (faqItems.length > 0) updateResultCount(faqItems.length, false);
+                return;
+            }
+        
             let visibleCount = 0;
+            let firstVisibleItem = null;
+        
             document.querySelectorAll('.faq-item').forEach(item => {
-                if (category === 'all' || item. dataset.category === category) {
+                const questionEl = item.querySelector('.faq-question');
+                const answerEl = item.querySelector('.faq-answer');
+
+                if (! questionEl || !answerEl) return;
+
+                const questionText = questionEl.textContent. toLowerCase();
+                const answerText = answerEl.textContent.toLowerCase();
+
+                if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
                     item.style.display = 'block';
                     visibleCount++;
+
+                    if (! firstVisibleItem) {
+                        firstVisibleItem = item;
+                    }
+
+                    highlightText(answerEl, searchTerm);
+
                 } else {
                     item.style.display = 'none';
                     item.classList.remove('active');
-                    item.querySelector('.icon').textContent = '+';
+                    const icon = item.querySelector('.icon');
+                    if (icon) icon.textContent = '+';
                 }
             });
-            
-            updateResultCount(visibleCount, false);
-        });
-    });
 
-    // 검색 기능
-    const searchInput = document.getElementById('faqSearchInput');
-    const clearBtn = document.getElementById('clearSearchBtn');
+            updateResultCount(visibleCount, true, searchTerm);
+        
+            if (visibleCount === 0) {
+                showNoResultsMessage(searchTerm);
+            } else {
+                if (firstVisibleItem) {
+                    firstVisibleItem.classList. add('active');
+                    const icon = firstVisibleItem.querySelector('.icon');
+                    if (icon) icon.textContent = '−';
+                }
+            }
+        
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        });
     
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase().trim();
+        // 초기화 버튼
+        clearBtn. addEventListener('click', () => {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            removeHighlights();
+            removeNoResultsMessage();
         
-        clearBtn.style.display = searchTerm ? 'block' : 'none';
-        removeHighlights();
-        removeNoResultsMessage();
-        
-        if (! searchTerm) {
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.style.display = 'block';
+                item.classList.remove('active');
+                const icon = item.querySelector('.icon');
+                if (icon) icon.textContent = '+';
             });
+        
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
-            updateResultCount(document.querySelectorAll('.faq-item').length, false);
-            return;
-        }
+            const allBtn = document.querySelector('.filter-btn[data-category="all"]');
+            if (allBtn) allBtn.classList.add('active');
         
-        let visibleCount = 0;
-        let firstVisibleItem = null;
-        
-        document.querySelectorAll('.faq-item').forEach(item => {
-            const questionEl = item.querySelector('.faq-question');
-            const answerEl = item.querySelector('.faq-answer');
-            
-            const questionText = questionEl.textContent. toLowerCase();
-            const answerText = answerEl.textContent.toLowerCase();
-            
-            if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
-                item.style.display = 'block';
-                visibleCount++;
-                
-                if (! firstVisibleItem) {
-                    firstVisibleItem = item;
-                }
-                
-                // 답변에만 하이라이팅 적용
-                highlightText(answerEl, searchTerm);
-                
-            } else {
-                item.style.display = 'none';
-                item. classList.remove('active');
-                item.querySelector('.icon').textContent = '+';
-            }
+            const faqItems = document.querySelectorAll('.faq-item');
+            if (faqItems.length > 0) updateResultCount(faqItems.length, false);
+            searchInput.focus();
         });
-        
-        updateResultCount(visibleCount, true, searchTerm);
-        
-        if (visibleCount === 0) {
-            showNoResultsMessage(searchTerm);
-        } else {
-            if (firstVisibleItem) {
-                firstVisibleItem.classList. add('active');
-                firstVisibleItem. querySelector('.icon').textContent = '−';
-            }
-        }
-        
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    });
-    
-    // 초기화 버튼
-    clearBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        clearBtn.style.display = 'none';
-        removeHighlights();
-        removeNoResultsMessage();
-        
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item.style. display = 'block';
-            item.classList.remove('active');
-            item.querySelector('.icon').textContent = '+';
-        });
-        
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
-        
-        updateResultCount(document.querySelectorAll('.faq-item').length, false);
-        searchInput.focus();
-    });
+    }
     
     // 하이라이팅 함수 (답변에만 적용)
         function highlightText(element, searchTerm) {
@@ -402,57 +419,61 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalCount = document.querySelectorAll('.faq-item').length;
         updateResultCount(totalCount, false);
     });
-    // 폼 제출 처리 (Supabase 연동)
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
 
-        const formData = new FormData(e. target);
-        const message = formData.get('message');
+    // 폼 제출 처리 (Supabase 연동) - FAQ 페이지 전용
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        // 클라이언트 검증
-        if (message.length < 10) {
-            alert('문의 내용을 최소 10자 이상 입력해주세요.');
+            const formData = new FormData(e.target);
+            const message = formData.get('message');
+
+            // 클라이언트 검증
+            if (message.length < 10) {
+                alert('문의 내용을 최소 10자 이상 입력해주세요.');
             return;
-        }
-
-        // 제출 버튼 비활성화
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = '전송 중...';
-
-        try {
-            // Supabase에 데이터 삽입
-            const { data, error } = await supabase
-                .from('contact_inquiries')
-                .insert([
-                    {
-                        name: formData.get('name'),
-                        email: formData.get('email'),
-                        phone: formData.get('phone') || null,
-                        category: formData.get('category'),
-                        subject: formData.get('subject'),
-                        message: formData.get('message')
-                    }
-                ])
-                .select();
-                
-            if (error) {
-                throw error;
             }
-        
-            // 성공
-            console.log('저장된 데이터:', data);
-            alert('✅ 문의가 성공적으로 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
-            e.target.reset();
-        
-        } catch (error) {
-            console.error('Error:', error);
-            alert('❌ 전송 중 오류가 발생했습니다.\n' + error.message);
-        } finally {
-            // 버튼 복구
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-        }
-    });
+
+            // 제출 버튼 비활성화
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '전송 중... ';
+
+            try {
+                // Supabase에 데이터 삽입
+                const { data, error } = await supabase
+                    .from('contact_inquiries')
+                    .insert([
+                        {
+                            name: formData.get('name'),
+                            email: formData.get('email'),
+                            phone: formData.get('phone') || null,
+                            category: formData.get('category'),
+                            subject: formData. get('subject'),
+                            message: formData.get('message')
+                        }
+                    ])
+                    .select();
+                    
+                if (error) {
+                    throw error;
+                }
+                
+                // 성공
+                console.log('저장된 데이터:', data);
+                alert('✅ 문의가 성공적으로 접수되었습니다!\n영업일 기준 24시간 내에 답변드리겠습니다.');
+                e.target.reset();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ 전송 중 오류가 발생했습니다.\n' + error.message);
+            } finally {
+                // 버튼 복구
+                submitBtn.disabled = false;
+                submitBtn. textContent = originalText;
+            }
+        });
+    }
 });

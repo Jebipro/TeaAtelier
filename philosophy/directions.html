@@ -238,27 +238,25 @@
     <!-- JavaScript 파일 링크 -->
     <script src="/resources/js/scripts.js"></script>
 
-    <!-- ✅ autoload=false 추가 -->
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=91bc5a8b4de66dd2b8312704c71e30b7&autoload=false"></script>
+    <!-- 카카오맵 API -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91bc5a8b4de66dd2b8312704c71e30b7"></script>
 
     <script>
-    // ✅ SDK 로드 완료 후 실행
-    kakao.maps.load(function() {
         // 순천시 중앙로 255 좌표
-        var latitude = 34.96969;
-        var longitude = 127.48102;
+        var latitude = 34.96969; // 위도
+        var longitude = 127.48102; // 경도
 
         // 지도 초기화
         var mapContainer = document.getElementById('map');
         var mapOption = { 
             center: new kakao.maps.LatLng(latitude, longitude),
-            level: 3
+            level: 3 // 확대 레벨
         };
 
         var map = new kakao.maps. Map(mapContainer, mapOption);
 
         // 마커 생성
-        var markerPosition = new kakao.maps. LatLng(latitude, longitude);
+        var markerPosition = new kakao.maps.LatLng(latitude, longitude);
         var marker = new kakao.maps.Marker({
             position: markerPosition
         });
@@ -267,7 +265,7 @@
         // 인포윈도우 (말풍선)
         var iwContent = '<div style="padding: 15px; text-align: center; font-family: \'Noto Sans KR\', sans-serif;">' +
                         '<h4 style="margin: 0 0 10px 0; color:#AA3624; font-size: 15px;">The Tea Atelier 본사</h4>' +
-                        '<p style="margin: 0; font-size: 13px; color:#555;">전남 순천시 중앙로 255</p>' +
+                        '<p style="margin: 0; font-size:13px; color:#555;">전남 순천시 중앙로 255</p>' +
                         '</div>';
         
         var infowindow = new kakao. maps.InfoWindow({
@@ -277,10 +275,9 @@
         infowindow.open(map, marker);
 
         // 마커 클릭 시 카카오맵 앱/웹 열기
-        kakao.maps. event.addListener(marker, 'click', function() {
+        kakao.maps.event.addListener(marker, 'click', function() {
             window.open('https://map.kakao.com/link/map/The Tea Atelier 본사,' + latitude + ',' + longitude);
         });
-    });
-</script>
+    </script>
 </body>
 </html>
