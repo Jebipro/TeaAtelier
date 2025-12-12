@@ -230,10 +230,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 카테고리 필터 기능 (FAQ 페이지 전용)
-const faqFilterBtns = document.querySelectorAll('.faq-category-filter . filter-btn');
-    if (faqFilterBtns. length > 0) {
+    const faqFilterBtns = document.querySelectorAll('.faq-category-filter .filter-btn');
+    if (faqFilterBtns.length > 0) {
         faqFilterBtns.forEach(btn => {
-            btn. addEventListener('click', () => {
+            btn.addEventListener('click', () => {
                 const searchInput = document.getElementById('faqSearchInput');
                 const clearBtn = document.getElementById('clearSearchBtn');
             
